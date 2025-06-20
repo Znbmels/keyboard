@@ -6,9 +6,48 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		FA7A484C2E03EBC200875337 /* KeyboardApp.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FA7A48452E03EBC200875337 /* KeyboardApp.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FA7A484A2E03EBC200875337 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FA7A482B2E03EB0500875337 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FA7A48442E03EBC200875337;
+			remoteInfo = KeyboardApp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FA7A48512E03EBC200875337 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				FA7A484C2E03EBC200875337 /* KeyboardApp.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		FA7A48332E03EB0500875337 /* Keyboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Keyboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA7A48452E03EBC200875337 /* KeyboardApp.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = KeyboardApp.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		FA7A484D2E03EBC200875337 /* Exceptions for "KeyboardApp" folder in "KeyboardApp" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = FA7A48442E03EBC200875337 /* KeyboardApp */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		FA7A48352E03EB0500875337 /* Keyboard */ = {
@@ -16,10 +55,25 @@
 			path = Keyboard;
 			sourceTree = "<group>";
 		};
+		FA7A48462E03EBC200875337 /* KeyboardApp */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				FA7A484D2E03EBC200875337 /* Exceptions for "KeyboardApp" folder in "KeyboardApp" target */,
+			);
+			path = KeyboardApp;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		FA7A48302E03EB0500875337 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA7A48422E03EBC200875337 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -33,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				FA7A48352E03EB0500875337 /* Keyboard */,
+				FA7A48462E03EBC200875337 /* KeyboardApp */,
 				FA7A48342E03EB0500875337 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				FA7A48332E03EB0500875337 /* Keyboard.app */,
+				FA7A48452E03EBC200875337 /* KeyboardApp.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -55,10 +111,12 @@
 				FA7A482F2E03EB0500875337 /* Sources */,
 				FA7A48302E03EB0500875337 /* Frameworks */,
 				FA7A48312E03EB0500875337 /* Resources */,
+				FA7A48512E03EBC200875337 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				FA7A484B2E03EBC200875337 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				FA7A48352E03EB0500875337 /* Keyboard */,
@@ -69,6 +127,28 @@
 			productName = Keyboard;
 			productReference = FA7A48332E03EB0500875337 /* Keyboard.app */;
 			productType = "com.apple.product-type.application";
+		};
+		FA7A48442E03EBC200875337 /* KeyboardApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FA7A484E2E03EBC200875337 /* Build configuration list for PBXNativeTarget "KeyboardApp" */;
+			buildPhases = (
+				FA7A48412E03EBC200875337 /* Sources */,
+				FA7A48422E03EBC200875337 /* Frameworks */,
+				FA7A48432E03EBC200875337 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				FA7A48462E03EBC200875337 /* KeyboardApp */,
+			);
+			name = KeyboardApp;
+			packageProductDependencies = (
+			);
+			productName = KeyboardApp;
+			productReference = FA7A48452E03EBC200875337 /* KeyboardApp.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -83,6 +163,9 @@
 					FA7A48322E03EB0500875337 = {
 						CreatedOnToolsVersion = 16.3;
 					};
+					FA7A48442E03EBC200875337 = {
+						CreatedOnToolsVersion = 16.3;
+					};
 				};
 			};
 			buildConfigurationList = FA7A482E2E03EB0500875337 /* Build configuration list for PBXProject "Keyboard" */;
@@ -91,6 +174,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = FA7A482A2E03EB0500875337;
 			minimizedProjectReferenceProxies = 1;
@@ -100,12 +184,20 @@
 			projectRoot = "";
 			targets = (
 				FA7A48322E03EB0500875337 /* Keyboard */,
+				FA7A48442E03EBC200875337 /* KeyboardApp */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		FA7A48312E03EB0500875337 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA7A48432E03EBC200875337 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -122,7 +214,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FA7A48412E03EBC200875337 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FA7A484B2E03EBC200875337 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FA7A48442E03EBC200875337 /* KeyboardApp */;
+			targetProxy = FA7A484A2E03EBC200875337 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		FA7A483C2E03EB0800875337 /* Debug */ = {
@@ -251,6 +358,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Keyboard/Keyboard.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 339VJ678HZ;
@@ -268,6 +377,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.mels.Keyboard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -279,6 +389,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Keyboard/Keyboard.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 339VJ678HZ;
@@ -296,6 +408,61 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.mels.Keyboard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		FA7A484F2E03EBC200875337 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 339VJ678HZ;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = KeyboardApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = KeyboardApp;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.mels.Keyboard.KeyboardExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FA7A48502E03EBC200875337 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 339VJ678HZ;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = KeyboardApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = KeyboardApp;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.mels.Keyboard.KeyboardExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -319,6 +486,15 @@
 			buildConfigurations = (
 				FA7A483F2E03EB0800875337 /* Debug */,
 				FA7A48402E03EB0800875337 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FA7A484E2E03EBC200875337 /* Build configuration list for PBXNativeTarget "KeyboardApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA7A484F2E03EBC200875337 /* Debug */,
+				FA7A48502E03EBC200875337 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

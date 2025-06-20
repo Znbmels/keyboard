@@ -1,0 +1,115 @@
+/* 
+  Localizable.strings
+  Keyboard
+
+  Created by Zainab on 19.06.2025.
+  
+*/
+
+// MARK: - App Information
+"app_name" = "Muslim AI Keyboard";
+"app_name_arabic" = "مسلم الذكية لوحة المفاتيح";
+
+// MARK: - Language Selection
+"language_selection_title" = "Choose Your Language";
+"language_selection_subtitle" = "Select your preferred language";
+"language_english" = "English";
+"language_russian" = "Русский";
+"language_continue" = "Continue";
+
+// MARK: - Onboarding
+"onboarding_page1_title" = "Welcome to Muslim AI Keyboard";
+"onboarding_page1_description" = "This app helps you write Muslim phrases faster and correctly.";
+
+"onboarding_page2_title" = "AI-Powered Writing";
+"onboarding_page2_description" = "You can use AI-powered keyboard with duas and Islamic expressions.";
+
+"onboarding_page3_title" = "Ready to Start";
+"onboarding_page3_description" = "Just add the keyboard in settings and you're ready!";
+
+// MARK: - Buttons
+"button_add_keyboard" = "Add Keyboard";
+"button_get_started" = "Get Started";
+"button_next" = "Next";
+"button_done" = "Done";
+"button_skip" = "Skip";
+"button_continue" = "Continue";
+
+// MARK: - Tab Bar
+"tab_home" = "Home";
+"tab_phrases" = "Phrases";
+"tab_keyboard" = "Keyboard";
+"tab_settings" = "Settings";
+
+// MARK: - Home Screen
+"home_welcome_title" = "Welcome to Muslim AI Keyboard";
+"home_welcome_subtitle" = "Your intelligent Islamic typing companion";
+"home_description" = "Write Islamic phrases, duas, and expressions with ease using our AI-powered keyboard extension.";
+"home_features_title" = "Features";
+"home_feature1" = "AI-powered suggestions";
+"home_feature2" = "Islamic phrases database";
+"home_feature3" = "Multiple languages support";
+"home_feature4" = "Easy to use interface";
+
+// MARK: - Keyboard Instructions
+"keyboard_title" = "Setup Instructions";
+"keyboard_subtitle" = "Follow these steps to add the keyboard";
+"keyboard_step1" = "1. Tap 'Add Keyboard' button";
+"keyboard_step2" = "2. Go to Settings > General > Keyboard";
+"keyboard_step3" = "3. Tap 'Keyboards' then 'Add New Keyboard'";
+"keyboard_step4" = "4. Select 'Muslim AI Keyboard'";
+"keyboard_step5" = "5. Enable 'Allow Full Access' for AI features";
+"keyboard_how_to_use" = "How to Use";
+"keyboard_usage_description" = "Once installed, you can switch to Muslim AI Keyboard in any app by tapping the globe icon on your keyboard.";
+
+// MARK: - Settings
+"settings_title" = "Settings";
+"settings_language" = "Language";
+"settings_about" = "About";
+"settings_version" = "Version";
+"settings_support" = "Support";
+"settings_privacy" = "Privacy Policy";
+"settings_terms" = "Terms of Service";
+"settings_change_language" = "Change Language";
+
+// MARK: - Islamic Phrases
+"islamic_phrases_title" = "Islamic Phrases";
+"islamic_phrases_subtitle" = "Select phrases to use in your keyboard";
+"select_all" = "Select All";
+"deselect_all" = "Deselect All";
+"selected" = "selected";
+
+// Islamic Phrases - English
+"phrase_assalamu_alaikum" = "Assalamu Alaikum";
+"phrase_wa_alaikum_assalam" = "Wa Alaikum Assalam";
+"phrase_bismillah" = "Bismillah";
+"phrase_alhamdulillah" = "Alhamdulillah";
+"phrase_subhanallah" = "SubhanAllah";
+"phrase_allahu_akbar" = "Allahu Akbar";
+"phrase_la_ilaha_illallah" = "La ilaha illallah";
+"phrase_astaghfirullah" = "Astaghfirullah";
+"phrase_inshallah" = "InshaAllah";
+"phrase_mashallah" = "MashaAllah";
+"phrase_jazakallahu_khairan" = "JazakAllahu Khairan";
+"phrase_barakallahu_feek" = "BarakAllahu Feek";
+"phrase_ameen" = "Ameen";
+"phrase_la_hawla" = "La hawla wa la quwwata illa billah";
+"phrase_tawakkaltu" = "Tawakkaltu 'ala Allah";
+"phrase_rahimahu_allah" = "Rahimahu Allah";
+"phrase_fi_amanillah" = "Fi Amanillah";
+"phrase_taqabbal_allah" = "Taqabbal Allah";
+"phrase_maa_salama" = "Ma'a Salama";
+"phrase_ya_allah" = "Ya Allah";
+
+// MARK: - General
+"ok" = "OK";
+"cancel" = "Cancel";
+"close" = "Close";
+"save" = "Save";
+"done" = "Done";
+
+// MARK: - Keyboard Settings
+"keyboard_settings" = "Keyboard Settings";
+"keyboard_languages_title" = "Keyboard Languages";
+"keyboard_languages_subtitle" = "Choose which languages to show in the keyboard";
+"save_selection" = "Save Selection";

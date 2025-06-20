@@ -1,0 +1,115 @@
+/* 
+  Localizable.strings
+  Keyboard
+
+  Created by Zainab on 19.06.2025.
+  
+*/
+
+// MARK: - App Information
+"app_name" = "Мусульманская ИИ Клавиатура";
+"app_name_arabic" = "مسلم الذكية لوحة المفاتيح";
+
+// MARK: - Language Selection
+"language_selection_title" = "Выберите язык";
+"language_selection_subtitle" = "Выберите предпочитаемый язык";
+"language_english" = "English";
+"language_russian" = "Русский";
+"language_continue" = "Продолжить";
+
+// MARK: - Onboarding
+"onboarding_page1_title" = "Добро пожаловать в Мусульманскую ИИ Клавиатуру";
+"onboarding_page1_description" = "Это приложение поможет вам быстро и правильно писать мусульманские фразы.";
+
+"onboarding_page2_title" = "Письмо с ИИ";
+"onboarding_page2_description" = "Вы можете использовать клавиатуру с ИИ для дуа и исламских выражений.";
+
+"onboarding_page3_title" = "Готово к использованию";
+"onboarding_page3_description" = "Просто добавьте клавиатуру в настройках и вы готовы!";
+
+// MARK: - Buttons
+"button_add_keyboard" = "Добавить клавиатуру";
+"button_get_started" = "Начать";
+"button_next" = "Далее";
+"button_done" = "Готово";
+"button_skip" = "Пропустить";
+"button_continue" = "Продолжить";
+
+// MARK: - Tab Bar
+"tab_home" = "Главная";
+"tab_phrases" = "Фразы";
+"tab_keyboard" = "Клавиатура";
+"tab_settings" = "Настройки";
+
+// MARK: - Home Screen
+"home_welcome_title" = "Добро пожаловать в Мусульманскую ИИ Клавиатуру";
+"home_welcome_subtitle" = "Ваш умный исламский помощник для набора текста";
+"home_description" = "Пишите исламские фразы, дуа и выражения с легкостью, используя наше расширение клавиатуры с ИИ.";
+"home_features_title" = "Возможности";
+"home_feature1" = "Предложения с ИИ";
+"home_feature2" = "База исламских фраз";
+"home_feature3" = "Поддержка нескольких языков";
+"home_feature4" = "Простой интерфейс";
+
+// MARK: - Keyboard Instructions
+"keyboard_title" = "Инструкции по настройке";
+"keyboard_subtitle" = "Следуйте этим шагам для добавления клавиатуры";
+"keyboard_step1" = "1. Нажмите кнопку 'Добавить клавиатуру'";
+"keyboard_step2" = "2. Перейдите в Настройки > Основные > Клавиатура";
+"keyboard_step3" = "3. Нажмите 'Клавиатуры', затем 'Добавить клавиатуру'";
+"keyboard_step4" = "4. Выберите 'Мусульманская ИИ Клавиатура'";
+"keyboard_step5" = "5. Включите 'Разрешить полный доступ' для функций ИИ";
+"keyboard_how_to_use" = "Как использовать";
+"keyboard_usage_description" = "После установки вы можете переключиться на Мусульманскую ИИ Клавиатуру в любом приложении, нажав значок глобуса на клавиатуре.";
+
+// MARK: - Settings
+"settings_title" = "Настройки";
+"settings_language" = "Язык";
+"settings_about" = "О приложении";
+"settings_version" = "Версия";
+"settings_support" = "Поддержка";
+"settings_privacy" = "Политика конфиденциальности";
+"settings_terms" = "Условия использования";
+"settings_change_language" = "Изменить язык";
+
+// MARK: - Islamic Phrases
+"islamic_phrases_title" = "Исламские фразы";
+"islamic_phrases_subtitle" = "Выберите фразы для использования в клавиатуре";
+"select_all" = "Выбрать все";
+"deselect_all" = "Снять выбор";
+"selected" = "выбрано";
+
+// Islamic Phrases - Russian
+"phrase_assalamu_alaikum" = "Ассаламу алейкум";
+"phrase_wa_alaikum_assalam" = "Уа алейкум ассалям";
+"phrase_bismillah" = "Бисмиллях";
+"phrase_alhamdulillah" = "Альхамдулиллях";
+"phrase_subhanallah" = "Субханаллах";
+"phrase_allahu_akbar" = "Аллаху Акбар";
+"phrase_la_ilaha_illallah" = "Ля иляха илляллах";
+"phrase_astaghfirullah" = "Астагфируллах";
+"phrase_inshallah" = "ИншаАллах";
+"phrase_mashallah" = "МашаАллах";
+"phrase_jazakallahu_khairan" = "Джазакаллаху хайран";
+"phrase_barakallahu_feek" = "Баракаллаху фик";
+"phrase_ameen" = "Аминь";
+"phrase_la_hawla" = "Ля хауля уа ля куввата илля биллях";
+"phrase_tawakkaltu" = "Таваккальту аля Аллах";
+"phrase_rahimahu_allah" = "Рахимаху Аллах";
+"phrase_fi_amanillah" = "Фи аманиллях";
+"phrase_taqabbal_allah" = "ТакяббалАллах";
+"phrase_maa_salama" = "Маа саляма";
+"phrase_ya_allah" = "Я Аллах";
+
+// MARK: - General
+"ok" = "ОК";
+"cancel" = "Отмена";
+"close" = "Закрыть";
+"save" = "Сохранить";
+"done" = "Готово";
+
+// MARK: - Keyboard Settings
+"keyboard_settings" = "Настройки клавиатуры";
+"keyboard_languages_title" = "Языки клавиатуры";
+"keyboard_languages_subtitle" = "Выберите языки для отображения в клавиатуре";
+"save_selection" = "Сохранить выбор";
