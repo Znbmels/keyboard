@@ -1,0 +1,239 @@
+/* 
+  Localizable.strings
+  Keyboard
+
+  Created by Zainab on 07.07.2025.
+  
+*/
+
+// MARK: - App Information
+"app_name" = "لوحة المفاتيح الإسلامية الذكية";
+"app_name_arabic" = "مسلم الذكية لوحة المفاتيح";
+
+// MARK: - Language Selection
+"language_selection_title" = "اختر لغتك";
+"language_selection_subtitle" = "حدد لغتك المفضلة";
+"language_english" = "English";
+"language_russian" = "Русский";
+"language_continue" = "متابعة";
+
+// MARK: - Onboarding
+"onboarding_page1_title" = "مرحباً بك في لوحة المفاتيح الإسلامية الذكية";
+"onboarding_page1_description" = "يساعدك هذا التطبيق على كتابة العبارات الإسلامية بسرعة وصحة.";
+
+"onboarding_page2_title" = "الكتابة بالذكاء الاصطناعي";
+"onboarding_page2_description" = "يمكنك استخدام لوحة المفاتيح المدعومة بالذكاء الاصطناعي مع الأدعية والتعبيرات الإسلامية.";
+
+"onboarding_page3_title" = "جاهز للبدء";
+"onboarding_page3_description" = "فقط أضف لوحة المفاتيح في الإعدادات وأنت جاهز!";
+
+// MARK: - Buttons
+"button_add_keyboard" = "إضافة لوحة المفاتيح";
+"button_get_started" = "البدء";
+"button_next" = "التالي";
+"button_done" = "تم";
+"button_skip" = "تخطي";
+"button_continue" = "متابعة";
+"close" = "إغلاق";
+
+// MARK: - Tab Bar
+"tab_home" = "الرئيسية";
+"tab_phrases" = "العبارات";
+"tab_keyboard" = "لوحة المفاتيح";
+"tab_settings" = "الإعدادات";
+
+// MARK: - Home Screen
+"home_welcome_title" = "مرحباً بك في لوحة المفاتيح الإسلامية الذكية";
+"home_welcome_subtitle" = "رفيقك الذكي للكتابة الإسلامية";
+"home_description" = "اكتب العبارات الإسلامية والأدعية والتعبيرات بسهولة باستخدام امتداد لوحة المفاتيح المدعوم بالذكاء الاصطناعي.";
+"home_features_title" = "الميزات";
+"home_feature1" = "اقتراحات مدعومة بالذكاء الاصطناعي";
+"home_feature2" = "العبارات الإسلامية";
+"home_feature3" = "مجموعة الأدعية";
+"home_feature4" = "دعم متعدد اللغات";
+
+// MARK: - Islamic Phrases
+"islamic_phrases_title" = "العبارات الإسلامية";
+"islamic_phrases_subtitle" = "اختر وأضف إلى لوحة المفاتيح";
+"islamic_phrases_button" = "العبارات الإسلامية";
+"phrase_selected_count" = "محدد";
+
+// MARK: - Settings
+"settings_title" = "الإعدادات";
+"settings_language" = "اللغة";
+"settings_change_language" = "تغيير اللغة";
+"settings_about" = "حول التطبيق";
+"settings_version" = "الإصدار";
+"settings_support" = "الدعم";
+"settings_privacy" = "سياسة الخصوصية";
+"settings_terms" = "شروط الاستخدام";
+"appearance_settings" = "المظهر";
+"keyboard_color_title" = "لون لوحة المفاتيح";
+"content_settings" = "إعدادات المحتوى";
+"select_phrases_title" = "اختر العبارات";
+"select_phrases_subtitle" = "اختر العبارات للوحة المفاتيح";
+"select_duas_title" = "اختر الأدعية";
+"select_duas_subtitle" = "اختر الأدعية للوحة المفاتيح";
+"settings_about" = "حول";
+"settings_version" = "الإصدار";
+
+// MARK: - Keyboard Instructions
+"keyboard_title" = "تعليمات الإعداد";
+"keyboard_subtitle" = "اتبع هذه الخطوات لإضافة لوحة المفاتيح";
+"keyboard_step1" = "1. اضغط على زر 'إضافة لوحة المفاتيح'";
+"keyboard_step2" = "2. انتقل إلى الإعدادات > عام > لوحة المفاتيح";
+"keyboard_step3" = "3. اضغط على 'لوحات المفاتيح' ثم 'إضافة لوحة مفاتيح جديدة'";
+"keyboard_step4" = "4. اختر 'لوحة المفاتيح الإسلامية الذكية'";
+"keyboard_step5" = "5. فعّل 'السماح بالوصول الكامل' لميزات الذكاء الاصطناعي";
+"keyboard_how_to_use" = "كيفية الاستخدام";
+"keyboard_usage_description" = "بعد التثبيت، يمكنك التبديل إلى لوحة المفاتيح الإسلامية الذكية في أي تطبيق بالضغط على أيقونة الكرة الأرضية في لوحة المفاتيح.";
+
+// MARK: - Keyboard Colors
+"keyboard_colors_title" = "ألوان لوحة المفاتيح";
+"keyboard_colors_subtitle" = "اختر لون لوحة المفاتيح";
+
+// MARK: - Keyboard Settings
+"keyboard_settings" = "إعدادات لوحة المفاتيح";
+"keyboard_languages_title" = "لغات لوحة المفاتيح";
+"keyboard_languages_subtitle" = "اختر اللغات التي تظهر في لوحة المفاتيح";
+"keyboard_arabic_text_title" = "لغة النص العربي";
+"keyboard_arabic_text_subtitle" = "اختر اللغة التي تدخل النص العربي";
+"keyboard_arabic_dua_text_title" = "لغة الأدعية العربية";
+"keyboard_arabic_dua_text_subtitle" = "اختر اللغة التي تدخل الأدعية العربية (النص العربي فقط)";
+"save_selection" = "حفظ الاختيار";
+
+// MARK: - Arabic Language Selection
+"arabic_language_selection_title" = "إعدادات النص العربي";
+"arabic_language_selection_subtitle" = "اختر اللغة التي تدخل النص العربي بدلاً من النقل الحرفي";
+"arabic_disabled" = "معطل";
+"arabic_disabled_description" = "جميع اللغات ستدخل النقل الحرفي";
+"arabic_english_description" = "الإنجليزية ستدخل النص العربي";
+"arabic_russian_description" = "الروسية ستدخل النص العربي";
+"arabic_kazakh_description" = "الكازاخية ستدخل النص العربي";
+"arabic_arabic_description" = "العربية ستدخل النص العربي";
+
+// MARK: - Arabic Dua Language Selection
+"arabic_dua_language_selection_title" = "إعدادات الأدعية العربية";
+"arabic_dua_language_selection_description" = "اختر اللغة التي تدخل الأدعية العربية (النص العربي فقط)";
+"arabic_dua_disabled_description" = "جميع اللغات ستدخل الترجمة فقط";
+"arabic_dua_english_description" = "الإنجليزية ستدخل الأدعية العربية (النص العربي فقط)";
+"arabic_dua_russian_description" = "الروسية ستدخل الأدعية العربية (النص العربي فقط)";
+"arabic_dua_kazakh_description" = "الكازاخية ستدخل الأدعية العربية (النص العربي فقط)";
+"arabic_dua_arabic_description" = "العربية ستدخل الأدعية العربية (النص العربي فقط)";
+
+// MARK: - Arabic Display Mode
+"arabic_display_arabic" = "النص العربي";
+"arabic_display_english" = "الترجمة الإنجليزية";
+"arabic_display_mode_title" = "وضع عرض العربية";
+"arabic_display_mode_subtitle" = "اختر كيف تعرض اللغة العربية المحتوى";
+"arabic_display_arabic_description" = "إظهار النص العربي والنقل الحرفي";
+"arabic_display_english_description" = "إظهار الترجمة الإنجليزية بدلاً من العربية";
+
+// MARK: - Phrase Details
+"transliteration" = "النقل الحرفي";
+"meaning" = "المعنى";
+"when_to_use" = "متى تستخدم";
+
+// MARK: - Keyboard Preview
+"keyboard_preview_title" = "معاينة لوحة المفاتيح";
+"keyboard_preview_description" = "شاهد كيف تعمل لوحة المفاتيح الإسلامية الذكية في المحادثات الحقيقية. اضغط على العبارات الإسلامية لإدراجها في رسائلك.";
+
+// MARK: - Short Duas
+"short_duas_title" = "الأدعية القصيرة";
+"short_duas_subtitle" = "أدعية سريعة للتواصل اليومي";
+"short_duas_button" = "الأدعية القصيرة";
+"search_duas" = "البحث عن الأدعية...";
+
+// MARK: - Dua Details
+"dua_arabic" = "بالعربية";
+"translation" = "الترجمة";
+"dua_translation" = "الترجمة";
+"dua_usage" = "الاستخدام";
+"copy_dua" = "نسخ الدعاء";
+"copy_for_chat" = "نسخ للدردشة";
+"add_to_keyboard" = "إضافة إلى لوحة المفاتيح";
+"remove_from_keyboard" = "إزالة من لوحة المفاتيح";
+
+// MARK: - Support
+"support_title" = "الدعم";
+"support_description" = "هل لديك أسئلة؟ نحن هنا للمساعدة!";
+"support_email" = "البريد الإلكتروني";
+"support_contact_us" = "اتصل بنا";
+
+// MARK: - Common
+"cancel" = "إلغاء";
+"save" = "حفظ";
+"done" = "تم";
+"back" = "رجوع";
+"next" = "التالي";
+"previous" = "السابق";
+"search" = "بحث";
+"clear" = "مسح";
+"select_all" = "تحديد الكل";
+"deselect_all" = "إلغاء تحديد الكل";
+"home" = "الرئيسية";
+
+// MARK: - Dua Selection
+"select_duas_title" = "اختر الأدعية للوحة المفاتيح";
+"select_duas_subtitle" = "اختر الأدعية التي ستظهر في لوحة المفاتيح";
+"selected_count" = "محدد";
+
+// MARK: - Keyboard Colors
+"keyboard_colors_title" = "ألوان لوحة المفاتيح";
+"keyboard_colors_subtitle" = "اختر اللون المفضل لأزرار لوحة المفاتيح";
+"save_color_selection" = "حفظ الاختيار";
+"color_saved_successfully" = "تم حفظ اللون بنجاح!";
+"color_islamic_green" = "الأخضر الإسلامي";
+"color_ocean_blue" = "أزرق المحيط";
+"color_royal_purple" = "البنفسجي الملكي";
+"color_golden_amber" = "العنبر الذهبي";
+"color_elegant_gray" = "الرمادي الأنيق";
+"color_pure_white" = "الأبيض النقي";
+"color_soft_pink" = "الوردي الناعم";
+"color_deep_teal" = "الأزرق المخضر العميق";
+"color_warm_orange" = "البرتقالي الدافئ";
+
+// MARK: - Errors
+"error_title" = "خطأ";
+"error_message" = "حدث خطأ ما. يرجى المحاولة مرة أخرى.";
+"error_network" = "خطأ في الشبكة. يرجى التحقق من اتصال الإنترنت.";
+
+// MARK: - Success
+"success_title" = "نجح";
+"success_saved" = "تم الحفظ بنجاح";
+"success_copied" = "تم النسخ إلى الحافظة";
+
+// MARK: - Privacy Policy
+"privacy_policy_title" = "سياسة الخصوصية";
+
+// MARK: - Terms and Conditions
+"terms_conditions_title" = "شروط الاستخدام";
+
+// MARK: - Support Section
+"support_subtitle" = "أنا أقوم ببناء لوحة مفاتيح المسلم الذكية - لأنني أريد أن يتواصل المسلمون بشكل أكثر راحة في الدردشة.";
+"support_project_title" = "ادعم المشروع:";
+"support_share_app" = "شارك التطبيق";
+"support_share_subtitle" = "أخبر أصدقاءك عن لوحة مفاتيح المسلم";
+"support_rate_app" = "قيم التطبيق";
+"support_rate_subtitle" = "إذا أعجبك - أعطنا نجمة";
+"support_social_title" = "وسائل التواصل الاجتماعي:";
+"support_instagram" = "Instagram";
+"support_twitter" = "X / Twitter";
+"support_telegram" = "Telegram";
+"support_email" = "البريد الإلكتروني";
+"support_heart_title" = "طلب صغير من القلب:";
+"support_heart_message" = "أنا أصنع شيئًا بسيطًا جدًا، لكنه مطلوب للأمة.\nدعمكم جزء من هذه الرحلة.\nادعوا، أخبروا الآخرين، اعطوا إعجاب.\nحتى تحميل واحد هو صدقة جارية، إن شاء الله.";
+
+// MARK: - Troubleshooting
+"troubleshooting_title" = "استكشاف الأخطاء وإصلاحها";
+"keyboard_not_visible_title" = "لوحة المفاتيح غير مرئية في الإعدادات";
+"keyboard_not_visible_description" = "إذا لم تتمكن من العثور على لوحة المفاتيح في إعدادات iOS:";
+"troubleshooting_step1" = "تأكد من أن جهازك يعمل بنظام iOS 17.0 أو أحدث";
+"troubleshooting_step2" = "اذهب إلى الإعدادات > عام > لوحة المفاتيح > لوحات المفاتيح";
+"troubleshooting_step3" = "اضغط على 'إضافة لوحة مفاتيح جديدة...'";
+"troubleshooting_step4" = "ابحث عن 'Muslim AI Keyboard' في القائمة";
+"keyboard_not_working_title" = "لوحة المفاتيح لا تعمل بشكل صحيح";
+"keyboard_not_working_description" = "إذا ظهرت لوحة المفاتيح ولكنها لا تعمل:";
+"troubleshooting_restart_step1" = "أعد تشغيل جهازك بالكامل";
+"troubleshooting_restart_step2" = "احذف وأعد إضافة لوحة المفاتيح في الإعدادات";
+"troubleshooting_restart_step3" = "فعّل 'السماح بالوصول الكامل' إذا لزم الأمر";

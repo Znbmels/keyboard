@@ -1,0 +1,33 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <!-- Черный круглый фон -->
+  <circle cx="32" cy="32" r="32" fill="#000000"/>
+  
+  <!-- Зеленый полумесяц -->
+  <path d="M 16 32 A 12 12 0 1 1 16 32.01 A 8 8 0 1 0 16 32 Z" fill="#4CAF50"/>
+  
+  <!-- Зеленая клавиатура -->
+  <g transform="translate(36, 20)">
+    <!-- Основа клавиатуры -->
+    <rect x="0" y="0" width="20" height="16" rx="3" ry="3" fill="#4CAF50"/>
+    
+    <!-- Кнопки клавиатуры -->
+    <rect x="2" y="2" width="2" height="2" rx="0.5" fill="#000000"/>
+    <rect x="5" y="2" width="2" height="2" rx="0.5" fill="#000000"/>
+    <rect x="8" y="2" width="2" height="2" rx="0.5" fill="#000000"/>
+    <rect x="11" y="2" width="2" height="2" rx="0.5" fill="#000000"/>
+    <rect x="14" y="2" width="3" height="2" rx="0.5" fill="#000000"/>
+    
+    <rect x="2" y="5" width="2" height="2" rx="0.5" fill="#000000"/>
+    <rect x="5" y="5" width="2" height="2" rx="0.5" fill="#000000"/>
+    <rect x="8" y="5" width="2" height="2" rx="0.5" fill="#000000"/>
+    <rect x="11" y="5" width="2" height="2" rx="0.5" fill="#000000"/>
+    <rect x="14" y="5" width="3" height="2" rx="0.5" fill="#000000"/>
+    
+    <rect x="2" y="8" width="2" height="2" rx="0.5" fill="#000000"/>
+    <rect x="5" y="8" width="2" height="2" rx="0.5" fill="#000000"/>
+    <rect x="8" y="8" width="2" height="2" rx="0.5" fill="#000000"/>
+    <rect x="11" y="8" width="6" height="2" rx="0.5" fill="#000000"/>
+    
+    <rect x="2" y="11" width="15" height="3" rx="0.5" fill="#000000"/>
+  </g>
+</svg>

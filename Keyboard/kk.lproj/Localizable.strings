@@ -1,0 +1,239 @@
+/* 
+  Localizable.strings
+  Keyboard
+
+  Created by Zainab on 07.07.2025.
+  
+*/
+
+// MARK: - App Information
+"app_name" = "Мұсылман AI Пернетақта";
+"app_name_arabic" = "مسلم الذكية لوحة المفاتيح";
+
+// MARK: - Language Selection
+"language_selection_title" = "Тіліңізді таңдаңыз";
+"language_selection_subtitle" = "Қалаған тіліңізді таңдаңыз";
+"language_english" = "English";
+"language_russian" = "Русский";
+"language_continue" = "Жалғастыру";
+
+// MARK: - Onboarding
+"onboarding_page1_title" = "Мұсылман AI Пернетақтасына қош келдіңіз";
+"onboarding_page1_description" = "Бұл қолданба мұсылман сөздерін жылдам және дұрыс жазуға көмектеседі.";
+
+"onboarding_page2_title" = "AI-қуатты жазу";
+"onboarding_page2_description" = "Дұғалар мен ислами өрнектермен AI-қуатты пернетақтаны пайдалана аласыз.";
+
+"onboarding_page3_title" = "Бастауға дайын";
+"onboarding_page3_description" = "Параметрлерде пернетақтаны қосыңыз және дайынсыз!";
+
+// MARK: - Buttons
+"button_add_keyboard" = "Пернетақтаны қосу";
+"button_get_started" = "Бастау";
+"button_next" = "Келесі";
+"button_done" = "Дайын";
+"button_skip" = "Өткізу";
+"button_continue" = "Жалғастыру";
+"close" = "Жабу";
+
+// MARK: - Tab Bar
+"tab_home" = "Басты";
+"tab_phrases" = "Сөздер";
+"tab_keyboard" = "Пернетақта";
+"tab_settings" = "Параметрлер";
+
+// MARK: - Home Screen
+"home_welcome_title" = "Мұсылман AI Пернетақтасына қош келдіңіз";
+"home_welcome_subtitle" = "Сіздің ақылды ислами теру серіктесіңіз";
+"home_description" = "AI-қуатты пернетақта кеңейтімін пайдаланып ислами сөздерді, дұғаларды және өрнектерді оңай жазыңыз.";
+"home_features_title" = "Мүмкіндіктер";
+"home_feature1" = "AI-қуатты ұсыныстар";
+"home_feature2" = "Ислами сөздер";
+"home_feature3" = "Дұғалар жинағы";
+"home_feature4" = "Көп тілді қолдау";
+
+// MARK: - Islamic Phrases
+"islamic_phrases_title" = "Ислами сөздер";
+"islamic_phrases_subtitle" = "Таңдаңыз және пернетақтаға қосыңыз";
+"islamic_phrases_button" = "Ислами сөздер";
+"phrase_selected_count" = "таңдалды";
+
+// MARK: - Settings
+"settings_title" = "Параметрлер";
+"settings_language" = "Тіл";
+"settings_change_language" = "Тілді өзгерту";
+"settings_about" = "Қосымша туралы";
+"settings_version" = "Нұсқа";
+"settings_support" = "Қолдау";
+"settings_privacy" = "Құпиялылық саясаты";
+"settings_terms" = "Пайдалану шарттары";
+"appearance_settings" = "Сыртқы түр";
+"keyboard_color_title" = "Пернетақта түсі";
+"content_settings" = "Мазмұн параметрлері";
+"select_phrases_title" = "Сөздерді таңдау";
+"select_phrases_subtitle" = "Пернетақта үшін сөздерді таңдаңыз";
+"select_duas_title" = "Дұғаларды таңдау";
+"select_duas_subtitle" = "Пернетақта үшін дұғаларды таңдаңыз";
+"settings_about" = "Туралы";
+"settings_version" = "Нұсқа";
+
+// MARK: - Keyboard Instructions
+"keyboard_title" = "Орнату нұсқаулары";
+"keyboard_subtitle" = "Пернетақтаны қосу үшін осы қадамдарды орындаңыз";
+"keyboard_step1" = "1. 'Пернетақтаны қосу' түймесін басыңыз";
+"keyboard_step2" = "2. Параметрлер > Жалпы > Пернетақта бөліміне өтіңіз";
+"keyboard_step3" = "3. 'Пернетақталар' содан кейін 'Жаңа пернетақта қосу' басыңыз";
+"keyboard_step4" = "4. 'Мұсылман AI Пернетақта' таңдаңыз";
+"keyboard_step5" = "5. AI мүмкіндіктері үшін 'Толық қол жетімділікті рұқсат ету' қосыңыз";
+"keyboard_how_to_use" = "Қалай пайдалану";
+"keyboard_usage_description" = "Орнатылғаннан кейін, кез келген қолданбада пернетақтадағы глобус белгішесін басу арқылы Мұсылман AI Пернетақтасына ауыса аласыз.";
+
+// MARK: - Keyboard Colors
+"keyboard_colors_title" = "Пернетақта түстері";
+"keyboard_colors_subtitle" = "Пернетақта түсін таңдаңыз";
+
+// MARK: - Keyboard Settings
+"keyboard_settings" = "Пернетақта параметрлері";
+"keyboard_languages_title" = "Пернетақта тілдері";
+"keyboard_languages_subtitle" = "Пернетақтада көрсетілетін тілдерді таңдаңыз";
+"keyboard_arabic_text_title" = "Араб мәтіні тілі";
+"keyboard_arabic_text_subtitle" = "Араб мәтінін енгізетін тілді таңдаңыз";
+"keyboard_arabic_dua_text_title" = "Араб дұға тілі";
+"keyboard_arabic_dua_text_subtitle" = "Араб дұғаларын енгізетін тілді таңдаңыз (тек араб мәтіні)";
+"save_selection" = "Таңдауды сақтау";
+
+// MARK: - Arabic Language Selection
+"arabic_language_selection_title" = "Араб мәтіні параметрлері";
+"arabic_language_selection_subtitle" = "Транслитерация орнына араб мәтінін енгізетін тілді таңдаңыз";
+"arabic_disabled" = "Өшірілген";
+"arabic_disabled_description" = "Барлық тілдер транслитерация енгізеді";
+"arabic_english_description" = "Ағылшын тілі араб мәтінін енгізеді";
+"arabic_russian_description" = "Орыс тілі араб мәтінін енгізеді";
+"arabic_kazakh_description" = "Қазақ тілі араб мәтінін енгізеді";
+"arabic_arabic_description" = "Араб тілі араб мәтінін енгізеді";
+
+// MARK: - Arabic Dua Language Selection
+"arabic_dua_language_selection_title" = "Араб дұға параметрлері";
+"arabic_dua_language_selection_description" = "Араб дұғаларын енгізетін тілді таңдаңыз (тек араб мәтіні)";
+"arabic_dua_disabled_description" = "Барлық тілдер тек аударманы енгізеді";
+"arabic_dua_english_description" = "Ағылшын тілі араб дұғаларын енгізеді (тек араб мәтіні)";
+"arabic_dua_russian_description" = "Орыс тілі араб дұғаларын енгізеді (тек араб мәтіні)";
+"arabic_dua_kazakh_description" = "Қазақ тілі араб дұғаларын енгізеді (тек араб мәтіні)";
+"arabic_dua_arabic_description" = "Араб тілі араб дұғаларын енгізеді (тек араб мәтіні)";
+
+// MARK: - Arabic Display Mode
+"arabic_display_arabic" = "Араб мәтіні";
+"arabic_display_english" = "Ағылшын аудармасы";
+"arabic_display_mode_title" = "Араб көрсету режимі";
+"arabic_display_mode_subtitle" = "Араб тілі мазмұнды қалай көрсететінін таңдаңыз";
+"arabic_display_arabic_description" = "Араб мәтінін және транслитерацияны көрсету";
+"arabic_display_english_description" = "Араб орнына ағылшын аудармасын көрсету";
+
+// MARK: - Phrase Details
+"transliteration" = "Транслитерация";
+"meaning" = "Мағынасы";
+"when_to_use" = "Қашан пайдалану";
+
+// MARK: - Keyboard Preview
+"keyboard_preview_title" = "Пернетақтаны алдын ала көру";
+"keyboard_preview_description" = "Мұсылман AI пернетақтасының нақты сөйлесулерде қалай жұмыс істейтінін көріңіз. Хабарларыңызға енгізу үшін ислами сөздерді басыңыз.";
+
+// MARK: - Short Duas
+"short_duas_title" = "Қысқа дұғалар";
+"short_duas_subtitle" = "Күнделікті қарым-қатынас үшін жылдам дұғалар";
+"short_duas_button" = "Қысқа дұғалар";
+"search_duas" = "Дұғаларды іздеу...";
+
+// MARK: - Dua Details
+"dua_arabic" = "АРАБ ТІЛІНДЕ";
+"translation" = "Аударма";
+"dua_translation" = "АУДАРМА";
+"dua_usage" = "ПАЙДАЛАНУ";
+"copy_dua" = "Дұғаны көшіру";
+"copy_for_chat" = "Чатқа көшіру";
+"add_to_keyboard" = "Пернетақтаға қосу";
+"remove_from_keyboard" = "Пернетақтадан алу";
+
+// MARK: - Support
+"support_title" = "Қолдау";
+"support_description" = "Сұрақтарыңыз бар ма? Біз көмектесуге дайынбыз!";
+"support_email" = "Электрондық пошта";
+"support_contact_us" = "Бізбен байланысыңыз";
+
+// MARK: - Common
+"cancel" = "Болдырмау";
+"save" = "Сақтау";
+"done" = "Дайын";
+"back" = "Артқа";
+"next" = "Келесі";
+"previous" = "Алдыңғы";
+"search" = "Іздеу";
+"clear" = "Тазалау";
+"select_all" = "Барлығын таңдау";
+"deselect_all" = "Барлығын алып тастау";
+"home" = "Басты";
+
+// MARK: - Dua Selection
+"select_duas_title" = "Пернетақта үшін дұғаларды таңдау";
+"select_duas_subtitle" = "Пернетақтада көрсетілетін дұғаларды таңдаңыз";
+"selected_count" = "Таңдалды";
+
+// MARK: - Keyboard Colors
+"keyboard_colors_title" = "Пернетақта түстері";
+"keyboard_colors_subtitle" = "Пернетақта түймелері үшін қалаған түсті таңдаңыз";
+"save_color_selection" = "Таңдауды сақтау";
+"color_saved_successfully" = "Түс сәтті сақталды!";
+"color_islamic_green" = "Ислами жасыл";
+"color_ocean_blue" = "Мұхит көгі";
+"color_royal_purple" = "Патшалық күлгін";
+"color_golden_amber" = "Алтын янтарь";
+"color_elegant_gray" = "Сәнді сұр";
+"color_pure_white" = "Таза ақ";
+"color_soft_pink" = "Жұмсақ қызғылт";
+"color_deep_teal" = "Терең теңіз көгі";
+"color_warm_orange" = "Жылы сарғыш";
+
+// MARK: - Errors
+"error_title" = "Қате";
+"error_message" = "Бірдеңе дұрыс болмады. Қайталап көріңіз.";
+"error_network" = "Желі қатесі. Интернет байланысын тексеріңіз.";
+
+// MARK: - Success
+"success_title" = "Сәтті";
+"success_saved" = "Сәтті сақталды";
+"success_copied" = "Буферге көшірілді";
+
+// MARK: - Privacy Policy
+"privacy_policy_title" = "Құпиялылық саясаты";
+
+// MARK: - Terms and Conditions
+"terms_conditions_title" = "Пайдалану шарттары";
+
+// MARK: - Support Section
+"support_subtitle" = "Мен Muslim AI Keyboard жасап жатырмын - мұсылмандар чатта ыңғайлы қарым-қатынас жасасын деп.";
+"support_project_title" = "Жобаны қолдаңыз:";
+"support_share_app" = "Қосымшаны бөлісу";
+"support_share_subtitle" = "Достарыңызға Muslim Keyboard туралы айтыңыз";
+"support_rate_app" = "Қосымшаны бағалау";
+"support_rate_subtitle" = "Ұнаса - жұлдыз қойыңыз";
+"support_social_title" = "Біздің әлеуметтік желілер:";
+"support_instagram" = "Instagram";
+"support_twitter" = "X / Twitter";
+"support_telegram" = "Telegram";
+"support_email" = "Пошта";
+"support_heart_title" = "Жүректен кішкентай өтініш:";
+"support_heart_message" = "Мен өте қарапайым, бірақ Үмметке қажет нәрсе жасап жатырмын.\nСіздің қолдауыңыз - осы жолдың бір бөлігі.\nДұға жасаңыз, басқаларға айтыңыз, лайк қойыңыз.\nТіпті бір жүктеу де садақа жария, ИншаАллах.";
+
+// MARK: - Troubleshooting
+"troubleshooting_title" = "Ақаулықтарды жою";
+"keyboard_not_visible_title" = "Пернетақта параметрлерде көрінбейді";
+"keyboard_not_visible_description" = "iOS параметрлерінде пернетақтаны таба алмасаңыз:";
+"troubleshooting_step1" = "Құрылғыда iOS 17.0 немесе жаңа нұсқа бар екенін тексеріңіз";
+"troubleshooting_step2" = "Параметрлер > Жалпы > Пернетақта > Пернетақталар бөліміне өтіңіз";
+"troubleshooting_step3" = "'Жаңа пернетақта қосу...' түймесін басыңыз";
+"troubleshooting_step4" = "Тізімнен 'Muslim AI Keyboard' іздеңіз";
+"keyboard_not_working_title" = "Пернетақта дұрыс жұмыс істемейді";
+"keyboard_not_working_description" = "Пернетақта пайда болады, бірақ жұмыс істемесе:";
+"troubleshooting_restart_step1" = "Құрылғыны толығымен қайта іске қосыңыз";
+"troubleshooting_restart_step2" = "Параметрлерде пернетақтаны жойып, қайта қосыңыз";
+"troubleshooting_restart_step3" = "Қажет болса 'Толық қол жетімділікті рұқсат ету' опциясын қосыңыз";

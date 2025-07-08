@@ -12,15 +12,15 @@ struct AppConstants {
     struct Onboarding {
         static let page1Title = "onboarding_page1_title"
         static let page1Description = "onboarding_page1_description"
-        static let page1Icon = "book.quran"
+        static let page1Icon = "book.fill"
 
         static let page2Title = "onboarding_page2_title"
         static let page2Description = "onboarding_page2_description"
-        static let page2Icon = "brain.head.profile"
+        static let page2Icon = "brain.fill"
 
         static let page3Title = "onboarding_page3_title"
         static let page3Description = "onboarding_page3_description"
-        static let page3Icon = "checkmark.circle.fill"
+        static let page3Icon = "checkmark.square.fill"
     }
 
     // MARK: - Button Texts

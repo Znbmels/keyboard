@@ -34,6 +34,7 @@
 "button_done" = "Done";
 "button_skip" = "Skip";
 "button_continue" = "Continue";
+"close" = "Close";
 
 // MARK: - Tab Bar
 "tab_home" = "Home";
@@ -65,12 +66,20 @@
 // MARK: - Settings
 "settings_title" = "Settings";
 "settings_language" = "Language";
+"settings_change_language" = "Change Language";
 "settings_about" = "About";
 "settings_version" = "Version";
 "settings_support" = "Support";
 "settings_privacy" = "Privacy Policy";
 "settings_terms" = "Terms of Service";
+"appearance_settings" = "Appearance";
+"keyboard_color_title" = "Keyboard Color";
+"content_settings" = "Content";
 "settings_change_language" = "Change Language";
+"keyboard_settings" = "Keyboard Settings";
+"content_settings" = "Content Settings";
+"select_phrases_title" = "Select Islamic Phrases";
+"select_duas_title" = "Select Duas";
 
 // MARK: - Islamic Phrases
 "islamic_phrases_title" = "Islamic Phrases";
@@ -101,6 +110,12 @@
 "phrase_maa_salama" = "Ma'a Salama";
 "phrase_ya_allah" = "Ya Allah";
 
+// Islamic Symbols and Honorifics
+"phrase_sallallahu_alayhi_wa_sallam" = "Peace and blessings of Allah be upon him";
+"phrase_alayhi_salam" = "Peace be upon him";
+"phrase_radiyallahu_anhum" = "May Allah be pleased with them";
+"phrase_subhanahu_wa_taala" = "Glory be to Him, the Exalted";
+
 // MARK: - General
 "ok" = "OK";
 "cancel" = "Cancel";
@@ -112,4 +127,112 @@
 "keyboard_settings" = "Keyboard Settings";
 "keyboard_languages_title" = "Keyboard Languages";
 "keyboard_languages_subtitle" = "Choose which languages to show in the keyboard";
+"keyboard_arabic_text_title" = "Arabic Text Language";
+"keyboard_arabic_text_subtitle" = "Choose which language should insert Arabic text";
+"keyboard_arabic_dua_text_title" = "Arabic Dua Language";
+"keyboard_arabic_dua_text_subtitle" = "Choose which language should insert Arabic duas (Arabic text only)";
 "save_selection" = "Save Selection";
+
+// MARK: - Arabic Language Selection
+"arabic_language_selection_title" = "Arabic Text Settings";
+"arabic_language_selection_subtitle" = "Choose which language should insert Arabic text instead of transliteration";
+"arabic_disabled" = "Disabled";
+"arabic_disabled_description" = "All languages will insert transliteration";
+"arabic_english_description" = "English will insert Arabic text";
+"arabic_russian_description" = "Russian will insert Arabic text";
+"arabic_kazakh_description" = "Kazakh will insert Arabic text";
+"arabic_arabic_description" = "Arabic will insert Arabic text";
+
+// MARK: - Arabic Dua Language Selection
+"arabic_dua_language_selection_title" = "Arabic Dua Settings";
+"arabic_dua_language_selection_description" = "Choose which language should insert Arabic duas (Arabic text only)";
+"arabic_dua_disabled_description" = "All languages will insert translation only";
+"arabic_dua_english_description" = "English will insert Arabic duas (Arabic text only)";
+"arabic_dua_russian_description" = "Russian will insert Arabic duas (Arabic text only)";
+"arabic_dua_kazakh_description" = "Kazakh will insert Arabic duas (Arabic text only)";
+"arabic_dua_arabic_description" = "Arabic will insert Arabic duas (Arabic text only)";
+
+// MARK: - Arabic Display Mode
+"arabic_display_arabic" = "Arabic Text";
+"arabic_display_english" = "English Translation";
+"arabic_display_mode_title" = "Arabic Display Mode";
+"arabic_display_mode_subtitle" = "Choose how Arabic language displays content";
+"arabic_display_arabic_description" = "Show Arabic text and transliteration";
+"arabic_display_english_description" = "Show English translation instead of Arabic";
+
+// MARK: - Phrase Details
+"transliteration" = "Transliteration";
+"meaning" = "Meaning";
+"when_to_use" = "When to Use";
+
+// MARK: - Keyboard Preview
+"keyboard_preview_title" = "Keyboard Preview";
+"keyboard_preview_description" = "See how the Muslim AI Keyboard works in real conversations. Tap on Islamic phrases to insert them into your messages.";
+
+// MARK: - Short Duas
+"short_duas_title" = "Short Duas";
+"short_duas_subtitle" = "Quick prayers for daily communication";
+"search_duas" = "Search duas...";
+
+// MARK: - Dua Details
+"dua_arabic" = "ARABIC";
+"translation" = "Translation";
+"dua_translation" = "TRANSLATION";
+"dua_usage" = "USAGE";
+"when_to_use" = "When to Use";
+"copy_dua" = "Copy Dua";
+"copy_for_chat" = "Copy for Chat";
+"add_to_keyboard" = "Add to Keyboard";
+"remove_from_keyboard" = "Remove from Keyboard";
+"close" = "Close";
+"home" = "Home";
+
+// MARK: - Dua Selection
+"select_duas_title" = "Select Duas for Keyboard";
+"select_duas_subtitle" = "Choose which duas will appear in your keyboard";
+"selected_count" = "Selected";
+
+// MARK: - Keyboard Colors
+"keyboard_colors_title" = "Keyboard Colors";
+"keyboard_colors_subtitle" = "Choose your preferred color for keyboard buttons";
+"save_color_selection" = "Save Selection";
+"color_saved_successfully" = "Color saved successfully!";
+"color_islamic_green" = "Islamic Green";
+"color_ocean_blue" = "Ocean Blue";
+"color_royal_purple" = "Royal Purple";
+"color_golden_amber" = "Golden Amber";
+"color_elegant_gray" = "Elegant Gray";
+"color_pure_white" = "Pure White";
+"color_soft_pink" = "Soft Pink";
+"color_deep_teal" = "Deep Teal";
+"color_warm_orange" = "Warm Orange";
+
+// MARK: - Support Section
+"support_title" = "Support";
+"support_subtitle" = "I'm building Muslim AI Keyboard - because I want Muslims to communicate more comfortably in the chat.";
+"support_project_title" = "Support the Project:";
+"support_share_app" = "Share the App";
+"support_share_subtitle" = "Tell your friends about Muslim Keyboard";
+"support_rate_app" = "Rate the App";
+"support_rate_subtitle" = "If you like it - give us a star";
+"support_social_title" = "Our Social Media:";
+"support_instagram" = "Instagram";
+"support_twitter" = "X / Twitter";
+"support_telegram" = "Telegram";
+"support_email" = "Email";
+"support_heart_title" = "A Small Request from the Heart:";
+"support_heart_message" = "I'm creating something very simple, but needed by the Ummah.\nYour support is part of this journey.\nMake dua, tell others, give a like.\nEven one download is sadaka jariya, Insha'Allah.";
+
+// MARK: - Troubleshooting
+"troubleshooting_title" = "Troubleshooting";
+"keyboard_not_visible_title" = "Keyboard Not Visible in Settings";
+"keyboard_not_visible_description" = "If you can't find the keyboard in iOS Settings:";
+"troubleshooting_step1" = "Make sure your device runs iOS 17.0 or later";
+"troubleshooting_step2" = "Go to Settings > General > Keyboard > Keyboards";
+"troubleshooting_step3" = "Tap 'Add New Keyboard...'";
+"troubleshooting_step4" = "Look for 'Muslim AI Keyboard' in the list";
+"keyboard_not_working_title" = "Keyboard Not Working Properly";
+"keyboard_not_working_description" = "If the keyboard appears but doesn't work:";
+"troubleshooting_restart_step1" = "Restart your device completely";
+"troubleshooting_restart_step2" = "Remove and re-add the keyboard in Settings";
+"troubleshooting_restart_step3" = "Enable 'Allow Full Access' if needed";

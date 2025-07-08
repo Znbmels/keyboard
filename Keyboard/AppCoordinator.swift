@@ -23,29 +23,14 @@ class AppCoordinator: ObservableObject {
     
     init() {
         print("🚀 AppCoordinator: Initializing...")
-        // Сбрасываем состояние при каждом запуске приложения
-        resetOnboardingState()
         determineInitialState()
         print("🎯 AppCoordinator: Initial state set to \(currentState)")
     }
 
-    private func resetOnboardingState() {
-        // Сбрасываем флаги онбординга при каждом запуске
-        print("🔄 AppCoordinator: Resetting onboarding state...")
-        userDefaults.set(false, forKey: onboardingCompletedKey)
-        userDefaults.set(false, forKey: languageSelectedKey)
-        print("✅ AppCoordinator: Onboarding state reset")
-    }
-    
     private func determineInitialState() {
-        // ВСЕГДА запускаем онбординг при каждом билдинге приложения
-        currentState = .onboarding
-
-        // Комментируем старую логику для возможного восстановления:
-        /*
+        // Проверяем, был ли онбординг уже завершен
         let onboardingCompleted = userDefaults.bool(forKey: onboardingCompletedKey)
         let languageSelected = userDefaults.bool(forKey: languageSelectedKey)
-
         if !onboardingCompleted {
             currentState = .onboarding
         } else if !languageSelected {
@@ -53,7 +38,6 @@ class AppCoordinator: ObservableObject {
         } else {
             currentState = .main
         }
-        */
     }
     
     func completeOnboarding() {
@@ -69,9 +53,11 @@ class AppCoordinator: ObservableObject {
     }
     
     func resetToOnboarding() {
+        print("🔄 AppCoordinator: Manually resetting to onboarding...")
         userDefaults.set(false, forKey: onboardingCompletedKey)
         userDefaults.set(false, forKey: languageSelectedKey)
         currentState = .onboarding
+        print("✅ AppCoordinator: Reset to onboarding completed")
     }
 }
 

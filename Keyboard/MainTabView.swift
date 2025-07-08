@@ -24,7 +24,7 @@ struct MainTabView: View {
             // Keyboard Tab
             KeyboardInstructionsView()
                 .tabItem {
-                    Image(systemName: "keyboard")
+                    Image(systemName: "keyboard.fill")
                     Text("tab_keyboard")
                 }
                 .tag(1)
@@ -32,7 +32,7 @@ struct MainTabView: View {
             // Settings Tab
             SettingsView()
                 .tabItem {
-                    Image(systemName: "gearshape.fill")
+                    Image(systemName: "gear.circle.fill")
                     Text("tab_settings")
                 }
                 .tag(2)

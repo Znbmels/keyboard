@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FA7A48322E03EB0500875337"
-               BuildableName = "Keyboard.app"
-               BlueprintName = "Keyboard"
-               ReferencedContainer = "container:Keyboard.xcodeproj">
+               BuildableName = "MuslimKeyboard.app"
+               BlueprintName = "MuslimKeyboard"
+               ReferencedContainer = "container:MuslimKeyboard.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FA7A48322E03EB0500875337"
-            BuildableName = "Keyboard.app"
-            BlueprintName = "Keyboard"
-            ReferencedContainer = "container:Keyboard.xcodeproj">
+            BuildableName = "MuslimKeyboard.app"
+            BlueprintName = "MuslimKeyboard"
+            ReferencedContainer = "container:MuslimKeyboard.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FA7A48322E03EB0500875337"
-            BuildableName = "Keyboard.app"
-            BlueprintName = "Keyboard"
-            ReferencedContainer = "container:Keyboard.xcodeproj">
+            BuildableName = "MuslimKeyboard.app"
+            BlueprintName = "MuslimKeyboard"
+            ReferencedContainer = "container:MuslimKeyboard.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

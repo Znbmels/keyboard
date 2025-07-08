@@ -50,7 +50,7 @@ struct OnboardingView: View {
                     // Page Indicators
                     HStack(spacing: 8) {
                         ForEach(0..<onboardingPages.count, id: \.self) { index in
-                            Circle()
+                            RoundedRectangle(cornerRadius: 2)
                                 .fill(currentPage == index ? Color.islamicGreen : Color.white.opacity(0.3))
                                 .frame(width: 8, height: 8)
                                 .animation(.easeInOut, value: currentPage)
@@ -78,8 +78,13 @@ struct OnboardingView: View {
                             }
                         }
                         .foregroundColor(.black)
-                        .islamicButtonStyle()
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 18)
                         .background(Color.islamicGreen)
+                        .cornerRadius(12)
+                        .shadow(color: .black.opacity(0.2), radius: 8, x: 0, y: 4)
                     }
                     .padding(.horizontal, 32)
                 }

@@ -67,8 +67,13 @@ struct LanguageSelectionView: View {
                             .font(.title3)
                     }
                     .foregroundColor(.black)
-                    .islamicButtonStyle()
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 18)
                     .background(Color.islamicGreen)
+                    .cornerRadius(12)
+                    .shadow(color: .black.opacity(0.2), radius: 8, x: 0, y: 4)
                 }
                 .padding(.horizontal, 32)
                 .padding(.bottom, 40)
@@ -99,22 +104,29 @@ struct LanguageOptionView: View {
                 Spacer()
                 
                 // Selection Indicator
-                if isSelected {
-                    Image(systemName: "checkmark.circle.fill")
-                        .font(.title2)
-                        .foregroundColor(.islamicGreen)
-                } else {
-                    Image(systemName: "circle")
-                        .font(.title2)
-                        .foregroundColor(.white.opacity(0.3))
+                ZStack {
+                    RoundedRectangle(cornerRadius: 6)
+                        .fill(isSelected ? Color.islamicGreen : Color.clear)
+                        .frame(width: 24, height: 24)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 6)
+                                .stroke(isSelected ? Color.islamicGreen : Color.white.opacity(0.3), lineWidth: 2)
+                        )
+
+                    if isSelected {
+                        Image(systemName: "checkmark")
+                            .font(.caption)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                    }
                 }
             }
             .padding(.horizontal, 24)
             .padding(.vertical, 20)
             .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(isSelected ? Color.islamicGreen.opacity(0.1) : Color.white.opacity(0.05))
-                    .stroke(isSelected ? Color.islamicGreen : Color.white.opacity(0.2), lineWidth: 2)
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(isSelected ? Color.islamicGreen.opacity(0.15) : Color.white.opacity(0.05))
+                    .stroke(isSelected ? Color.islamicGreen : Color.white.opacity(0.2), lineWidth: isSelected ? 2 : 1)
             )
         }
         .buttonStyle(PlainButtonStyle())

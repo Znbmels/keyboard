@@ -11,6 +11,8 @@ import SwiftUI
 enum KeyboardLanguageOption: String, CaseIterable, Codable {
     case english = "en"
     case russian = "ru"
+    case kazakh = "kk"
+    case arabic = "ar"
 
     var displayName: String {
         switch self {
@@ -18,6 +20,26 @@ enum KeyboardLanguageOption: String, CaseIterable, Codable {
             return "English"
         case .russian:
             return "Русский"
+        case .kazakh:
+            return "Қазақша"
+        case .arabic:
+            return "العربية"
+        }
+    }
+
+    // Создание из строки
+    static func fromRawValue(_ rawValue: String) -> KeyboardLanguageOption? {
+        switch rawValue {
+        case "en":
+            return .english
+        case "ru":
+            return .russian
+        case "kk":
+            return .kazakh
+        case "ar":
+            return .arabic
+        default:
+            return nil
         }
     }
 }
@@ -63,6 +85,18 @@ struct KeyboardLanguageSelectionView: View {
                             isSelected: selectedLanguages.contains(.russian),
                             onToggle: { toggleLanguage(.russian) }
                         )
+
+                        LanguageOptionRow(
+                            language: .kazakh,
+                            isSelected: selectedLanguages.contains(.kazakh),
+                            onToggle: { toggleLanguage(.kazakh) }
+                        )
+
+                        LanguageOptionRow(
+                            language: .arabic,
+                            isSelected: selectedLanguages.contains(.arabic),
+                            onToggle: { toggleLanguage(.arabic) }
+                        )
                     }
                     .padding(.horizontal, 24)
                     
@@ -89,9 +123,13 @@ struct KeyboardLanguageSelectionView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("done") {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
                         dismiss()
+                    }) {
+                        Image(systemName: "chevron.left")
+                            .font(.title2)
+                            .fontWeight(.medium)
                     }
                     .foregroundColor(.islamicGreen)
                 }
@@ -112,9 +150,12 @@ struct KeyboardLanguageSelectionView: View {
 
     private func loadCurrentSelection() {
         // Загружаем текущие выбранные языки из UserDefaults
-        let defaults = UserDefaults(suiteName: "group.org.mels.keyboard.muslim") ?? UserDefaults.standard
+        let defaults = UserDefaults(suiteName: "group.school.nfactorial.muslim.keyboard") ?? UserDefaults.standard
         if let languageData = defaults.data(forKey: "keyboard_available_languages"),
-           let languages = try? JSONDecoder().decode([KeyboardLanguageOption].self, from: languageData) {
+           let languageStrings = try? JSONDecoder().decode([String].self, from: languageData) {
+            let languages = languageStrings.compactMap { rawValue in
+                KeyboardLanguageOption.fromRawValue(rawValue)
+            }
             selectedLanguages = Set(languages)
         } else {
             // По умолчанию включаем оба языка
@@ -123,11 +164,11 @@ struct KeyboardLanguageSelectionView: View {
     }
 
     private func saveSelection() {
-        // Сохраняем выбранные языки
-        let defaults = UserDefaults(suiteName: "group.org.mels.keyboard.muslim") ?? UserDefaults.standard
-        let languagesArray = Array(selectedLanguages)
+        // Сохраняем выбранные языки как строки
+        let defaults = UserDefaults(suiteName: "group.school.nfactorial.muslim.keyboard") ?? UserDefaults.standard
+        let languageStrings = Array(selectedLanguages).map { $0.rawValue }
 
-        if let encoded = try? JSONEncoder().encode(languagesArray) {
+        if let encoded = try? JSONEncoder().encode(languageStrings) {
             defaults.set(encoded, forKey: "keyboard_available_languages")
             defaults.synchronize()
         }
@@ -151,7 +192,16 @@ struct LanguageOptionRow: View {
     }
 
     private var buttonText: String {
-        language == .english ? "Eng" : "Рус"
+        switch language {
+        case .english:
+            return "Eng"
+        case .russian:
+            return "Рус"
+        case .kazakh:
+            return "Қаз"
+        case .arabic:
+            return "عرب"
+        }
     }
 
     private var backgroundColor: Color {
@@ -163,7 +213,16 @@ struct LanguageOptionRow: View {
     }
 
     private var transliterationText: String {
-        language == .english ? "English transliteration" : "Русская транслитерация"
+        switch language {
+        case .english:
+            return "English transliteration"
+        case .russian:
+            return "Русская транслитерация"
+        case .kazakh:
+            return "Қазақша транслитерация"
+        case .arabic:
+            return "النسخ العربي"
+        }
     }
 
     private var checkboxStrokeColor: Color {

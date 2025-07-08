@@ -26,9 +26,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FA7A48442E03EBC200875337"
-               BuildableName = "KeyboardApp.appex"
-               BlueprintName = "KeyboardApp"
-               ReferencedContainer = "container:Keyboard.xcodeproj">
+               BuildableName = "MuslimKeyboardApp.appex"
+               BlueprintName = "MuslimKeyboardApp"
+               ReferencedContainer = "container:MuslimKeyboard.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -40,9 +40,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FA7A48322E03EB0500875337"
-               BuildableName = "Keyboard.app"
-               BlueprintName = "Keyboard"
-               ReferencedContainer = "container:Keyboard.xcodeproj">
+               BuildableName = "MuslimKeyboard.app"
+               BlueprintName = "MuslimKeyboard"
+               ReferencedContainer = "container:MuslimKeyboard.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -75,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FA7A48322E03EB0500875337"
-            BuildableName = "Keyboard.app"
-            BlueprintName = "Keyboard"
-            ReferencedContainer = "container:Keyboard.xcodeproj">
+            BuildableName = "MuslimKeyboard.app"
+            BlueprintName = "MuslimKeyboard"
+            ReferencedContainer = "container:MuslimKeyboard.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </LaunchAction>
@@ -94,9 +94,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FA7A48322E03EB0500875337"
-            BuildableName = "Keyboard.app"
-            BlueprintName = "Keyboard"
-            ReferencedContainer = "container:Keyboard.xcodeproj">
+            BuildableName = "MuslimKeyboard.app"
+            BlueprintName = "MuslimKeyboard"
+            ReferencedContainer = "container:MuslimKeyboard.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

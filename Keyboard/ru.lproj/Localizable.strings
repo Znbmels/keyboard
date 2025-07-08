@@ -34,6 +34,7 @@
 "button_done" = "Готово";
 "button_skip" = "Пропустить";
 "button_continue" = "Продолжить";
+"close" = "Закрыть";
 
 // MARK: - Tab Bar
 "tab_home" = "Главная";
@@ -65,12 +66,20 @@
 // MARK: - Settings
 "settings_title" = "Настройки";
 "settings_language" = "Язык";
+"settings_change_language" = "Изменить язык";
 "settings_about" = "О приложении";
 "settings_version" = "Версия";
 "settings_support" = "Поддержка";
 "settings_privacy" = "Политика конфиденциальности";
 "settings_terms" = "Условия использования";
+"appearance_settings" = "Внешний вид";
+"keyboard_color_title" = "Цвет клавиатуры";
+"content_settings" = "Содержимое";
 "settings_change_language" = "Изменить язык";
+"keyboard_settings" = "Настройки клавиатуры";
+"content_settings" = "Настройки контента";
+"select_phrases_title" = "Выбрать исламские фразы";
+"select_duas_title" = "Выбрать дуа";
 
 // MARK: - Islamic Phrases
 "islamic_phrases_title" = "Исламские фразы";
@@ -101,6 +110,12 @@
 "phrase_maa_salama" = "Маа саляма";
 "phrase_ya_allah" = "Я Аллах";
 
+// Islamic Symbols and Honorifics
+"phrase_sallallahu_alayhi_wa_sallam" = "Мир и благословение Аллаха да будут над ним";
+"phrase_alayhi_salam" = "Мир да будет над ним";
+"phrase_radiyallahu_anhum" = "Пусть Аллах будет доволен ими";
+"phrase_subhanahu_wa_taala" = "Пречист и Возвышен Он";
+
 // MARK: - General
 "ok" = "ОК";
 "cancel" = "Отмена";
@@ -112,4 +127,112 @@
 "keyboard_settings" = "Настройки клавиатуры";
 "keyboard_languages_title" = "Языки клавиатуры";
 "keyboard_languages_subtitle" = "Выберите языки для отображения в клавиатуре";
+"keyboard_arabic_text_title" = "Язык для арабского текста";
+"keyboard_arabic_text_subtitle" = "Выберите язык, который будет вставлять арабский текст";
+"keyboard_arabic_dua_text_title" = "Язык для арабских дуа";
+"keyboard_arabic_dua_text_subtitle" = "Выберите язык, который будет вставлять арабские дуа (только арабский текст)";
 "save_selection" = "Сохранить выбор";
+
+// MARK: - Arabic Language Selection
+"arabic_language_selection_title" = "Настройки арабского текста";
+"arabic_language_selection_subtitle" = "Выберите язык, который будет вставлять арабский текст вместо транслитерации";
+"arabic_disabled" = "Отключено";
+"arabic_disabled_description" = "Все языки будут вставлять транслитерацию";
+"arabic_english_description" = "Английский будет вставлять арабский текст";
+"arabic_russian_description" = "Русский будет вставлять арабский текст";
+"arabic_kazakh_description" = "Казахский будет вставлять арабский текст";
+"arabic_arabic_description" = "Арабский будет вставлять арабский текст";
+
+// MARK: - Arabic Dua Language Selection
+"arabic_dua_language_selection_title" = "Настройки арабских дуа";
+"arabic_dua_language_selection_description" = "Выберите язык, который будет вставлять арабские дуа (только арабский текст)";
+"arabic_dua_disabled_description" = "Все языки будут вставлять только перевод";
+"arabic_dua_english_description" = "Английский будет вставлять арабские дуа (только арабский текст)";
+"arabic_dua_russian_description" = "Русский будет вставлять арабские дуа (только арабский текст)";
+"arabic_dua_kazakh_description" = "Казахский будет вставлять арабские дуа (только арабский текст)";
+"arabic_dua_arabic_description" = "Арабский будет вставлять арабские дуа (только арабский текст)";
+
+// MARK: - Arabic Display Mode
+"arabic_display_arabic" = "Арабский текст";
+"arabic_display_english" = "Английский перевод";
+"arabic_display_mode_title" = "Режим отображения арабского";
+"arabic_display_mode_subtitle" = "Выберите, как арабский язык отображает контент";
+"arabic_display_arabic_description" = "Показывать арабский текст и транслитерацию";
+"arabic_display_english_description" = "Показывать английский перевод вместо арабского";
+
+// MARK: - Phrase Details
+"transliteration" = "Транслитерация";
+"meaning" = "Значение";
+"when_to_use" = "Когда использовать";
+
+// MARK: - Keyboard Preview
+"keyboard_preview_title" = "Предварительный просмотр клавиатуры";
+"keyboard_preview_description" = "Посмотрите, как работает клавиатура Muslim AI в реальных разговорах. Нажимайте на исламские фразы, чтобы вставить их в сообщения.";
+
+// MARK: - Short Duas
+"short_duas_title" = "Короткие дуа";
+"short_duas_subtitle" = "Быстрые молитвы для ежедневного общения";
+"search_duas" = "Поиск дуа...";
+
+// MARK: - Dua Details
+"dua_arabic" = "АРАБСКИЙ";
+"translation" = "Перевод";
+"dua_translation" = "ПЕРЕВОД";
+"dua_usage" = "ИСПОЛЬЗОВАНИЕ";
+"when_to_use" = "Когда использовать";
+"copy_dua" = "Копировать дуа";
+"copy_for_chat" = "Копировать для чата";
+"add_to_keyboard" = "Добавить в клавиатуру";
+"remove_from_keyboard" = "Убрать из клавиатуры";
+"close" = "Закрыть";
+"home" = "Домой";
+
+// MARK: - Dua Selection
+"select_duas_title" = "Выбрать дуа для клавиатуры";
+"select_duas_subtitle" = "Выберите, какие дуа будут отображаться в клавиатуре";
+"selected_count" = "Выбрано";
+
+// MARK: - Keyboard Colors
+"keyboard_colors_title" = "Цвета клавиатуры";
+"keyboard_colors_subtitle" = "Выберите предпочитаемый цвет для кнопок клавиатуры";
+"save_color_selection" = "Сохранить выбор";
+"color_saved_successfully" = "Цвет успешно сохранён!";
+"color_islamic_green" = "Исламский зелёный";
+"color_ocean_blue" = "Океанский синий";
+"color_royal_purple" = "Королевский фиолетовый";
+"color_golden_amber" = "Золотой янтарь";
+"color_elegant_gray" = "Элегантный серый";
+"color_pure_white" = "Чистый белый";
+"color_soft_pink" = "Нежный розовый";
+"color_deep_teal" = "Глубокий бирюзовый";
+"color_warm_orange" = "Тёплый оранжевый";
+
+// MARK: - Support Section
+"support_title" = "Поддержка";
+"support_subtitle" = "Я создаю Muslim AI Keyboard - потому что хочу, чтобы мусульмане общались комфортнее в чате.";
+"support_project_title" = "Поддержите проект:";
+"support_share_app" = "Поделиться приложением";
+"support_share_subtitle" = "Расскажите друзьям о Muslim Keyboard";
+"support_rate_app" = "Оценить приложение";
+"support_rate_subtitle" = "Если вам нравится - поставьте звезду";
+"support_social_title" = "Наши соцсети:";
+"support_instagram" = "Instagram";
+"support_twitter" = "X / Twitter";
+"support_telegram" = "Telegram";
+"support_email" = "Почта";
+"support_heart_title" = "Небольшая просьба от сердца:";
+"support_heart_message" = "Я создаю что-то очень простое, но нужное Умме.\nВаша поддержка - это часть этого пути.\nСделайте дуа, расскажите другим, поставьте лайк.\nДаже одна загрузка - это садака джария, ИншаАллах.";
+
+// MARK: - Troubleshooting
+"troubleshooting_title" = "Устранение неполадок";
+"keyboard_not_visible_title" = "Клавиатура не видна в настройках";
+"keyboard_not_visible_description" = "Если вы не можете найти клавиатуру в настройках iOS:";
+"troubleshooting_step1" = "Убедитесь, что на устройстве iOS 17.0 или новее";
+"troubleshooting_step2" = "Перейдите в Настройки > Основные > Клавиатура > Клавиатуры";
+"troubleshooting_step3" = "Нажмите 'Добавить клавиатуру...'";
+"troubleshooting_step4" = "Найдите 'Muslim AI Keyboard' в списке";
+"keyboard_not_working_title" = "Клавиатура работает неправильно";
+"keyboard_not_working_description" = "Если клавиатура появляется, но не работает:";
+"troubleshooting_restart_step1" = "Полностью перезагрузите устройство";
+"troubleshooting_restart_step2" = "Удалите и заново добавьте клавиатуру в настройках";
+"troubleshooting_restart_step3" = "Включите 'Разрешить полный доступ' при необходимости";
