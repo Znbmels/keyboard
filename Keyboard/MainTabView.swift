@@ -21,7 +21,7 @@ struct MainTabView: View {
                 }
                 .tag(0)
 
-            // Keyboard Tab
+            // Keyboard Tab when is select 
             KeyboardInstructionsView()
                 .tabItem {
                     Image(systemName: "keyboard.fill")
@@ -37,6 +37,7 @@ struct MainTabView: View {
                 }
                 .tag(2)
         }
+        .environment(\.layoutDirection, .leftToRight)
         .accentColor(.islamicGreen)
         .preferredColorScheme(.dark)
         .environmentLanguage(languageManager.currentLanguage)

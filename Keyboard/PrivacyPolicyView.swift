@@ -45,6 +45,7 @@ struct PrivacyPolicyView: View {
                 }
             }
         }
+        .environment(\.layoutDirection, .leftToRight)
         .environmentLanguage(languageManager.currentLanguage)
     }
     

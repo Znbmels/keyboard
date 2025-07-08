@@ -117,6 +117,7 @@ struct ArabicDuaLanguageSelectionView: View {
                 }
             }
         }
+        .environment(\.layoutDirection, .leftToRight)
         .environmentLanguage(languageManager.currentLanguage)
     }
 }

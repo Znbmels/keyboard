@@ -91,6 +91,7 @@ struct AppCoordinatorView: View {
                 }
             }
         }
+        .environment(\.layoutDirection, .leftToRight)
         .environmentLanguage(languageManager.currentLanguage)
         .animation(.easeInOut(duration: 0.5), value: coordinator.currentState)
     }

@@ -79,6 +79,7 @@ struct LanguageSelectionView: View {
                 .padding(.bottom, 40)
             }
         }
+        .environment(\.layoutDirection, .leftToRight)
         .environmentLanguage(selectedLanguage)
     }
 }

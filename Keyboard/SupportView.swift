@@ -162,6 +162,7 @@ struct SupportView: View {
                 }
             }
         }
+        .environment(\.layoutDirection, .leftToRight)
         .environmentLanguage(languageManager.currentLanguage)
     }
     

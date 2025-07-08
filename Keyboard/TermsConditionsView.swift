@@ -46,6 +46,7 @@ struct TermsConditionsView: View {
                 }
             }
         }
+        .environment(\.layoutDirection, .leftToRight)
         .environmentLanguage(languageManager.currentLanguage)
     }
     

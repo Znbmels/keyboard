@@ -20,7 +20,7 @@ struct SettingsView: View {
             ZStack {
                 Color.black
                     .ignoresSafeArea()
-                
+
                 ScrollView {
                     VStack(spacing: 20) {
                         // Language Section
@@ -173,6 +173,7 @@ struct SettingsView: View {
                 }
             }
         }
+        .environment(\.layoutDirection, .leftToRight)
         .environmentLanguage(languageManager.currentLanguage)
         .sheet(isPresented: $showLanguageSelection) {
             LanguageSelectionView {

@@ -726,34 +726,38 @@ class KeyboardViewController: UIInputViewController {
             button.setTitle("#+=", for: .normal)
             button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         case .letter("ABC"):
-            // Кнопка переключения на следующую клавиатуру iOS или режим
-            let buttonTitle: String
-            let multipleKeyboards = hasMultipleKeyboards()
-            if multipleKeyboards {
-                // Есть другие клавиатуры - показываем стандартную иконку
-                buttonTitle = "🌐"
-            } else {
-                // Единственная клавиатура - показываем соответствующий текст
-                if currentMode == .islamic {
-                    buttonTitle = "ABC"  // В исламском режиме показываем ABC для переключения на буквы
-                } else {
-                    buttonTitle = "☪️"   // В буквенном режиме показываем исламскую иконку
+            // Кнопка переключения на следующую клавиатуру iOS - всегда показываем логотип
+            var logoImage: UIImage?
+
+            // Сначала пробуем из KeyboardApp Assets
+            logoImage = UIImage(named: "IOSKeyboardIcon")
+
+            // Если не найдено, пробуем из основного bundle
+            if logoImage == nil {
+                if let mainBundle = Bundle(identifier: "school.nfactorial.muslim.keyboard") {
+                    logoImage = UIImage(named: "IOSKeyboardIcon", in: mainBundle, compatibleWith: nil)
                 }
             }
-            button.setTitle(buttonTitle, for: .normal)
 
-            // В исламской клавиатуре используем цвет темы и меньший шрифт
+            if let image = logoImage {
+                let resizedImage = image.resized(to: CGSize(width: 24, height: 24))
+                button.setImage(resizedImage, for: .normal)
+                button.setTitle(nil, for: .normal)
+                button.imageView?.contentMode = .scaleAspectFit
+                button.imageView?.tintColor = nil
+                print("✅ ABC button configured with logo image")
+            } else {
+                // Fallback - показываем глобус если логотип не найден
+                button.setTitle("🌐", for: .normal)
+                button.setImage(nil, for: .normal)
+                print("⚠️ ABC button fallback to globe icon - logo not found")
+            }
+
+            // Настраиваем цвет фона в зависимости от режима
             if currentMode == .islamic {
                 button.backgroundColor = colorManager.keyboardButtonColor
-                button.setTitleColor(colorManager.keyboardButtonTextColor, for: .normal)
-                button.titleLabel?.font = UIFont.systemFont(ofSize: multipleKeyboards ? 16 : 12, weight: .medium)
-                print("🔧 ABC button configured for Islamic mode with title: \(buttonTitle)")
             } else {
-                // В обычных режимах используем стандартный серый цвет
                 button.backgroundColor = UIColor(red: 0.68, green: 0.71, blue: 0.74, alpha: 1.0)
-                button.setTitleColor(UIColor.black, for: .normal)
-                button.titleLabel?.font = UIFont.systemFont(ofSize: multipleKeyboards ? 16 : 16, weight: .regular)
-                print("🔧 ABC button configured for regular mode with title: \(buttonTitle)")
             }
         case .globe:
             // В исламской клавиатуре показываем текущий язык

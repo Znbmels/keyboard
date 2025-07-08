@@ -10,7 +10,7 @@ import SwiftUI
 struct ArabicDisplayModeSelectionView: View {
     @StateObject private var languageManager = LanguageManager.shared
     @State private var selectedMode: ArabicDisplayMode
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) private var dismiss
     
     let onModeSelected: (ArabicDisplayMode) -> Void
     
@@ -65,7 +65,7 @@ struct ArabicDisplayModeSelectionView: View {
                     // Save Button
                     Button(action: {
                         onModeSelected(selectedMode)
-                        presentationMode.wrappedValue.dismiss()
+                        dismiss()
                     }) {
                         HStack(spacing: 12) {
                             Text("save_selection")
@@ -92,7 +92,7 @@ struct ArabicDisplayModeSelectionView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("cancel") {
-                        presentationMode.wrappedValue.dismiss()
+                        dismiss()
                     }
                     .foregroundColor(.islamicGreen)
                 }
@@ -104,6 +104,7 @@ struct ArabicDisplayModeSelectionView: View {
                 }
             }
         }
+        .environment(\.layoutDirection, .leftToRight)
         .environmentLanguage(languageManager.currentLanguage)
     }
 }

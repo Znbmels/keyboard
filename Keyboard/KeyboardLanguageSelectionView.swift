@@ -135,6 +135,7 @@ struct KeyboardLanguageSelectionView: View {
                 }
             }
         }
+        .environment(\.layoutDirection, .leftToRight)
         .onAppear {
             loadCurrentSelection()
         }

@@ -125,6 +125,7 @@ struct ArabicLanguageSelectionView: View {
                 }
             }
         }
+        .environment(\.layoutDirection, .leftToRight)
         .environmentLanguage(languageManager.currentLanguage)
     }
 }
