@@ -425,7 +425,7 @@ final class StickerAPIService: ObservableObject {
 
     /// Отслеживает задачу до завершения с периодическими обновлениями прогресса
     private func pollTaskUntilComplete(taskId: String, progressCallback: @escaping (TaskStatusResponse) -> Void) async throws -> (imageData: Data, analysis: StickerAnalysis) {
-        let maxAttempts = 120 // 2 минуты при проверке каждую секунду
+        let maxAttempts = 180 // 3 минуты при проверке каждую секунду (увеличено с 120)
         var attempts = 0
         var consecutiveErrors = 0
         let maxConsecutiveErrors = 5
@@ -436,6 +436,7 @@ final class StickerAPIService: ObservableObject {
                 consecutiveErrors = 0 // Сбрасываем счетчик ошибок при успешном запросе
 
                 // Вызываем callback для обновления UI
+                print("🔄 Calling progress callback with status: \(status.status.rawValue)")
                 progressCallback(status)
 
                 print("📊 Task status check (attempt \(attempts + 1)/\(maxAttempts)):")
@@ -448,6 +449,8 @@ final class StickerAPIService: ObservableObject {
                 switch status.status {
                 case .completed:
                     print("✅ Task completed! Getting final result...")
+                    print("🔄 Final progress callback before completion...")
+                    progressCallback(status) // Убеждаемся, что UI получил финальный статус
                     // Получаем результат
                     let result = try await getTaskResult(taskId: taskId)
                     print("📦 Final result obtained, processing...")
@@ -483,6 +486,8 @@ final class StickerAPIService: ObservableObject {
             }
         }
 
+        print("❌ Polling timeout reached after \(maxAttempts) attempts")
+        print("⏰ Task \(taskId) did not complete within \(maxAttempts) seconds")
         throw APIError.timeout
     }
 
