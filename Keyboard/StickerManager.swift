@@ -262,12 +262,23 @@ class StickerManager: ObservableObject {
     /// Синхронизирует стикеры с сервером
     func syncWithServer() async {
         print("🔄 Starting server sync...")
+        print("🌐 API Base URL: \(StickerAPIService().baseURL)")
 
         do {
             let apiService = StickerAPIService()
+            print("🔗 Calling syncUserStickers endpoint...")
             let serverStickers = try await apiService.syncUserStickers()
 
             print("📥 Downloaded \(serverStickers.count) stickers from server")
+
+            // Log each sticker
+            for (index, sticker) in serverStickers.enumerated() {
+                print("📋 Sticker \(index + 1):")
+                print("   - ID: \(sticker.id)")
+                print("   - Prompt: \(sticker.prompt)")
+                print("   - Image URL: \(sticker.imageUrl)")
+                print("   - Content Type: \(sticker.contentType)")
+            }
 
             // Конвертируем серверные стикеры в локальные
             var newStickers: [SavedSticker] = []
@@ -275,10 +286,13 @@ class StickerManager: ObservableObject {
             for serverSticker in serverStickers {
                 // Проверяем, есть ли уже такой стикер локально
                 if !savedStickers.contains(where: { $0.id == serverSticker.id }) {
-                    print("📥 Downloading new sticker: \(serverSticker.prompt)")
+                    print("📥 Processing new sticker: \(serverSticker.prompt)")
+                    print("🔗 Image URL: \(serverSticker.imageUrl)")
 
                     // Загружаем изображение
+                    print("⬇️ Starting image download...")
                     if let imageData = await downloadImageData(from: serverSticker.imageUrl) {
+                        print("✅ Image downloaded successfully: \(imageData.count) bytes")
                         let analysis = serverSticker.analysis.map { serverAnalysis in
                             StickerAnalysisData(
                                 contentType: serverAnalysis.contentType,
@@ -300,7 +314,12 @@ class StickerManager: ObservableObject {
                         )
 
                         newStickers.append(localSticker)
+                        print("✅ Sticker added to newStickers array")
+                    } else {
+                        print("❌ Failed to download image for sticker: \(serverSticker.prompt)")
                     }
+                } else {
+                    print("ℹ️ Sticker already exists locally: \(serverSticker.prompt)")
                 }
             }
 

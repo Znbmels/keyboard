@@ -19,6 +19,7 @@ struct StickerGeneratorView: View {
     @State private var showSaveSuccess = false
     @State private var isTestingConnection = false
     @State private var connectionTestResult: String?
+    @State private var isSyncing = false
 
     // Async generation progress tracking
     @State private var generationProgress: Int = 0
@@ -207,6 +208,29 @@ struct StickerGeneratorView: View {
                             )
                         }
                         .disabled(isTestingConnection || isGenerating)
+
+                        // Sync Stickers Button
+                        Button(action: syncStickers) {
+                            HStack {
+                                if isSyncing {
+                                    ProgressView()
+                                        .scaleEffect(0.8)
+                                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                                    Text("Syncing...")
+                                } else {
+                                    Image(systemName: "arrow.clockwise")
+                                    Text("Sync Stickers")
+                                }
+                            }
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 12)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(isSyncing ? Color.gray : Color.green)
+                            )
+                        }
+                        .disabled(isSyncing || isGenerating)
                     }
                     .padding(.horizontal, 20)
 
@@ -661,6 +685,28 @@ struct StickerGeneratorView: View {
             DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
                 connectionTestResult = nil
             }
+        }
+    }
+
+    private func syncStickers() {
+        Task { @MainActor in
+            isSyncing = true
+            errorMessage = nil
+            successMessage = nil
+
+            print("🔄 Manual sticker sync started...")
+
+            await stickerManager.syncWithServer()
+
+            isSyncing = false
+            successMessage = "✅ Стикеры синхронизированы!"
+
+            // Clear success message after 3 seconds
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                successMessage = nil
+            }
+
+            print("✅ Manual sticker sync completed")
         }
     }
 

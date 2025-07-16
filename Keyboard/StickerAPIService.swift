@@ -1034,11 +1034,19 @@ final class StickerAPIService: ObservableObject {
     /// Получает все стикеры пользователя из Supabase
     func syncUserStickers(username: String = "ios_user") async throws -> [StickerFromServer] {
         print("🔄 Syncing stickers for user: \(username)")
+        print("🔗 Full URL: \(baseURL)/user-stickers/\(username)")
 
-        let response: StickerSyncResponse = try await performGetRequest(endpoint: "/user-stickers/\(username)")
+        do {
+            let response: StickerSyncResponse = try await performGetRequest(endpoint: "/user-stickers/\(username)")
 
-        print("✅ Synced \(response.stickers.count) stickers from server")
-        return response.stickers
+            print("✅ Synced \(response.stickers.count) stickers from server")
+            print("📊 Total count from server: \(response.totalCount)")
+
+            return response.stickers
+        } catch {
+            print("❌ Failed to sync stickers: \(error)")
+            throw error
+        }
     }
 
     // MARK: - Helper Methods
