@@ -318,5 +318,5 @@
 "troubleshooting_restart_step3" = "فعّل 'السماح بالوصول الكامل' إذا لزم الأمر";
 
 // MARK: - Stickers Settings
-"stickers_show_button_title" = "إظهار الملصقات";
-"stickers_show_button_subtitle" = "عرض زر الملصقات في لوحة المفاتيح";
+"stickers_show_button_title" = "إظهار الملصقات في لوحة المفاتيح";
+"stickers_show_button_subtitle" = "تفعيل زر الملصقات والوظائف في لوحة المفاتيح";

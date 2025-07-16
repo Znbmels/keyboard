@@ -318,5 +318,5 @@
 "troubleshooting_restart_step3" = "Қажет болса 'Толық қол жетімділікті рұқсат ету' опциясын қосыңыз";
 
 // MARK: - Stickers Settings
-"stickers_show_button_title" = "Стикерлерді көрсету";
-"stickers_show_button_subtitle" = "Пернетақтада стикерлер түймесін көрсету";
+"stickers_show_button_title" = "Пернетақтада стикерлерді көрсету";
+"stickers_show_button_subtitle" = "Пернетақтада стикерлер түймесі мен функционалын қосу";

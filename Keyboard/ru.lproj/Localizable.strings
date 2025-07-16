@@ -318,5 +318,5 @@
 "troubleshooting_restart_step3" = "Включите 'Разрешить полный доступ' при необходимости";
 
 // MARK: - Stickers Settings
-"stickers_show_button_title" = "Показать стикеры";
-"stickers_show_button_subtitle" = "Отображать кнопку стикеров в клавиатуре";
+"stickers_show_button_title" = "Показать стикеры в клавиатуре";
+"stickers_show_button_subtitle" = "Включить кнопку стикеров и функционал в клавиатуре";

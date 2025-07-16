@@ -108,7 +108,7 @@ struct SettingsView: View {
 
                             // Stickers toggle setting
                             HStack {
-                                Image(systemName: "face.smiling.fill")
+                                Image(systemName: "photo.on.rectangle.angled")
                                     .foregroundColor(.islamicGreen)
                                     .font(.title2)
                                     .frame(width: 30)
@@ -232,14 +232,14 @@ struct SettingsView: View {
     private func loadStickersSetting() {
         // Используем App Groups для синхронизации
         let userDefaults = UserDefaults(suiteName: "group.school.nfactorial.muslim.keyboard") ?? UserDefaults.standard
-        showStickersInKeyboard = userDefaults.object(forKey: "show_stickers_in_keyboard") as? Bool ?? true
+        showStickersInKeyboard = userDefaults.object(forKey: "stickers_enabled_in_keyboard") as? Bool ?? true
         print("🎨 Settings: Loaded stickers setting: \(showStickersInKeyboard)")
     }
 
     private func saveStickersSetting(_ enabled: Bool) {
         // Используем App Groups для синхронизации
         let userDefaults = UserDefaults(suiteName: "group.school.nfactorial.muslim.keyboard") ?? UserDefaults.standard
-        userDefaults.set(enabled, forKey: "show_stickers_in_keyboard")
+        userDefaults.set(enabled, forKey: "stickers_enabled_in_keyboard")
         userDefaults.synchronize()
 
         // Отправляем уведомление об изменении настроек

@@ -425,7 +425,7 @@ final class StickerAPIService: ObservableObject {
 
     /// Отслеживает задачу до завершения с периодическими обновлениями прогресса
     private func pollTaskUntilComplete(taskId: String, progressCallback: @escaping (TaskStatusResponse) -> Void) async throws -> (imageData: Data, analysis: StickerAnalysis) {
-        let maxAttempts = 180 // 3 минуты при проверке каждую секунду (увеличено с 120)
+        let maxAttempts = 120 // 2 минуты при проверке каждую секунду
         var attempts = 0
         var consecutiveErrors = 0
         let maxConsecutiveErrors = 5
@@ -436,7 +436,6 @@ final class StickerAPIService: ObservableObject {
                 consecutiveErrors = 0 // Сбрасываем счетчик ошибок при успешном запросе
 
                 // Вызываем callback для обновления UI
-                print("🔄 Calling progress callback with status: \(status.status.rawValue)")
                 progressCallback(status)
 
                 print("📊 Task status check (attempt \(attempts + 1)/\(maxAttempts)):")
@@ -449,8 +448,6 @@ final class StickerAPIService: ObservableObject {
                 switch status.status {
                 case .completed:
                     print("✅ Task completed! Getting final result...")
-                    print("🔄 Final progress callback before completion...")
-                    progressCallback(status) // Убеждаемся, что UI получил финальный статус
                     // Получаем результат
                     let result = try await getTaskResult(taskId: taskId)
                     print("📦 Final result obtained, processing...")
@@ -486,8 +483,6 @@ final class StickerAPIService: ObservableObject {
             }
         }
 
-        print("❌ Polling timeout reached after \(maxAttempts) attempts")
-        print("⏰ Task \(taskId) did not complete within \(maxAttempts) seconds")
         throw APIError.timeout
     }
 
@@ -934,52 +929,28 @@ final class StickerAPIService: ObservableObject {
     }
     
     private func downloadImage(from urlString: String) async throws -> Data {
-        print("🔍 Starting image download from: \(urlString)")
-
         guard let url = URL(string: urlString) else {
-            print("❌ Invalid image URL: \(urlString)")
             throw APIError.invalidImageURL
         }
-
-        print("✅ URL is valid, starting download...")
-
+        
         do {
             let (data, response) = try await session.data(from: url)
-
-            print("📥 Download response received:")
-            print("   - Data size: \(data.count) bytes")
-            print("   - Response type: \(type(of: response))")
-
-            guard let httpResponse = response as? HTTPURLResponse else {
-                print("❌ Response is not HTTPURLResponse")
+            
+            guard let httpResponse = response as? HTTPURLResponse,
+                  httpResponse.statusCode == 200 else {
                 throw APIError.imageDownloadFailed
             }
-
-            print("   - HTTP Status Code: \(httpResponse.statusCode)")
-            print("   - Content-Type: \(httpResponse.value(forHTTPHeaderField: "Content-Type") ?? "unknown")")
-
-            guard httpResponse.statusCode == 200 else {
-                print("❌ HTTP error: \(httpResponse.statusCode)")
-                throw APIError.imageDownloadFailed
-            }
-
+            
             // Проверяем, что это действительно изображение
             guard UIImage(data: data) != nil else {
-                print("❌ Downloaded data is not a valid image")
-                print("   - First 100 bytes: \(data.prefix(100))")
                 throw APIError.invalidImageData
             }
-
-            print("✅ Image downloaded and validated: \(data.count) bytes")
+            
+            print("📸 Image downloaded: \(data.count) bytes")
             return data
-
+            
         } catch {
-            print("❌ Image download failed with error: \(error)")
-            if let apiError = error as? APIError {
-                throw apiError
-            } else {
-                throw APIError.imageDownloadFailed
-            }
+            throw APIError.imageDownloadFailed
         }
     }
 

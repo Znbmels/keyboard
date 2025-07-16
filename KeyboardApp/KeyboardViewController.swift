@@ -549,7 +549,7 @@ class KeyboardViewController: UIInputViewController {
 
         // Проверяем настройку отображения стикеров
         let userDefaults = UserDefaults(suiteName: "group.school.nfactorial.muslim.keyboard") ?? UserDefaults.standard
-        let shouldShowStickers = userDefaults.object(forKey: "show_stickers_in_keyboard") as? Bool ?? true
+        let shouldShowStickers = userDefaults.object(forKey: "stickers_enabled_in_keyboard") as? Bool ?? true
         var stickersButton: UIButton?
 
         if shouldShowStickers {

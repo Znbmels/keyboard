@@ -57,6 +57,13 @@ class StickerManager: ObservableObject {
     
     /// Сохранить новый стикер
     func saveSticker(prompt: String, contentType: String, imageData: Data, analysis: StickerAnalysisData? = nil) {
+        print("🎨 === STICKER MANAGER SAVE PROCESS STARTED ===")
+        print("📝 Prompt: '\(prompt)'")
+        print("📊 Content Type: '\(contentType)'")
+        print("📦 Image Data Size: \(imageData.count) bytes")
+        print("🔍 Analysis: \(analysis != nil ? "present" : "nil")")
+        print("📊 Current stickers count before save: \(savedStickers.count)")
+
         let sticker = SavedSticker(
             prompt: prompt,
             contentType: contentType,
@@ -64,20 +71,19 @@ class StickerManager: ObservableObject {
             analysis: analysis
         )
 
-        print("🎨 Saving sticker: '\(prompt)'")
-        print("🎨 Current stickers count before save: \(savedStickers.count)")
-        print("🎨 Image data size: \(imageData.count) bytes")
-        print("🎨 Content type: \(contentType)")
-        print("🎨 Analysis: \(analysis != nil ? "present" : "nil")")
+        print("🆔 Generated sticker ID: \(sticker.id)")
+        print("⏰ Created at: \(sticker.createdAt)")
 
         // Verify image data is valid before saving
         if imageData.isEmpty {
-            print("❌ ERROR: Cannot save sticker - image data is empty!")
+            print("❌ CRITICAL ERROR: Cannot save sticker - image data is empty!")
+            print("🎨 === STICKER MANAGER SAVE PROCESS FAILED ===")
             return
         }
 
         if UIImage(data: imageData) == nil {
-            print("❌ ERROR: Cannot save sticker - image data is corrupted!")
+            print("❌ CRITICAL ERROR: Cannot save sticker - image data is corrupted!")
+            print("🎨 === STICKER MANAGER SAVE PROCESS FAILED ===")
             return
         }
 
@@ -85,35 +91,44 @@ class StickerManager: ObservableObject {
 
         // Ensure UI updates happen on main thread
         DispatchQueue.main.async {
+            print("🔄 Executing on main thread...")
             print("🎨 Adding sticker to savedStickers array...")
-            print("🎨 Sticker ID: \(sticker.id)")
+            print("🎨 Array count before insert: \(self.savedStickers.count)")
 
             // Добавляем в начало списка (последние сверху)
             self.savedStickers.insert(sticker, at: 0)
             print("🎨 Sticker inserted at index 0")
+            print("🎨 Array count after insert: \(self.savedStickers.count)")
 
             // Ограничиваем количество стикеров
             if self.savedStickers.count > self.maxStickers {
+                let oldCount = self.savedStickers.count
                 self.savedStickers = Array(self.savedStickers.prefix(self.maxStickers))
-                print("🎨 Trimmed to max \(self.maxStickers) stickers")
+                print("🎨 Trimmed from \(oldCount) to max \(self.maxStickers) stickers")
             }
 
-            print("🎨 Current stickers count after insert: \(self.savedStickers.count)")
+            print("🎨 Final array count: \(self.savedStickers.count)")
             print("🎨 First sticker prompt: '\(self.savedStickers.first?.prompt ?? "none")'")
-            print("🎨 UI should update now with \(self.savedStickers.count) stickers")
+            print("🎨 First sticker ID: '\(self.savedStickers.first?.id ?? "none")'")
 
             // Force UI refresh by triggering objectWillChange
+            print("🔄 Triggering UI update...")
             self.objectWillChange.send()
+            print("✅ UI update triggered")
         }
 
+        // Сохраняем в UserDefaults
+        print("💾 Saving to UserDefaults...")
         saveStickers()
 
         // Автоматически добавляем новый стикер в выбранные для клавиатуры
+        print("🎯 Adding sticker to keyboard selection...")
         addStickerToKeyboardSelection(sticker.id)
 
-        print("🎨 Стикер сохранен: '\(prompt)' (\(formatFileSize(imageData.count)))")
-        print("🎨 Final stickers count: \(savedStickers.count)")
-        print("🎨 Sticker automatically added to keyboard selection")
+        print("🎨 === STICKER MANAGER SAVE PROCESS COMPLETED ===")
+        print("✅ Стикер сохранен: '\(prompt)' (\(formatFileSize(imageData.count)))")
+        print("📊 Final stickers count: \(savedStickers.count)")
+        print("🎯 Sticker automatically added to keyboard selection")
     }
     
     /// Удалить стикер
@@ -171,13 +186,75 @@ class StickerManager: ObservableObject {
     func getStatistics() -> (count: Int, totalSize: String, types: [String: Int]) {
         let totalBytes = savedStickers.reduce(0) { $0 + $1.imageData.count }
         let totalSize = formatFileSize(totalBytes)
-        
+
         var types: [String: Int] = [:]
         for sticker in savedStickers {
             types[sticker.contentType, default: 0] += 1
         }
-        
+
         return (savedStickers.count, totalSize, types)
+    }
+
+    /// Проверить целостность библиотеки стикеров
+    func validateStickerLibrary() -> (isValid: Bool, issues: [String]) {
+        print("🔍 === VALIDATING STICKER LIBRARY ===")
+        var issues: [String] = []
+
+        // Проверяем, что данные в UserDefaults соответствуют массиву в памяти
+        if let data = userDefaults.data(forKey: stickersKey) {
+            do {
+                let savedStickersFromDefaults = try JSONDecoder().decode([SavedSticker].self, from: data)
+                if savedStickersFromDefaults.count != savedStickers.count {
+                    let issue = "Mismatch between memory (\(savedStickers.count)) and UserDefaults (\(savedStickersFromDefaults.count))"
+                    issues.append(issue)
+                    print("❌ \(issue)")
+                }
+
+                // Проверяем каждый стикер на валидность
+                for (index, sticker) in savedStickers.enumerated() {
+                    if sticker.imageData.isEmpty {
+                        let issue = "Sticker at index \(index) has empty image data"
+                        issues.append(issue)
+                        print("❌ \(issue)")
+                    }
+
+                    if UIImage(data: sticker.imageData) == nil {
+                        let issue = "Sticker at index \(index) has corrupted image data"
+                        issues.append(issue)
+                        print("❌ \(issue)")
+                    }
+
+                    if sticker.prompt.isEmpty {
+                        let issue = "Sticker at index \(index) has empty prompt"
+                        issues.append(issue)
+                        print("❌ \(issue)")
+                    }
+                }
+
+            } catch {
+                let issue = "Failed to decode stickers from UserDefaults: \(error)"
+                issues.append(issue)
+                print("❌ \(issue)")
+            }
+        } else {
+            if !savedStickers.isEmpty {
+                let issue = "No data in UserDefaults but \(savedStickers.count) stickers in memory"
+                issues.append(issue)
+                print("❌ \(issue)")
+            }
+        }
+
+        let isValid = issues.isEmpty
+        print("🔍 Library validation result: \(isValid ? "VALID" : "INVALID")")
+        if !isValid {
+            print("🔍 Issues found: \(issues.count)")
+            for issue in issues {
+                print("   - \(issue)")
+            }
+        }
+        print("🔍 === VALIDATION COMPLETED ===")
+
+        return (isValid, issues)
     }
     
     // MARK: - Private Methods
@@ -198,21 +275,50 @@ class StickerManager: ObservableObject {
     }
     
     private func saveStickers() {
-        print("💾 Attempting to save \(savedStickers.count) stickers to key '\(stickersKey)'")
+        print("💾 === USERDEFAULTS SAVE PROCESS STARTED ===")
+        print("📊 Attempting to save \(savedStickers.count) stickers")
+        print("🔑 UserDefaults key: '\(stickersKey)'")
+        print("🏢 UserDefaults suite: group.school.nfactorial.muslim.keyboard")
+
         do {
+            print("🔄 Encoding stickers to JSON...")
             let data = try JSONEncoder().encode(savedStickers)
+            print("📦 Encoded data size: \(data.count) bytes")
+
+            print("💾 Setting data in UserDefaults...")
             userDefaults.set(data, forKey: stickersKey)
-            userDefaults.synchronize()
-            print("💾 Стикеры сохранены: \(savedStickers.count)")
+
+            print("🔄 Synchronizing UserDefaults...")
+            let syncResult = userDefaults.synchronize()
+            print("🔄 Synchronize result: \(syncResult)")
+
+            print("✅ Стикеры сохранены: \(savedStickers.count)")
 
             // Проверяем, что данные действительно сохранились
+            print("🔍 Verifying save...")
             if let savedData = userDefaults.data(forKey: stickersKey) {
-                print("💾 Verification: Data saved successfully, size: \(savedData.count) bytes")
+                print("✅ Verification: Data saved successfully, size: \(savedData.count) bytes")
+
+                // Дополнительная проверка - пытаемся декодировать
+                do {
+                    let decodedStickers = try JSONDecoder().decode([SavedSticker].self, from: savedData)
+                    print("✅ Verification: Successfully decoded \(decodedStickers.count) stickers")
+                    if let firstSticker = decodedStickers.first {
+                        print("✅ Verification: First sticker prompt: '\(firstSticker.prompt)'")
+                    }
+                } catch {
+                    print("❌ Verification: Failed to decode saved data: \(error)")
+                }
             } else {
-                print("❌ Verification: No data found after save!")
+                print("❌ CRITICAL ERROR: No data found after save!")
             }
+
+            print("💾 === USERDEFAULTS SAVE PROCESS COMPLETED ===")
         } catch {
+            print("❌ === USERDEFAULTS SAVE PROCESS FAILED ===")
             print("❌ Ошибка сохранения стикеров: \(error)")
+            print("🔍 Error type: \(type(of: error))")
+            print("📄 Error description: \(error.localizedDescription)")
         }
     }
     

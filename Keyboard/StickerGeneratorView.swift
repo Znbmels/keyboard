@@ -25,6 +25,8 @@ struct StickerGeneratorView: View {
     @State private var currentStep: String = ""
     @State private var taskId: String?
     @State private var estimatedTimeRemaining: Int?
+    @State private var generationStartTime: Date?
+    @State private var elapsedTime: Int = 0
 
     private let apiService = StickerAPIService.shared
 
@@ -86,7 +88,7 @@ struct StickerGeneratorView: View {
                                     Image(systemName: "clock.arrow.circlepath")
                                         .foregroundColor(.blue)
                                         .font(.system(size: 12))
-                                    Text("Real-time progress tracking • ~30s generation time")
+                                    Text("Отслеживание в реальном времени • ~26-30с генерация")
                                         .font(.system(size: 11))
                                         .foregroundColor(.secondary)
                                     Spacer()
@@ -137,10 +139,16 @@ struct StickerGeneratorView: View {
 
                                             Spacer()
 
-                                            if let timeRemaining = estimatedTimeRemaining {
-                                                Text("~\(timeRemaining)s remaining")
+                                            HStack(spacing: 4) {
+                                                Text("\(elapsedTime)с")
                                                     .font(.system(size: 11))
                                                     .opacity(0.8)
+
+                                                if let timeRemaining = estimatedTimeRemaining, timeRemaining > 0 {
+                                                    Text("/ ~\(timeRemaining)с")
+                                                        .font(.system(size: 11))
+                                                        .opacity(0.6)
+                                                }
                                             }
                                         }
                                     }
@@ -344,6 +352,16 @@ struct StickerGeneratorView: View {
         }
         .onAppear {
             loadSelectedStickers()
+
+            // Проверяем целостность библиотеки стикеров
+            let validation = stickerManager.validateStickerLibrary()
+            if !validation.isValid {
+                print("⚠️ Sticker library validation failed with \(validation.issues.count) issues")
+                for issue in validation.issues {
+                    print("   - \(issue)")
+                }
+            }
+
             // Add demo stickers if empty
             if stickerManager.savedStickers.isEmpty {
                 stickerManager.addDemoStickers()
@@ -379,9 +397,15 @@ struct StickerGeneratorView: View {
             errorMessage = nil
             successMessage = nil
             generationProgress = 0
-            currentStep = "Initializing..."
+            currentStep = "Подготовка..."
             taskId = nil
             estimatedTimeRemaining = 30
+            generationStartTime = Date()
+            elapsedTime = 0
+
+            // Запускаем таймер для отслеживания времени
+            startElapsedTimeTimer()
+
             print("✅ Generation state initialized")
 
             // Проверяем подключение к API перед началом
@@ -391,12 +415,14 @@ struct StickerGeneratorView: View {
             if !isHealthy {
                 print("❌ API health check failed")
                 print("🔧 Setting error state...")
-                errorMessage = "Server is not available. Please try again later."
+                errorMessage = "Сервер недоступен. Попробуйте позже."
                 isGenerating = false
                 generationProgress = 0
                 currentStep = ""
                 taskId = nil
                 estimatedTimeRemaining = nil
+                generationStartTime = nil
+                elapsedTime = 0
                 print("❌ Generation aborted due to health check failure")
                 return
             }
@@ -420,7 +446,7 @@ struct StickerGeneratorView: View {
                             print("   - estimatedRemaining: \(status.estimatedRemaining ?? 0)s")
 
                             self.generationProgress = status.progress
-                            self.currentStep = status.currentStep
+                            self.currentStep = translateStepToUserFriendly(status.currentStep)
                             self.taskId = status.taskId
                             self.estimatedTimeRemaining = status.estimatedRemaining
 
@@ -437,9 +463,10 @@ struct StickerGeneratorView: View {
                 print("   - analysis.emotion: \(result.analysis.emotion)")
                 print("   - analysis.context: \(result.analysis.context)")
 
-                // Update UI to show completion
+                // Force UI update to show completion immediately
+                print("🔄 Forcing UI update to show completion...")
                 self.generationProgress = 100
-                self.currentStep = "Completed!"
+                self.currentStep = "Завершено! Сохранение..."
 
                 // Save sticker - convert StickerAnalysis to StickerAnalysisData
                 print("🔄 Converting analysis data...")
@@ -453,74 +480,87 @@ struct StickerGeneratorView: View {
                     hasUserColorRequest: false
                 )
 
-                print("💾 Saving sticker to database...")
-                print("🔍 Checking result data before save:")
-                print("   - imageData size: \(result.imageData.count) bytes")
-                print("   - imageData is empty: \(result.imageData.isEmpty)")
-                print("   - prompt: '\(promptText)'")
-                print("   - contentType: '\(result.analysis.contentType)'")
+                print("💾 === STARTING STICKER SAVE PROCESS ===")
+                print("📝 Prompt: '\(promptText)'")
+                print("📊 Content Type: '\(result.analysis.contentType)'")
+                print("📦 Image Data Size: \(result.imageData.count) bytes")
+                print("🔍 Analysis: \(analysisData)")
 
-                // Verify image data is valid
+                // Проверяем, что данные изображения валидны
                 if result.imageData.isEmpty {
-                    print("❌ ERROR: Image data is empty! Cannot save sticker.")
-                    DispatchQueue.main.async {
-                        errorMessage = "❌ Failed to save sticker: No image data received"
-                        isGenerating = false
-                        generationProgress = 0
-                        currentStep = ""
-                        taskId = nil
-                        estimatedTimeRemaining = nil
-                    }
-                    return
+                    print("❌ CRITICAL ERROR: Image data is empty!")
+                    throw APIError.decodingError(NSError(domain: "StickerError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Image data is empty"]))
                 }
 
-                // Try to create UIImage to verify data is valid
                 if UIImage(data: result.imageData) == nil {
-                    print("❌ ERROR: Image data is corrupted! Cannot create UIImage.")
-                    DispatchQueue.main.async {
-                        errorMessage = "❌ Failed to save sticker: Corrupted image data"
-                        isGenerating = false
-                        generationProgress = 0
-                        currentStep = ""
-                        taskId = nil
-                        estimatedTimeRemaining = nil
-                    }
-                    return
+                    print("❌ CRITICAL ERROR: Image data is corrupted!")
+                    throw APIError.decodingError(NSError(domain: "StickerError", code: 2, userInfo: [NSLocalizedDescriptionKey: "Image data is corrupted"]))
                 }
 
-                print("✅ Image data validation passed - proceeding with save")
+                print("✅ Image data validation passed")
 
+                // Сохраняем количество стикеров до сохранения
+                let stickersCountBefore = stickerManager.savedStickers.count
+                print("📊 Stickers count before save: \(stickersCountBefore)")
+
+                // Сохраняем стикер
                 stickerManager.saveSticker(
                     prompt: promptText,
                     contentType: result.analysis.contentType,
                     imageData: result.imageData,
                     analysis: analysisData
                 )
-                print("✅ Sticker saved successfully!")
-                print("📊 Total stickers after save: \(stickerManager.savedStickers.count)")
 
-                // Force UI update on main thread
-                DispatchQueue.main.async {
-                    // Stop generation state
-                    isGenerating = false
-                    generationProgress = 0
-                    currentStep = ""
-                    taskId = nil
-                    estimatedTimeRemaining = nil
+                // Проверяем, что стикер действительно сохранился
+                let stickersCountAfter = stickerManager.savedStickers.count
+                print("📊 Stickers count after save: \(stickersCountAfter)")
 
-                    // Clear input only after successful generation and save
-                    inputText = ""
-
-                    // Show success message
-                    successMessage = "✅ Sticker generated and saved successfully!"
-
-                    print("🔄 UI updated - generation stopped, input cleared, success message shown")
-                    print("📊 UI sees \(stickerManager.savedStickers.count) stickers")
+                if stickersCountAfter <= stickersCountBefore {
+                    print("❌ CRITICAL ERROR: Sticker was not saved! Count did not increase.")
+                    throw APIError.decodingError(NSError(domain: "StickerError", code: 3, userInfo: [NSLocalizedDescriptionKey: "Failed to save sticker to library"]))
                 }
 
-                // Clear success message after 3 seconds
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-                    successMessage = nil
+                // Проверяем, что последний стикер соответствует нашему
+                if let lastSticker = stickerManager.savedStickers.first {
+                    if lastSticker.prompt == promptText && lastSticker.imageData.count == result.imageData.count {
+                        print("✅ Sticker saved and verified successfully!")
+                        print("📋 Saved sticker ID: \(lastSticker.id)")
+                        print("📝 Saved sticker prompt: '\(lastSticker.prompt)'")
+                        print("📦 Saved sticker image size: \(lastSticker.imageData.count) bytes")
+                    } else {
+                        print("⚠️ WARNING: Last saved sticker doesn't match our data")
+                        print("   Expected prompt: '\(promptText)', got: '\(lastSticker.prompt)'")
+                        print("   Expected size: \(result.imageData.count), got: \(lastSticker.imageData.count)")
+                    }
+                } else {
+                    print("❌ CRITICAL ERROR: No stickers found after save!")
+                    throw APIError.decodingError(NSError(domain: "StickerError", code: 4, userInfo: [NSLocalizedDescriptionKey: "No stickers found after save"]))
+                }
+
+                print("💾 === STICKER SAVE PROCESS COMPLETED ===")
+                print("✅ Sticker saved successfully!")
+
+                // Дополнительная проверка через небольшую задержку
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    let finalCount = stickerManager.savedStickers.count
+                    print("🔍 Final verification: \(finalCount) stickers in library")
+
+                    if finalCount > stickersCountBefore {
+                        print("✅ Final verification passed - sticker is in library")
+                        // Clear input only after successful generation and save
+                        inputText = ""
+
+                        // Show success message
+                        successMessage = "🎉 Стикер успешно создан и сохранен!"
+
+                        // Clear success message after 3 seconds
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                            successMessage = nil
+                        }
+                    } else {
+                        print("❌ Final verification failed - sticker not found in library")
+                        errorMessage = "Стикер создан, но не сохранился. Попробуйте еще раз."
+                    }
                 }
 
                 print("🎉 Async sticker generation process completed successfully!")
@@ -531,22 +571,8 @@ struct StickerGeneratorView: View {
                 print("📄 Error description: \(error.localizedDescription)")
                 print("🔧 Full error: \(error)")
 
-                // Check if it's a timeout error
                 if let apiError = error as? APIError {
-                    switch apiError {
-                    case .timeout:
-                        print("⏰ Generation timed out - this might be the issue!")
-                    case .networkError(let networkError):
-                        print("🌐 Network error: \(networkError)")
-                    case .generationFailed(let message):
-                        print("🚫 Generation failed: \(message)")
-                    default:
-                        print("❓ Other API error: \(apiError)")
-                    }
-                }
-
-                if let apiError = error as? APIError {
-                    print("🚨 APIError detected: \(apiError)")
+                    print(" APIError detected: \(apiError)")
                 }
 
                 // Более понятные сообщения об ошибках для пользователя
@@ -556,46 +582,64 @@ struct StickerGeneratorView: View {
                     switch apiError {
                     case .noImageURL:
                         print("🔍 Specific error: noImageURL")
-                        userFriendlyMessage = "Server did not return image URL. Please try again."
+                        userFriendlyMessage = "Не удалось получить изображение с сервера. Попробуйте еще раз."
                     case .networkError:
                         print("🔍 Specific error: networkError")
-                        userFriendlyMessage = "Network connection error. Please check your internet connection."
+                        userFriendlyMessage = "Проблема с интернет-соединением. Проверьте подключение к сети."
                     case .timeout:
                         print("🔍 Specific error: timeout")
-                        userFriendlyMessage = "Request timed out. Please try again."
+                        userFriendlyMessage = "Время ожидания истекло. Попробуйте еще раз."
                     case .serverOverloaded:
                         print("🔍 Specific error: serverOverloaded")
-                        userFriendlyMessage = "Server is busy. Please try again in a few moments."
+                        userFriendlyMessage = "Сервер перегружен. Попробуйте через несколько минут."
                     case .generationFailed(let message):
                         print("🔍 Specific error: generationFailed with message: \(message)")
-                        userFriendlyMessage = "Generation failed: \(message)"
+                        // Переводим техническое сообщение в понятное пользователю
+                        if message.lowercased().contains("inappropriate") || message.lowercased().contains("content") {
+                            userFriendlyMessage = "Текст не подходит для создания стикера. Попробуйте другую фразу."
+                        } else if message.lowercased().contains("timeout") {
+                            userFriendlyMessage = "Генерация заняла слишком много времени. Попробуйте еще раз."
+                        } else if message.lowercased().contains("server") {
+                            userFriendlyMessage = "Проблема на сервере. Попробуйте позже."
+                        } else {
+                            userFriendlyMessage = "Не удалось создать стикер. Попробуйте другую фразу."
+                        }
+                    case .decodingError:
+                        print("🔍 Specific error: decodingError")
+                        userFriendlyMessage = "Ошибка обработки данных. Попробуйте еще раз."
                     default:
                         print("🔍 Other APIError: \(apiError)")
-                        userFriendlyMessage = error.localizedDescription
+                        userFriendlyMessage = "Произошла ошибка. Попробуйте еще раз."
                     }
                 } else {
                     print("🔍 Non-APIError: \(error)")
-                    userFriendlyMessage = error.localizedDescription
+                    // Переводим системные ошибки в понятные сообщения
+                    let errorDescription = error.localizedDescription.lowercased()
+                    if errorDescription.contains("network") || errorDescription.contains("internet") {
+                        userFriendlyMessage = "Проблема с интернет-соединением. Проверьте подключение к сети."
+                    } else if errorDescription.contains("timeout") {
+                        userFriendlyMessage = "Время ожидания истекло. Попробуйте еще раз."
+                    } else if errorDescription.contains("server") {
+                        userFriendlyMessage = "Проблема на сервере. Попробуйте позже."
+                    } else {
+                        userFriendlyMessage = "Произошла ошибка. Попробуйте еще раз."
+                    }
                 }
 
                 print("🔄 Setting error message: \(userFriendlyMessage)")
-
-                // Update UI on main thread
-                DispatchQueue.main.async {
-                    // Reset progress state
-                    isGenerating = false
-                    generationProgress = 0
-                    currentStep = ""
-                    taskId = nil
-                    estimatedTimeRemaining = nil
-
-                    // Set error message
-                    errorMessage = userFriendlyMessage
-
-                    print("❌ Error state set - generation stopped, error message shown")
-                }
+                errorMessage = userFriendlyMessage
+                print("❌ Error state set - generation process failed")
                 // Don't clear input on error so user can try again
             }
+
+            // Reset progress state
+            isGenerating = false
+            generationProgress = 0
+            currentStep = ""
+            taskId = nil
+            estimatedTimeRemaining = nil
+            generationStartTime = nil
+            elapsedTime = 0
         }
     }
 
@@ -628,7 +672,9 @@ struct StickerGeneratorView: View {
                 currentStep = ""
                 self.taskId = nil
                 estimatedTimeRemaining = nil
-                errorMessage = "Generation cancelled by user"
+                generationStartTime = nil
+                elapsedTime = 0
+                errorMessage = "Генерация отменена"
                 print("✅ UI state reset after cancellation")
 
                 // Clear error message after 3 seconds
@@ -649,7 +695,7 @@ struct StickerGeneratorView: View {
 
                 // Тест 1: Базовая проверка /test endpoint
                 let testResponse = try await apiService.testConnection()
-                let testResult = "✅ Server accessible\n📄 Status: \(testResponse.status)\n📄 Message: \(testResponse.message)\n⏱️ Generation time: ~26s"
+                let testResult = "✅ Сервер доступен\n📄 Статус: \(testResponse.status)\n📄 Сообщение: \(testResponse.message)\n⏱️ Время генерации: ~26-30с"
 
                 // Тест 2: Проверка /generate-sticker endpoint через OPTIONS
                 let generateURL = URL(string: apiService.baseURL + "/generate-sticker")!
@@ -750,6 +796,57 @@ struct StickerGeneratorView: View {
 
         // Показываем сообщение об успешной синхронизации
         errorMessage = nil
+    }
+
+    // MARK: - Helper Functions
+
+    /// Переводит технические статусы с сервера в понятные пользователю сообщения
+    private func translateStepToUserFriendly(_ step: String) -> String {
+        let lowercaseStep = step.lowercased()
+
+        // Основные этапы генерации
+        if lowercaseStep.contains("analyzing") || lowercaseStep.contains("analysis") {
+            return "Анализ текста..."
+        } else if lowercaseStep.contains("creating") || lowercaseStep.contains("generating") {
+            return "Создание изображения..."
+        } else if lowercaseStep.contains("processing") || lowercaseStep.contains("process") {
+            return "Обработка..."
+        } else if lowercaseStep.contains("finalizing") || lowercaseStep.contains("finishing") {
+            return "Завершение..."
+        } else if lowercaseStep.contains("uploading") || lowercaseStep.contains("saving") {
+            return "Сохранение..."
+        } else if lowercaseStep.contains("completed") || lowercaseStep.contains("done") {
+            return "Готово!"
+        } else if lowercaseStep.contains("waiting") || lowercaseStep.contains("queue") {
+            return "Ожидание..."
+        } else if lowercaseStep.contains("starting") || lowercaseStep.contains("initializing") {
+            return "Запуск..."
+        } else if lowercaseStep.contains("prompt") {
+            return "Подготовка запроса..."
+        } else if lowercaseStep.contains("style") {
+            return "Выбор стиля..."
+        } else if lowercaseStep.contains("render") {
+            return "Отрисовка..."
+        } else if lowercaseStep.contains("error") || lowercaseStep.contains("failed") {
+            return "Ошибка"
+        } else {
+            // Если не можем перевести, возвращаем оригинал, но делаем первую букву заглавной
+            return step.prefix(1).uppercased() + step.dropFirst() + "..."
+        }
+    }
+
+    /// Запускает таймер для отслеживания времени генерации
+    private func startElapsedTimeTimer() {
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            guard isGenerating, let startTime = generationStartTime else {
+                timer.invalidate()
+                return
+            }
+
+            DispatchQueue.main.async {
+                self.elapsedTime = Int(Date().timeIntervalSince(startTime))
+            }
+        }
     }
 }
 

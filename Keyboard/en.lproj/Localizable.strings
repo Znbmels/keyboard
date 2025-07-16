@@ -318,5 +318,5 @@
 "troubleshooting_restart_step3" = "Enable 'Allow Full Access' if needed";
 
 // MARK: - Stickers Settings
-"stickers_show_button_title" = "Show Stickers";
-"stickers_show_button_subtitle" = "Display stickers button in keyboard";
+"stickers_show_button_title" = "Show Stickers in Keyboard";
+"stickers_show_button_subtitle" = "Enable stickers button and functionality in keyboard";
