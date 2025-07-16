@@ -262,11 +262,12 @@ class StickerManager: ObservableObject {
     func syncWithServer() async {
         print("🔄 Starting server sync...")
         print("🌐 API Base URL: \(StickerAPIService.shared.baseURL)")
+        print("📊 Current local stickers count: \(savedStickers.count)")
 
         do {
             let apiService = StickerAPIService.shared
             print("🔗 Calling syncUserStickers endpoint...")
-            let serverStickers = try await apiService.syncUserStickers()
+            let serverStickers = try await apiService.syncUserStickers(username: "ios_user")
 
             print("📥 Downloaded \(serverStickers.count) stickers from server")
 
@@ -323,21 +324,19 @@ class StickerManager: ObservableObject {
             }
 
             if !newStickers.isEmpty {
-                DispatchQueue.main.async {
-                    // Добавляем новые стикеры в начало списка
-                    self.savedStickers.insert(contentsOf: newStickers, at: 0)
+                // Добавляем новые стикеры в начало списка (уже на main thread из-за @MainActor)
+                savedStickers.insert(contentsOf: newStickers, at: 0)
 
-                    // Ограничиваем количество стикеров
-                    if self.savedStickers.count > self.maxStickers {
-                        self.savedStickers = Array(self.savedStickers.prefix(self.maxStickers))
-                    }
-
-                    print("✅ Added \(newStickers.count) new stickers to library")
-                    print("📊 Total stickers now: \(self.savedStickers.count)")
-
-                    // Force UI refresh
-                    self.objectWillChange.send()
+                // Ограничиваем количество стикеров
+                if savedStickers.count > maxStickers {
+                    savedStickers = Array(savedStickers.prefix(maxStickers))
                 }
+
+                print("✅ Added \(newStickers.count) new stickers to library")
+                print("📊 Total stickers now: \(savedStickers.count)")
+
+                // Force UI refresh
+                objectWillChange.send()
 
                 // Сохраняем обновленный список
                 saveStickers()
@@ -348,6 +347,8 @@ class StickerManager: ObservableObject {
         } catch {
             print("❌ Server sync failed: \(error)")
         }
+
+        print("🔄 Server sync completed. Final stickers count: \(savedStickers.count)")
     }
 
     private func downloadImageData(from urlString: String) async -> Data? {
