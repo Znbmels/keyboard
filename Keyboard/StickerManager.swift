@@ -66,19 +66,44 @@ class StickerManager: ObservableObject {
 
         print("🎨 Saving sticker: '\(prompt)'")
         print("🎨 Current stickers count before save: \(savedStickers.count)")
+        print("🎨 Image data size: \(imageData.count) bytes")
+        print("🎨 Content type: \(contentType)")
+        print("🎨 Analysis: \(analysis != nil ? "present" : "nil")")
+
+        // Verify image data is valid before saving
+        if imageData.isEmpty {
+            print("❌ ERROR: Cannot save sticker - image data is empty!")
+            return
+        }
+
+        if UIImage(data: imageData) == nil {
+            print("❌ ERROR: Cannot save sticker - image data is corrupted!")
+            return
+        }
+
+        print("✅ Image data validation passed in StickerManager")
 
         // Ensure UI updates happen on main thread
         DispatchQueue.main.async {
+            print("🎨 Adding sticker to savedStickers array...")
+            print("🎨 Sticker ID: \(sticker.id)")
+
             // Добавляем в начало списка (последние сверху)
             self.savedStickers.insert(sticker, at: 0)
+            print("🎨 Sticker inserted at index 0")
 
             // Ограничиваем количество стикеров
             if self.savedStickers.count > self.maxStickers {
                 self.savedStickers = Array(self.savedStickers.prefix(self.maxStickers))
+                print("🎨 Trimmed to max \(self.maxStickers) stickers")
             }
 
             print("🎨 Current stickers count after insert: \(self.savedStickers.count)")
+            print("🎨 First sticker prompt: '\(self.savedStickers.first?.prompt ?? "none")'")
             print("🎨 UI should update now with \(self.savedStickers.count) stickers")
+
+            // Force UI refresh by triggering objectWillChange
+            self.objectWillChange.send()
         }
 
         saveStickers()

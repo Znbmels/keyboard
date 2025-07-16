@@ -929,28 +929,52 @@ final class StickerAPIService: ObservableObject {
     }
     
     private func downloadImage(from urlString: String) async throws -> Data {
+        print("🔍 Starting image download from: \(urlString)")
+
         guard let url = URL(string: urlString) else {
+            print("❌ Invalid image URL: \(urlString)")
             throw APIError.invalidImageURL
         }
-        
+
+        print("✅ URL is valid, starting download...")
+
         do {
             let (data, response) = try await session.data(from: url)
-            
-            guard let httpResponse = response as? HTTPURLResponse,
-                  httpResponse.statusCode == 200 else {
+
+            print("📥 Download response received:")
+            print("   - Data size: \(data.count) bytes")
+            print("   - Response type: \(type(of: response))")
+
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("❌ Response is not HTTPURLResponse")
                 throw APIError.imageDownloadFailed
             }
-            
+
+            print("   - HTTP Status Code: \(httpResponse.statusCode)")
+            print("   - Content-Type: \(httpResponse.value(forHTTPHeaderField: "Content-Type") ?? "unknown")")
+
+            guard httpResponse.statusCode == 200 else {
+                print("❌ HTTP error: \(httpResponse.statusCode)")
+                throw APIError.imageDownloadFailed
+            }
+
             // Проверяем, что это действительно изображение
             guard UIImage(data: data) != nil else {
+                print("❌ Downloaded data is not a valid image")
+                print("   - First 100 bytes: \(data.prefix(100))")
                 throw APIError.invalidImageData
             }
-            
-            print("📸 Image downloaded: \(data.count) bytes")
+
+            print("✅ Image downloaded and validated: \(data.count) bytes")
             return data
-            
+
         } catch {
-            throw APIError.imageDownloadFailed
+            print("❌ Image download failed with error: \(error)")
+            if let apiError = error as? APIError {
+                throw apiError
+            } else {
+                throw APIError.imageDownloadFailed
+            }
         }
     }
 

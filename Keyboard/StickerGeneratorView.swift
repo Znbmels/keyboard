@@ -450,6 +450,42 @@ struct StickerGeneratorView: View {
                 )
 
                 print("💾 Saving sticker to database...")
+                print("🔍 Checking result data before save:")
+                print("   - imageData size: \(result.imageData.count) bytes")
+                print("   - imageData is empty: \(result.imageData.isEmpty)")
+                print("   - prompt: '\(promptText)'")
+                print("   - contentType: '\(result.analysis.contentType)'")
+
+                // Verify image data is valid
+                if result.imageData.isEmpty {
+                    print("❌ ERROR: Image data is empty! Cannot save sticker.")
+                    DispatchQueue.main.async {
+                        errorMessage = "❌ Failed to save sticker: No image data received"
+                        isGenerating = false
+                        generationProgress = 0
+                        currentStep = ""
+                        taskId = nil
+                        estimatedTimeRemaining = nil
+                    }
+                    return
+                }
+
+                // Try to create UIImage to verify data is valid
+                if UIImage(data: result.imageData) == nil {
+                    print("❌ ERROR: Image data is corrupted! Cannot create UIImage.")
+                    DispatchQueue.main.async {
+                        errorMessage = "❌ Failed to save sticker: Corrupted image data"
+                        isGenerating = false
+                        generationProgress = 0
+                        currentStep = ""
+                        taskId = nil
+                        estimatedTimeRemaining = nil
+                    }
+                    return
+                }
+
+                print("✅ Image data validation passed - proceeding with save")
+
                 stickerManager.saveSticker(
                     prompt: promptText,
                     contentType: result.analysis.contentType,
