@@ -437,6 +437,10 @@ struct StickerGeneratorView: View {
                 print("   - analysis.emotion: \(result.analysis.emotion)")
                 print("   - analysis.context: \(result.analysis.context)")
 
+                // Update UI to show completion
+                self.generationProgress = 100
+                self.currentStep = "Completed!"
+
                 // Save sticker - convert StickerAnalysis to StickerAnalysisData
                 print("🔄 Converting analysis data...")
                 let analysisData = StickerAnalysisData(
@@ -526,6 +530,20 @@ struct StickerGeneratorView: View {
                 print("🔍 Error type: \(type(of: error))")
                 print("📄 Error description: \(error.localizedDescription)")
                 print("🔧 Full error: \(error)")
+
+                // Check if it's a timeout error
+                if let apiError = error as? APIError {
+                    switch apiError {
+                    case .timeout:
+                        print("⏰ Generation timed out - this might be the issue!")
+                    case .networkError(let networkError):
+                        print("🌐 Network error: \(networkError)")
+                    case .generationFailed(let message):
+                        print("🚫 Generation failed: \(message)")
+                    default:
+                        print("❓ Other API error: \(apiError)")
+                    }
+                }
 
                 if let apiError = error as? APIError {
                     print("🚨 APIError detected: \(apiError)")
