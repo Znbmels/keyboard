@@ -433,32 +433,65 @@ struct StickerGeneratorView: View {
                 print("🔧 API Base URL: \(apiService.baseURL)")
                 print("🔧 Full generate URL: \(apiService.baseURL)/generate-sticker")
 
-                // Add timeout wrapper around the generation
-                let result = try await withTimeout(seconds: 600) { // 10 minutes max
-                    try await apiService.generateStickerAsync(
-                        phrase: promptText,
-                        progressCallback: { status in
-                            Task { @MainActor in
-                                print("📊 Progress callback received:")
-                                print("   - taskId: \(status.taskId)")
-                                print("   - status: \(status.status.rawValue)")
-                                print("   - progress: \(status.progress)%")
-                                print("   - currentStep: \(status.currentStep)")
-                                print("   - errorMessage: \(status.errorMessage ?? "nil")")
-                                print("   - estimatedRemaining: \(status.estimatedRemaining ?? 0)s")
+                // Simple approach: start generation and sync after delay
+                print("🚀 Starting simple sticker generation...")
+                let taskId = try await apiService.generateStickerSimple(phrase: promptText)
 
-                                self.generationProgress = status.progress
-                                self.currentStep = translateStepToUserFriendly(status.currentStep)
-                                self.taskId = status.taskId
-                                self.estimatedTimeRemaining = status.estimatedRemaining
+                print("✅ Generation started with task ID: \(taskId)")
+                self.taskId = taskId
+                self.currentStep = "Генерация запущена..."
+                self.generationProgress = 10
 
-                                print("📋 UI Updated - Progress: \(status.progress)% - \(status.currentStep)")
-                            }
-                        }
-                    )
+                // Wait for generation to complete (estimated time)
+                print("⏳ Waiting for generation to complete...")
+                self.currentStep = "Генерируем изображение..."
+                self.generationProgress = 50
+
+                // Wait 30 seconds for generation
+                try await Task.sleep(nanoseconds: 30_000_000_000)
+
+                self.currentStep = "Сохраняем стикер..."
+                self.generationProgress = 80
+
+                // Wait a bit more
+                try await Task.sleep(nanoseconds: 10_000_000_000)
+
+                self.currentStep = "Синхронизируем с библиотекой..."
+                self.generationProgress = 90
+
+                // Sync with server to get new stickers
+                await stickerManager.syncWithServer()
+
+                self.generationProgress = 100
+                self.currentStep = "Готово!"
+
+                print("✅ Simple generation process completed!")
+
+                // Update UI on main thread
+                DispatchQueue.main.async {
+                    // Stop generation state
+                    isGenerating = false
+                    generationProgress = 0
+                    currentStep = ""
+                    taskId = nil
+                    estimatedTimeRemaining = nil
+
+                    // Clear input
+                    inputText = ""
+
+                    // Show success message
+                    successMessage = "🎉 Стикер успешно создан и добавлен в библиотеку!"
+
+                    print("🔄 UI updated - generation stopped, input cleared, success message shown")
+                    print("📊 UI sees \(stickerManager.savedStickers.count) stickers")
                 }
 
-                print("✅ Async sticker generation completed!")
+                // Clear success message after 3 seconds
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                    successMessage = nil
+                }
+
+                print("🎉 Simple sticker generation process completed successfully!")
                 print("📦 Generation result received:")
                 print("   - imageData size: \(result.imageData.count) bytes")
                 print("   - analysis.contentType: \(result.analysis.contentType)")

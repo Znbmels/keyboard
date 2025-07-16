@@ -94,6 +94,49 @@ enum TaskStatus: String, Codable {
     case failed = "failed"
 }
 
+// MARK: - Sticker Sync Models
+struct StickerSyncResponse: Codable {
+    let stickers: [StickerFromServer]
+    let totalCount: Int
+
+    enum CodingKeys: String, CodingKey {
+        case stickers
+        case totalCount = "total_count"
+    }
+}
+
+struct StickerFromServer: Codable {
+    let id: String
+    let prompt: String
+    let imageUrl: String
+    let contentType: String
+    let createdAt: String
+    let analysis: StickerAnalysisFromServer?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case prompt
+        case imageUrl = "image_url"
+        case contentType = "content_type"
+        case createdAt = "created_at"
+        case analysis
+    }
+}
+
+struct StickerAnalysisFromServer: Codable {
+    let contentType: String
+    let meaning: String
+    let emotion: String
+    let context: String
+
+    enum CodingKeys: String, CodingKey {
+        case contentType = "content_type"
+        case meaning
+        case emotion
+        case context
+    }
+}
+
 struct StickerGenerationResponse: Codable {
     let success: Bool
     let message: String
@@ -970,6 +1013,32 @@ final class StickerAPIService: ObservableObject {
         } catch {
             throw APIError.imageDownloadFailed
         }
+    }
+
+    // MARK: - Simple Sticker Generation (No Polling)
+
+    /// Простая генерация стикера без polling - просто запускаем и ждем
+    func generateStickerSimple(phrase: String, username: String = "ios_user") async throws -> String {
+        print("🚀 Starting simple sticker generation...")
+
+        // Запускаем генерацию
+        let taskResponse = try await startStickerGeneration(phrase: phrase, username: username)
+        let taskId = taskResponse.taskId
+
+        print("📋 Task started with ID: \(taskId)")
+        print("⏳ Generation started, task ID returned: \(taskId)")
+
+        return taskId
+    }
+
+    /// Получает все стикеры пользователя из Supabase
+    func syncUserStickers(username: String = "ios_user") async throws -> [StickerFromServer] {
+        print("🔄 Syncing stickers for user: \(username)")
+
+        let response: StickerSyncResponse = try await performGetRequest(endpoint: "/user-stickers/\(username)")
+
+        print("✅ Synced \(response.stickers.count) stickers from server")
+        return response.stickers
     }
 
     // MARK: - Helper Methods

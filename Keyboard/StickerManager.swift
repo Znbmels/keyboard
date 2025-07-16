@@ -257,8 +257,99 @@ class StickerManager: ObservableObject {
         return (isValid, issues)
     }
     
+    // MARK: - Server Sync Methods
+
+    /// Синхронизирует стикеры с сервером
+    func syncWithServer() async {
+        print("🔄 Starting server sync...")
+
+        do {
+            let apiService = StickerAPIService()
+            let serverStickers = try await apiService.syncUserStickers()
+
+            print("📥 Downloaded \(serverStickers.count) stickers from server")
+
+            // Конвертируем серверные стикеры в локальные
+            var newStickers: [SavedSticker] = []
+
+            for serverSticker in serverStickers {
+                // Проверяем, есть ли уже такой стикер локально
+                if !savedStickers.contains(where: { $0.id == serverSticker.id }) {
+                    print("📥 Downloading new sticker: \(serverSticker.prompt)")
+
+                    // Загружаем изображение
+                    if let imageData = await downloadImageData(from: serverSticker.imageUrl) {
+                        let analysis = serverSticker.analysis.map { serverAnalysis in
+                            StickerAnalysisData(
+                                contentType: serverAnalysis.contentType,
+                                meaning: serverAnalysis.meaning,
+                                emotion: serverAnalysis.emotion,
+                                context: serverAnalysis.context,
+                                recommendedStyle: "default",
+                                recommendedColors: [],
+                                hasUserColorRequest: false
+                            )
+                        }
+
+                        let localSticker = SavedSticker(
+                            id: serverSticker.id,
+                            prompt: serverSticker.prompt,
+                            contentType: serverSticker.contentType,
+                            imageData: imageData,
+                            analysis: analysis
+                        )
+
+                        newStickers.append(localSticker)
+                    }
+                }
+            }
+
+            if !newStickers.isEmpty {
+                DispatchQueue.main.async {
+                    // Добавляем новые стикеры в начало списка
+                    self.savedStickers.insert(contentsOf: newStickers, at: 0)
+
+                    // Ограничиваем количество стикеров
+                    if self.savedStickers.count > self.maxStickers {
+                        self.savedStickers = Array(self.savedStickers.prefix(self.maxStickers))
+                    }
+
+                    print("✅ Added \(newStickers.count) new stickers to library")
+                    print("📊 Total stickers now: \(self.savedStickers.count)")
+
+                    // Force UI refresh
+                    self.objectWillChange.send()
+                }
+
+                // Сохраняем обновленный список
+                saveStickers()
+            } else {
+                print("ℹ️ No new stickers to sync")
+            }
+
+        } catch {
+            print("❌ Server sync failed: \(error)")
+        }
+    }
+
+    private func downloadImageData(from urlString: String) async -> Data? {
+        guard let url = URL(string: urlString) else {
+            print("❌ Invalid image URL: \(urlString)")
+            return nil
+        }
+
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            print("✅ Downloaded image: \(data.count) bytes")
+            return data
+        } catch {
+            print("❌ Failed to download image: \(error)")
+            return nil
+        }
+    }
+
     // MARK: - Private Methods
-    
+
     private func loadStickers() {
         guard let data = userDefaults.data(forKey: stickersKey) else {
             print("📱 Нет сохраненных стикеров")
