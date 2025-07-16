@@ -417,11 +417,11 @@ struct StickerGeneratorView: View {
                             }
 
                             print("📊 Progress callback received:")
-                            print("   - taskId: \(status.taskId ?? "nil")")
+                            print("   - taskId: \(status.taskId)")
                             print("   - status: \(status.status.rawValue)")
                             print("   - progress: \(status.progress)%")
                             print("   - currentStep: \(status.currentStep)")
-                            print("   - message: \(status.message ?? "nil")")
+                            print("   - errorMessage: \(status.errorMessage ?? "nil")")
                             print("   - estimatedRemaining: \(status.estimatedRemaining ?? 0)s")
 
                             self.generationProgress = status.progress
