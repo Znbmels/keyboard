@@ -411,6 +411,11 @@ struct StickerGeneratorView: View {
                     phrase: promptText,
                     progressCallback: { status in
                         Task { @MainActor in
+                            guard let self = self else {
+                                print("⚠️ Self is nil in progress callback")
+                                return
+                            }
+
                             print("📊 Progress callback received:")
                             print("   - taskId: \(status.taskId)")
                             print("   - status: \(status.status.rawValue)")
