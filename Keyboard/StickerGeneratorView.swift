@@ -461,13 +461,20 @@ struct StickerGeneratorView: View {
 
                 // Force UI update on main thread
                 DispatchQueue.main.async {
+                    // Stop generation state
+                    isGenerating = false
+                    generationProgress = 0
+                    currentStep = ""
+                    taskId = nil
+                    estimatedTimeRemaining = nil
+
                     // Clear input only after successful generation and save
                     inputText = ""
 
                     // Show success message
                     successMessage = "✅ Sticker generated and saved successfully!"
 
-                    print("🔄 UI updated - input cleared, success message shown")
+                    print("🔄 UI updated - generation stopped, input cleared, success message shown")
                     print("📊 UI sees \(stickerManager.savedStickers.count) stickers")
                 }
 
@@ -518,17 +525,23 @@ struct StickerGeneratorView: View {
                 }
 
                 print("🔄 Setting error message: \(userFriendlyMessage)")
-                errorMessage = userFriendlyMessage
-                print("❌ Error state set - generation process failed")
+
+                // Update UI on main thread
+                DispatchQueue.main.async {
+                    // Reset progress state
+                    isGenerating = false
+                    generationProgress = 0
+                    currentStep = ""
+                    taskId = nil
+                    estimatedTimeRemaining = nil
+
+                    // Set error message
+                    errorMessage = userFriendlyMessage
+
+                    print("❌ Error state set - generation stopped, error message shown")
+                }
                 // Don't clear input on error so user can try again
             }
-
-            // Reset progress state
-            isGenerating = false
-            generationProgress = 0
-            currentStep = ""
-            taskId = nil
-            estimatedTimeRemaining = nil
         }
     }
 
