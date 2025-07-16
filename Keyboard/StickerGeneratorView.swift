@@ -457,12 +457,19 @@ struct StickerGeneratorView: View {
                     analysis: analysisData
                 )
                 print("✅ Sticker saved successfully!")
+                print("📊 Total stickers after save: \(stickerManager.savedStickers.count)")
 
-                // Clear input only after successful generation and save
-                inputText = ""
+                // Force UI update on main thread
+                DispatchQueue.main.async {
+                    // Clear input only after successful generation and save
+                    inputText = ""
 
-                // Show success message
-                successMessage = "✅ Sticker generated and saved successfully!"
+                    // Show success message
+                    successMessage = "✅ Sticker generated and saved successfully!"
+
+                    print("🔄 UI updated - input cleared, success message shown")
+                    print("📊 UI sees \(stickerManager.savedStickers.count) stickers")
+                }
 
                 // Clear success message after 3 seconds
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {

@@ -67,15 +67,19 @@ class StickerManager: ObservableObject {
         print("🎨 Saving sticker: '\(prompt)'")
         print("🎨 Current stickers count before save: \(savedStickers.count)")
 
-        // Добавляем в начало списка (последние сверху)
-        savedStickers.insert(sticker, at: 0)
+        // Ensure UI updates happen on main thread
+        DispatchQueue.main.async {
+            // Добавляем в начало списка (последние сверху)
+            self.savedStickers.insert(sticker, at: 0)
 
-        // Ограничиваем количество стикеров
-        if savedStickers.count > maxStickers {
-            savedStickers = Array(savedStickers.prefix(maxStickers))
+            // Ограничиваем количество стикеров
+            if self.savedStickers.count > self.maxStickers {
+                self.savedStickers = Array(self.savedStickers.prefix(self.maxStickers))
+            }
+
+            print("🎨 Current stickers count after insert: \(self.savedStickers.count)")
+            print("🎨 UI should update now with \(self.savedStickers.count) stickers")
         }
-
-        print("🎨 Current stickers count after insert: \(savedStickers.count)")
 
         saveStickers()
 
