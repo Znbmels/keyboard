@@ -38,6 +38,7 @@ struct StickerAnalysisData: Codable {
 }
 
 // MARK: - Sticker Manager
+@MainActor
 class StickerManager: ObservableObject {
     static let shared = StickerManager()
     
@@ -89,33 +90,31 @@ class StickerManager: ObservableObject {
 
         print("✅ Image data validation passed in StickerManager")
 
-        // Ensure UI updates happen on main thread
-        DispatchQueue.main.async {
-            print("🔄 Executing on main thread...")
-            print("🎨 Adding sticker to savedStickers array...")
-            print("🎨 Array count before insert: \(self.savedStickers.count)")
+        // UI updates are already on main thread due to @MainActor
+        print("🔄 Executing on main thread...")
+        print("🎨 Adding sticker to savedStickers array...")
+        print("🎨 Array count before insert: \(savedStickers.count)")
 
-            // Добавляем в начало списка (последние сверху)
-            self.savedStickers.insert(sticker, at: 0)
-            print("🎨 Sticker inserted at index 0")
-            print("🎨 Array count after insert: \(self.savedStickers.count)")
+        // Добавляем в начало списка (последние сверху)
+        savedStickers.insert(sticker, at: 0)
+        print("🎨 Sticker inserted at index 0")
+        print("🎨 Array count after insert: \(savedStickers.count)")
 
-            // Ограничиваем количество стикеров
-            if self.savedStickers.count > self.maxStickers {
-                let oldCount = self.savedStickers.count
-                self.savedStickers = Array(self.savedStickers.prefix(self.maxStickers))
-                print("🎨 Trimmed from \(oldCount) to max \(self.maxStickers) stickers")
-            }
-
-            print("🎨 Final array count: \(self.savedStickers.count)")
-            print("🎨 First sticker prompt: '\(self.savedStickers.first?.prompt ?? "none")'")
-            print("🎨 First sticker ID: '\(self.savedStickers.first?.id ?? "none")'")
-
-            // Force UI refresh by triggering objectWillChange
-            print("🔄 Triggering UI update...")
-            self.objectWillChange.send()
-            print("✅ UI update triggered")
+        // Ограничиваем количество стикеров
+        if savedStickers.count > maxStickers {
+            let oldCount = savedStickers.count
+            savedStickers = Array(savedStickers.prefix(maxStickers))
+            print("🎨 Trimmed from \(oldCount) to max \(maxStickers) stickers")
         }
+
+        print("🎨 Final array count: \(savedStickers.count)")
+        print("🎨 First sticker prompt: '\(savedStickers.first?.prompt ?? "none")'")
+        print("🎨 First sticker ID: '\(savedStickers.first?.id ?? "none")'")
+
+        // Force UI refresh by triggering objectWillChange
+        print("🔄 Triggering UI update...")
+        objectWillChange.send()
+        print("✅ UI update triggered")
 
         // Сохраняем в UserDefaults
         print("💾 Saving to UserDefaults...")
@@ -262,10 +261,10 @@ class StickerManager: ObservableObject {
     /// Синхронизирует стикеры с сервером
     func syncWithServer() async {
         print("🔄 Starting server sync...")
-        print("🌐 API Base URL: \(StickerAPIService().baseURL)")
+        print("🌐 API Base URL: \(StickerAPIService.shared.baseURL)")
 
         do {
-            let apiService = StickerAPIService()
+            let apiService = StickerAPIService.shared
             print("🔗 Calling syncUserStickers endpoint...")
             let serverStickers = try await apiService.syncUserStickers()
 

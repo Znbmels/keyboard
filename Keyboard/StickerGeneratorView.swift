@@ -459,10 +459,10 @@ struct StickerGeneratorView: View {
 
                 // Simple approach: start generation and sync after delay
                 print("🚀 Starting simple sticker generation...")
-                let taskId = try await apiService.generateStickerSimple(phrase: promptText)
+                let generatedTaskId = try await apiService.generateStickerSimple(phrase: promptText)
 
-                print("✅ Generation started with task ID: \(taskId)")
-                self.taskId = taskId
+                print("✅ Generation started with task ID: \(generatedTaskId)")
+                self.taskId = generatedTaskId
                 self.currentStep = "Генерация запущена..."
                 self.generationProgress = 10
 
@@ -499,25 +499,25 @@ struct StickerGeneratorView: View {
                 // Update UI on main thread
                 DispatchQueue.main.async {
                     // Stop generation state
-                    isGenerating = false
-                    generationProgress = 0
-                    currentStep = ""
-                    taskId = nil
-                    estimatedTimeRemaining = nil
+                    self.isGenerating = false
+                    self.generationProgress = 0
+                    self.currentStep = ""
+                    self.taskId = nil
+                    self.estimatedTimeRemaining = nil
 
                     // Clear input
-                    inputText = ""
+                    self.inputText = ""
 
                     // Show success message
-                    successMessage = "🎉 Стикер успешно создан и добавлен в библиотеку!"
+                    self.successMessage = "🎉 Стикер успешно создан и добавлен в библиотеку!"
 
                     print("🔄 UI updated - generation stopped, input cleared, success message shown")
-                    print("📊 UI sees \(stickerManager.savedStickers.count) stickers")
+                    print("📊 UI sees \(self.stickerManager.savedStickers.count) stickers")
                 }
 
                 // Clear success message after 3 seconds
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-                    successMessage = nil
+                    self.successMessage = nil
                 }
 
                 print("🎉 Simple sticker generation process completed successfully!")

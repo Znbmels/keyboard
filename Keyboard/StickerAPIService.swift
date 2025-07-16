@@ -481,18 +481,38 @@ final class StickerAPIService: ObservableObject {
 
     /// Отслеживает задачу до завершения с периодическими обновлениями прогресса
     private func pollTaskUntilComplete(taskId: String, progressCallback: @escaping (TaskStatusResponse) -> Void) async throws -> (imageData: Data, analysis: StickerAnalysis) {
-        let maxAttempts = 300 // 5 минут при проверке каждую секунду
+        let maxAttempts = 90 // 1.5 минуты при проверке каждую секунду
         var attempts = 0
         var consecutiveErrors = 0
         let maxConsecutiveErrors = 5
+        var lastProgress = 0
+        var stuckProgressCount = 0
 
         print("🔄 Starting task polling for ID: \(taskId)")
-        print("⏱️ Max attempts: \(maxAttempts) (5 minutes)")
+        print("⏱️ Max attempts: \(maxAttempts) (1.5 minutes)")
 
         while attempts < maxAttempts {
             do {
                 let status = try await getTaskStatus(taskId: taskId)
                 consecutiveErrors = 0 // Сбрасываем счетчик ошибок при успешном запросе
+
+                // Проверяем, не застрял ли прогресс
+                if status.progress == lastProgress {
+                    stuckProgressCount += 1
+                    if stuckProgressCount > 30 && status.progress >= 90 { // 30 секунд без изменений при 90%+
+                        print("⚠️ Progress stuck at \(status.progress)% for 30+ seconds, trying to get result...")
+                        do {
+                            let result = try await getTaskResult(taskId: taskId)
+                            print("✅ Got result despite stuck progress!")
+                            return try await processCompletedTask(result: result)
+                        } catch {
+                            print("❌ Failed to get result from stuck task: \(error)")
+                        }
+                    }
+                } else {
+                    lastProgress = status.progress
+                    stuckProgressCount = 0
+                }
 
                 // Вызываем callback для обновления UI
                 progressCallback(status)
@@ -503,6 +523,7 @@ final class StickerAPIService: ObservableObject {
                 print("   - progress: \(status.progress)%")
                 print("   - currentStep: \(status.currentStep)")
                 print("   - errorMessage: \(status.errorMessage ?? "nil")")
+                print("   - stuckCount: \(stuckProgressCount)")
 
                 switch status.status {
                 case .completed:
@@ -518,7 +539,27 @@ final class StickerAPIService: ObservableObject {
                     throw APIError.generationFailed(errorMessage)
 
                 case .pending, .processing:
-                    print("⏳ Task still in progress, waiting 1 second...")
+                    // Проверяем, если прогресс 100% но статус все еще processing
+                    if status.progress >= 100 {
+                        print("⚠️ Progress is 100% but status is still \(status.status.rawValue)")
+                        print("🔄 Attempting to get result anyway...")
+
+                        // Пытаемся получить результат напрямую
+                        do {
+                            let result = try await getTaskResult(taskId: taskId)
+                            print("✅ Got result despite processing status!")
+                            return try await processCompletedTask(result: result)
+                        } catch {
+                            print("❌ Failed to get result: \(error)")
+                            // Если не получилось, продолжаем ждать еще немного
+                            if attempts > 60 { // Если уже ждем больше минуты с 100%
+                                print("❌ Giving up after 60+ attempts with 100% progress")
+                                throw APIError.timeout
+                            }
+                        }
+                    }
+
+                    print("⏳ Task still in progress (\(status.progress)%), waiting 1 second...")
                     // Продолжаем ожидание
                     try await Task.sleep(nanoseconds: 1_000_000_000) // 1 секунда
                     attempts += 1
