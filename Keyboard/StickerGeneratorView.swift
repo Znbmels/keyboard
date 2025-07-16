@@ -491,6 +491,11 @@ struct StickerGeneratorView: View {
 
                 print("✅ Simple generation process completed!")
 
+                // Синхронизируемся с сервером для получения нового стикера
+                print("🔄 Starting automatic sync after generation...")
+                await stickerManager.syncWithServer()
+                print("✅ Automatic sync completed after generation")
+
                 // Update UI on main thread
                 DispatchQueue.main.async {
                     // Stop generation state
