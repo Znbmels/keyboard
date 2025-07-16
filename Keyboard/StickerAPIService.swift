@@ -381,7 +381,7 @@ final class StickerAPIService: ObservableObject {
         print("   - status: \(response.status.rawValue)")
         print("   - progress: \(response.progress)%")
         print("   - currentStep: \(response.currentStep)")
-        print("   - message: \(response.message ?? "nil")")
+        print("   - errorMessage: \(response.errorMessage ?? "nil")")
 
         return response
     }
