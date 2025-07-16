@@ -375,15 +375,28 @@ final class StickerAPIService: ObservableObject {
         print("📊 Checking task status for ID: \(taskId)")
         print("🔗 Status URL: \(baseURL)/task-status/\(taskId)")
 
-        let response: TaskStatusResponse = try await performGetRequest(endpoint: "/task-status/\(taskId)")
+        do {
+            let response: TaskStatusResponse = try await performGetRequest(endpoint: "/task-status/\(taskId)")
 
-        print("📊 Status response:")
-        print("   - status: \(response.status.rawValue)")
-        print("   - progress: \(response.progress)%")
-        print("   - currentStep: \(response.currentStep)")
-        print("   - errorMessage: \(response.errorMessage ?? "nil")")
+            print("📊 Status response received:")
+            print("   - status: \(response.status.rawValue)")
+            print("   - progress: \(response.progress)%")
+            print("   - currentStep: \(response.currentStep)")
+            print("   - errorMessage: \(response.errorMessage ?? "nil")")
 
-        return response
+            // Special logging for completed status
+            if response.status == .completed {
+                print("🎉 TASK COMPLETED DETECTED!")
+                print("🎉 Task \(taskId) is marked as completed by server")
+                print("🎉 Progress: \(response.progress)%")
+                print("🎉 Current step: \(response.currentStep)")
+            }
+
+            return response
+        } catch {
+            print("❌ Failed to get task status: \(error)")
+            throw error
+        }
     }
 
     /// Получает результат завершенной задачи
@@ -425,10 +438,13 @@ final class StickerAPIService: ObservableObject {
 
     /// Отслеживает задачу до завершения с периодическими обновлениями прогресса
     private func pollTaskUntilComplete(taskId: String, progressCallback: @escaping (TaskStatusResponse) -> Void) async throws -> (imageData: Data, analysis: StickerAnalysis) {
-        let maxAttempts = 120 // 2 минуты при проверке каждую секунду
+        let maxAttempts = 300 // 5 минут при проверке каждую секунду
         var attempts = 0
         var consecutiveErrors = 0
         let maxConsecutiveErrors = 5
+
+        print("🔄 Starting task polling for ID: \(taskId)")
+        print("⏱️ Max attempts: \(maxAttempts) (5 minutes)")
 
         while attempts < maxAttempts {
             do {
@@ -483,6 +499,8 @@ final class StickerAPIService: ObservableObject {
             }
         }
 
+        print("❌ POLLING TIMEOUT after \(attempts) attempts (\(attempts) seconds)")
+        print("❌ Task \(taskId) did not complete within \(maxAttempts) seconds")
         throw APIError.timeout
     }
 

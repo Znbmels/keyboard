@@ -433,27 +433,30 @@ struct StickerGeneratorView: View {
                 print("🔧 API Base URL: \(apiService.baseURL)")
                 print("🔧 Full generate URL: \(apiService.baseURL)/generate-sticker")
 
-                let result = try await apiService.generateStickerAsync(
-                    phrase: promptText,
-                    progressCallback: { status in
-                        Task { @MainActor in
-                            print("📊 Progress callback received:")
-                            print("   - taskId: \(status.taskId)")
-                            print("   - status: \(status.status.rawValue)")
-                            print("   - progress: \(status.progress)%")
-                            print("   - currentStep: \(status.currentStep)")
-                            print("   - errorMessage: \(status.errorMessage ?? "nil")")
-                            print("   - estimatedRemaining: \(status.estimatedRemaining ?? 0)s")
+                // Add timeout wrapper around the generation
+                let result = try await withTimeout(seconds: 600) { // 10 minutes max
+                    try await apiService.generateStickerAsync(
+                        phrase: promptText,
+                        progressCallback: { status in
+                            Task { @MainActor in
+                                print("📊 Progress callback received:")
+                                print("   - taskId: \(status.taskId)")
+                                print("   - status: \(status.status.rawValue)")
+                                print("   - progress: \(status.progress)%")
+                                print("   - currentStep: \(status.currentStep)")
+                                print("   - errorMessage: \(status.errorMessage ?? "nil")")
+                                print("   - estimatedRemaining: \(status.estimatedRemaining ?? 0)s")
 
-                            self.generationProgress = status.progress
-                            self.currentStep = translateStepToUserFriendly(status.currentStep)
-                            self.taskId = status.taskId
-                            self.estimatedTimeRemaining = status.estimatedRemaining
+                                self.generationProgress = status.progress
+                                self.currentStep = translateStepToUserFriendly(status.currentStep)
+                                self.taskId = status.taskId
+                                self.estimatedTimeRemaining = status.estimatedRemaining
 
-                            print("📋 UI Updated - Progress: \(status.progress)% - \(status.currentStep)")
+                                print("📋 UI Updated - Progress: \(status.progress)% - \(status.currentStep)")
+                            }
                         }
-                    }
-                )
+                    )
+                }
 
                 print("✅ Async sticker generation completed!")
                 print("📦 Generation result received:")
@@ -571,13 +574,20 @@ struct StickerGeneratorView: View {
                 print("📄 Error description: \(error.localizedDescription)")
                 print("🔧 Full error: \(error)")
 
+                // Handle timeout error specifically
+                if error is TimeoutError {
+                    print("⏰ TIMEOUT ERROR: Generation took too long (10+ minutes)")
+                }
+
                 if let apiError = error as? APIError {
                     print(" APIError detected: \(apiError)")
                 }
 
                 // Более понятные сообщения об ошибках для пользователя
                 let userFriendlyMessage: String
-                if let apiError = error as? APIError {
+                if error is TimeoutError {
+                    userFriendlyMessage = "⏰ Генерация заняла слишком много времени (более 10 минут). Попробуйте еще раз или обратитесь в поддержку."
+                } else if let apiError = error as? APIError {
                     print("🔍 Processing APIError...")
                     switch apiError {
                     case .noImageURL:
@@ -904,5 +914,32 @@ struct StickerAnalysis: Codable {
     let meaning: String
     let emotion: String
     let context: String
+}
+
+// MARK: - Timeout Helper
+func withTimeout<T>(seconds: TimeInterval, operation: @escaping () async throws -> T) async throws -> T {
+    return try await withThrowingTaskGroup(of: T.self) { group in
+        // Add the main operation
+        group.addTask {
+            try await operation()
+        }
+
+        // Add timeout task
+        group.addTask {
+            try await Task.sleep(nanoseconds: UInt64(seconds * 1_000_000_000))
+            throw TimeoutError()
+        }
+
+        // Return the first completed task and cancel others
+        let result = try await group.next()!
+        group.cancelAll()
+        return result
+    }
+}
+
+struct TimeoutError: Error, LocalizedError {
+    var errorDescription: String? {
+        return "Operation timed out"
+    }
 }
 
