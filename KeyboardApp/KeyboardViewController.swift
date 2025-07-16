@@ -1,4 +1,241 @@
 import UIKit
+import Foundation
+
+// MARK: - Sticker Models (Simplified for Keyboard Extension)
+struct SavedSticker: Codable, Identifiable {
+    let id: String
+    let prompt: String
+    let contentType: String
+    let imageData: Data
+    let createdAt: Date
+
+    init(id: String = UUID().uuidString, prompt: String, contentType: String, imageData: Data) {
+        self.id = id
+        self.prompt = prompt
+        self.contentType = contentType
+        self.imageData = imageData
+        self.createdAt = Date()
+    }
+}
+
+// Simplified StickerManager for Keyboard Extension
+class StickerManager {
+    static let shared = StickerManager()
+
+    let userDefaults = UserDefaults(suiteName: "group.school.nfactorial.muslim.keyboard") ?? UserDefaults.standard
+    private let stickersKey = "saved_stickers"
+
+    var savedStickers: [SavedSticker] = []
+
+    private init() {
+        loadStickers()
+    }
+
+    func getStickersForKeyboard() -> [SavedSticker] {
+        print("🎨 getStickersForKeyboard called")
+
+        // Принудительно перезагружаем данные из UserDefaults
+        loadStickers()
+
+        print("🎨 Total saved stickers: \(savedStickers.count)")
+
+        // Проверяем, включены ли стикеры в клавиатуре
+        // По умолчанию true, если настройка не установлена
+        let stickersEnabled = userDefaults.object(forKey: "stickers_enabled_in_keyboard") as? Bool ?? true
+        print("🎨 Stickers enabled in keyboard: \(stickersEnabled)")
+        guard stickersEnabled else {
+            print("🎨 Stickers disabled, returning empty array")
+            return []
+        }
+
+        // Получаем выбранные стикеры из настроек
+        if let data = userDefaults.data(forKey: "selected_stickers_for_keyboard"),
+           let selectedIds = try? JSONDecoder().decode(Set<String>.self, from: data) {
+            print("🎨 ===== KEYBOARD STICKER FILTERING DEBUG =====")
+            print("🎨 Found selected stickers data: \(selectedIds.count) IDs")
+            print("🎨 Selected IDs from settings: \(Array(selectedIds))")
+            print("🎨 Available stickers: \(savedStickers.count)")
+
+            // Показываем все доступные стикеры
+            for (index, sticker) in savedStickers.enumerated() {
+                print("🎨 Available sticker \(index): '\(sticker.prompt)' (ID: \(sticker.id))")
+            }
+
+            let selectedStickers = savedStickers.filter { selectedIds.contains($0.id) }
+            print("🎨 Filtered selected stickers: \(selectedStickers.count)")
+
+            // Отладочная информация о каждом стикере
+            for sticker in savedStickers {
+                let isSelected = selectedIds.contains(sticker.id)
+                print("🎨 Sticker '\(sticker.prompt)' (ID: \(sticker.id)) - Selected: \(isSelected)")
+            }
+
+            if !selectedStickers.isEmpty {
+                print("🎨 ✅ Returning \(selectedStickers.count) selected stickers")
+                for (index, sticker) in selectedStickers.enumerated() {
+                    print("🎨 Final sticker \(index): '\(sticker.prompt)'")
+                }
+                return selectedStickers
+            } else {
+                print("🎨 ❌ No matching selected stickers found, returning empty array")
+                print("🎨 This means the IDs in settings don't match any actual sticker IDs")
+                return []
+            }
+        } else {
+            print("🎨 ⚠️ No selection data found in UserDefaults, returning all \(savedStickers.count) stickers")
+            return savedStickers
+        }
+    }
+
+    func shouldShowStickersButton() -> Bool {
+        // Проверяем, включены ли стикеры в клавиатуре
+        // По умолчанию true, если настройка не установлена
+        let stickersEnabled = userDefaults.object(forKey: "stickers_enabled_in_keyboard") as? Bool ?? true
+        print("🎨 shouldShowStickersButton - enabled: \(stickersEnabled), stickers count: \(savedStickers.count)")
+
+        // Если стикеров нет, создаём демо-стикеры для тестирования
+        if savedStickers.isEmpty {
+            print("🎨 No stickers found, creating demo stickers for keyboard...")
+            createDemoStickersForKeyboard()
+        }
+
+        return stickersEnabled && !savedStickers.isEmpty
+    }
+
+    func createStickerPreview(sticker: SavedSticker, size: CGSize = CGSize(width: 35, height: 35)) -> UIImage? {
+        guard let originalImage = UIImage(data: sticker.imageData) else { return nil }
+
+        let renderer = UIGraphicsImageRenderer(size: size)
+        return renderer.image { context in
+            // Рисуем белый фон
+            UIColor.white.setFill()
+            context.fill(CGRect(origin: .zero, size: size))
+
+            // Рисуем изображение с небольшими отступами
+            let imageRect = CGRect(
+                x: 2,
+                y: 2,
+                width: size.width - 4,
+                height: size.height - 4
+            )
+            originalImage.draw(in: imageRect)
+
+            // Добавляем тонкую серую рамку
+            UIColor.systemGray3.setStroke()
+            let path = UIBezierPath(roundedRect: CGRect(origin: .zero, size: size), cornerRadius: 6)
+            path.lineWidth = 0.5
+            path.stroke()
+        }
+    }
+
+    func loadStickers() {
+        print("📱 Keyboard: Loading stickers from UserDefaults...")
+        print("📱 Keyboard: Using standard UserDefaults")
+
+        guard let data = userDefaults.data(forKey: stickersKey) else {
+            print("📱 Keyboard: Нет сохраненных стикеров в ключе '\(stickersKey)'")
+
+            // Проверим все ключи в UserDefaults
+            let allKeys = userDefaults.dictionaryRepresentation().keys
+            print("📱 Keyboard: Доступные ключи в UserDefaults: \(Array(allKeys))")
+            return
+        }
+
+        do {
+            savedStickers = try JSONDecoder().decode([SavedSticker].self, from: data)
+            print("📱 Keyboard: Загружено стикеров: \(savedStickers.count)")
+            for (index, sticker) in savedStickers.enumerated() {
+                print("📱 Keyboard: Стикер \(index): \(sticker.prompt)")
+            }
+        } catch {
+            print("❌ Keyboard: Ошибка загрузки стикеров: \(error)")
+            savedStickers = []
+        }
+    }
+
+    func createDemoStickersForKeyboard() {
+        print("🎨 Creating demo stickers for keyboard...")
+        let demoPrompts = [
+            "بِسْمِ اللَّهِ",
+            "الْحَمْدُ لِلَّهِ",
+            "سُبْحَانَ اللَّهِ",
+            "اللَّهُ أَكْبَرُ",
+            "أَسْتَغْفِرُ اللَّهَ",
+            "لَا إِلَهَ إِلَّا اللَّهُ",
+            "مَا شَاءَ اللَّهُ",
+            "بَارَكَ اللَّهُ",
+            "إِنْ شَاءَ اللَّهُ",
+            "جَزَاكَ اللَّهُ خَيْرًا",
+            "رَبِّ اغْفِرْ لِي",
+            "اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ"
+        ]
+
+        var demoStickers: [SavedSticker] = []
+
+        for prompt in demoPrompts {
+            let image = createDemoStickerImage(text: prompt)
+            if let imageData = image.pngData() {
+                let sticker = SavedSticker(
+                    prompt: prompt,
+                    contentType: "TEXTUAL",
+                    imageData: imageData
+                )
+                demoStickers.append(sticker)
+            }
+        }
+
+        savedStickers = demoStickers
+
+        // Сохраняем в UserDefaults
+        do {
+            let data = try JSONEncoder().encode(savedStickers)
+            userDefaults.set(data, forKey: stickersKey)
+            userDefaults.synchronize()
+            print("🎨 Demo stickers saved to UserDefaults: \(savedStickers.count)")
+        } catch {
+            print("❌ Failed to save demo stickers: \(error)")
+        }
+
+        // Автоматически выбираем все демо-стикеры для клавиатуры
+        let allStickerIds = Set(demoStickers.map { $0.id })
+        do {
+            let selectionData = try JSONEncoder().encode(allStickerIds)
+            userDefaults.set(selectionData, forKey: "selected_stickers_for_keyboard")
+            userDefaults.synchronize()
+            print("🎨 All demo stickers selected for keyboard: \(allStickerIds.count)")
+        } catch {
+            print("❌ Failed to save demo sticker selection: \(error)")
+        }
+    }
+
+    private func createDemoStickerImage(text: String) -> UIImage {
+        let size = CGSize(width: 200, height: 200)
+        let renderer = UIGraphicsImageRenderer(size: size)
+
+        return renderer.image { context in
+            // Зелёный фон
+            UIColor.systemGreen.setFill()
+            context.fill(CGRect(origin: .zero, size: size))
+
+            // Белый текст
+            let attributes: [NSAttributedString.Key: Any] = [
+                .font: UIFont.systemFont(ofSize: 24, weight: .bold),
+                .foregroundColor: UIColor.white
+            ]
+
+            let attributedText = NSAttributedString(string: text, attributes: attributes)
+            let textSize = attributedText.size()
+            let textRect = CGRect(
+                x: (size.width - textSize.width) / 2,
+                y: (size.height - textSize.height) / 2,
+                width: textSize.width,
+                height: textSize.height
+            )
+
+            attributedText.draw(in: textRect)
+        }
+    }
+}
 
 // MARK: - Keyboard Layout Enums
 enum KeyboardMode {
@@ -26,6 +263,8 @@ enum KeyType {
     case islamicPhrase(String)
     case islamicDua(String)
     case islamicToggle
+    case stickers
+    case stickerBack
 }
 
 class KeyboardViewController: UIInputViewController {
@@ -41,6 +280,7 @@ class KeyboardViewController: UIInputViewController {
     private let phrasesManager = KeyboardPhrasesManager.shared
     private let duaManager = KeyboardDuaManager.shared
     private let colorManager = KeyboardColorManager.shared
+    private let stickerManager = StickerManager.shared
     
     private let keyboardHeight: CGFloat = 216 // Стандартная высота iOS клавиатуры
     private let keyHeight: CGFloat = 42
@@ -73,28 +313,28 @@ class KeyboardViewController: UIInputViewController {
                 [.letter("Q"), .letter("W"), .letter("E"), .letter("R"), .letter("T"), .letter("Y"), .letter("U"), .letter("I"), .letter("O"), .letter("P")],
                 [.letter("A"), .letter("S"), .letter("D"), .letter("F"), .letter("G"), .letter("H"), .letter("J"), .letter("K"), .letter("L")],
                 [.shift, .letter("Z"), .letter("X"), .letter("C"), .letter("V"), .letter("B"), .letter("N"), .letter("M"), .delete],
-                [.numbers, .moon, .space, .returnKey]
+                [.numbers, .moon, .space, .symbol("."), .returnKey]
             ]
         case .russian:
             return [
-                [.letter("Й"), .letter("Ц"), .letter("У"), .letter("К"), .letter("Е"), .letter("Н"), .letter("Г"), .letter("Ш"), .letter("Щ"), .letter("З")],
-                [.letter("Ф"), .letter("Ы"), .letter("В"), .letter("А"), .letter("П"), .letter("Р"), .letter("О"), .letter("Л"), .letter("Д")],
-                [.shift, .letter("Я"), .letter("Ч"), .letter("С"), .letter("М"), .letter("И"), .letter("Т"), .letter("Ь"), .delete],
-                [.numbers, .moon, .space, .returnKey]
+                [.letter("Й"), .letter("Ц"), .letter("У"), .letter("К"), .letter("Е"), .letter("Н"), .letter("Г"), .letter("Ш"), .letter("Щ"), .letter("З"), .letter("Х")],
+                [.letter("Ф"), .letter("Ы"), .letter("В"), .letter("А"), .letter("П"), .letter("Р"), .letter("О"), .letter("Л"), .letter("Д"), .letter("Ж"), .letter("Э")],
+                [.shift, .letter("Я"), .letter("Ч"), .letter("С"), .letter("М"), .letter("И"), .letter("Т"), .letter("Ь"), .letter("Б"), .letter("Ю"), .delete],
+                [.numbers, .moon, .space, .symbol("."), .returnKey]
             ]
         case .kazakh:
             return [
-                [.letter("Й"), .letter("Ц"), .letter("У"), .letter("К"), .letter("Е"), .letter("Н"), .letter("Г"), .letter("Ш"), .letter("Щ"), .letter("З")],
-                [.letter("Ф"), .letter("Ы"), .letter("В"), .letter("А"), .letter("П"), .letter("Р"), .letter("О"), .letter("Л"), .letter("Д")],
-                [.shift, .letter("Я"), .letter("Ч"), .letter("С"), .letter("М"), .letter("И"), .letter("Т"), .letter("Ь"), .delete],
-                [.numbers, .moon, .space, .returnKey]
+                [.letter("Й"), .letter("Ц"), .letter("У"), .letter("К"), .letter("Е"), .letter("Н"), .letter("Г"), .letter("Ш"), .letter("Щ"), .letter("З"), .letter("Х")],
+                [.letter("Ф"), .letter("Ы"), .letter("В"), .letter("А"), .letter("П"), .letter("Р"), .letter("О"), .letter("Л"), .letter("Д"), .letter("Ж"), .letter("Э")],
+                [.shift, .letter("Я"), .letter("Ч"), .letter("С"), .letter("М"), .letter("И"), .letter("Т"), .letter("Ь"), .letter("Б"), .letter("Ю"), .delete],
+                [.numbers, .moon, .space, .symbol("."), .returnKey]
             ]
         case .arabic:
             return [
                 [.letter("ض"), .letter("ص"), .letter("ث"), .letter("ق"), .letter("ف"), .letter("غ"), .letter("ع"), .letter("ه"), .letter("خ"), .letter("ح")],
                 [.letter("ش"), .letter("س"), .letter("ي"), .letter("ب"), .letter("ل"), .letter("ا"), .letter("ت"), .letter("ن"), .letter("م")],
                 [.shift, .letter("ظ"), .letter("ط"), .letter("ذ"), .letter("د"), .letter("ز"), .letter("ر"), .letter("و"), .delete],
-                [.numbers, .moon, .space, .returnKey]
+                [.numbers, .moon, .space, .symbol("."), .returnKey]
             ]
         }
     }
@@ -154,6 +394,30 @@ class KeyboardViewController: UIInputViewController {
             self,
             selector: #selector(colorThemeChanged),
             name: NSNotification.Name("KeyboardColorChanged"),
+            object: nil
+        )
+
+        // Добавляем наблюдатель для изменений настроек стикеров
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(stickerSettingsChanged),
+            name: NSNotification.Name("StickerSettingsChanged"),
+            object: nil
+        )
+
+        // Добавляем наблюдатель для изменений выбранных стикеров
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(stickerSelectionChanged),
+            name: NSNotification.Name("StickerSelectionChanged"),
+            object: nil
+        )
+
+        // Добавляем наблюдатель для изменений видимости стикеров
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(stickerVisibilityChanged),
+            name: NSNotification.Name("StickerVisibilityChanged"),
             object: nil
         )
     }
@@ -223,6 +487,13 @@ class KeyboardViewController: UIInputViewController {
         // Принудительно обновляем цветовую тему
         colorManager.reloadThemeFromUserDefaults()
 
+        // Принудительно обновляем стикеры
+        stickerManager.loadStickers()
+
+        // Дополнительная отладочная информация
+        print("🎨 Islamic keyboard creation - stickers count: \(stickerManager.savedStickers.count)")
+        print("🎨 Islamic keyboard creation - should show button: \(stickerManager.shouldShowStickersButton())")
+
         // Удаляем старые элементы
         keyboardView.subviews.forEach { $0.removeFromSuperview() }
 
@@ -275,13 +546,44 @@ class KeyboardViewController: UIInputViewController {
         // Создаем кнопки управления
         let abcButton = createKeyButton(for: .letter("ABC"), rowIndex: 0, keyIndex: 0)
         let toggleButton = createKeyButton(for: .islamicToggle, rowIndex: 0, keyIndex: 1)
-        let spaceButton = createKeyButton(for: .space, rowIndex: 0, keyIndex: 3)
-        let sallaButton = createKeyButton(for: .symbol("ﷺ"), rowIndex: 0, keyIndex: 4)
-        let deleteButton = createKeyButton(for: .delete, rowIndex: 0, keyIndex: 5)
-        let returnButton = createKeyButton(for: .returnKey, rowIndex: 0, keyIndex: 6)
+
+        // Проверяем настройку отображения стикеров
+        let userDefaults = UserDefaults(suiteName: "group.school.nfactorial.muslim.keyboard") ?? UserDefaults.standard
+        let shouldShowStickers = userDefaults.object(forKey: "show_stickers_in_keyboard") as? Bool ?? true
+        var stickersButton: UIButton?
+
+        if shouldShowStickers {
+            print("🎨 Creating stickers button...")
+            print("🎨 StickerManager saved stickers count: \(stickerManager.savedStickers.count)")
+
+            // Убеждаемся, что стикеры загружены
+            stickerManager.loadStickers()
+
+            // Если стикеров нет, создаём демо-стикеры
+            if stickerManager.savedStickers.isEmpty {
+                stickerManager.createDemoStickersForKeyboard()
+            }
+
+            stickersButton = createKeyButton(for: .stickers, rowIndex: 0, keyIndex: 2)
+            print("🎨 Stickers button created successfully with \(stickerManager.savedStickers.count) stickers")
+        } else {
+            print("🎨 Stickers button hidden by user setting")
+        }
+
+        let spaceButton = createKeyButton(for: .space, rowIndex: 0, keyIndex: 4)
+        let sallaButton = createKeyButton(for: .symbol("ﷺ"), rowIndex: 0, keyIndex: 5)
+        let deleteButton = createKeyButton(for: .delete, rowIndex: 0, keyIndex: 6)
+        let returnButton = createKeyButton(for: .returnKey, rowIndex: 0, keyIndex: 7)
 
         controlRow.addSubview(abcButton)
         controlRow.addSubview(toggleButton)
+
+        // Добавляем кнопку стикеров только если она создана
+        if let stickersButton = stickersButton {
+            controlRow.addSubview(stickersButton)
+            print("🎨 Stickers button added to controlRow")
+        }
+
         controlRow.addSubview(spaceButton)
         controlRow.addSubview(sallaButton)
         controlRow.addSubview(deleteButton)
@@ -290,7 +592,7 @@ class KeyboardViewController: UIInputViewController {
         // Добавляем кнопку языка только если доступно больше одного языка
         var languageButton: UIButton?
         if languageManager.shouldShowLanguageToggle {
-            languageButton = createKeyButton(for: .globe, rowIndex: 0, keyIndex: 2)
+            languageButton = createKeyButton(for: .globe, rowIndex: 0, keyIndex: 3)
             controlRow.addSubview(languageButton!)
         }
 
@@ -298,63 +600,90 @@ class KeyboardViewController: UIInputViewController {
         var constraints: [NSLayoutConstraint] = []
 
         // Высота кнопок
-        constraints.append(contentsOf: [
+        var heightConstraints: [NSLayoutConstraint] = [
             abcButton.heightAnchor.constraint(equalTo: controlRow.heightAnchor),
             toggleButton.heightAnchor.constraint(equalTo: controlRow.heightAnchor),
             spaceButton.heightAnchor.constraint(equalTo: controlRow.heightAnchor),
             sallaButton.heightAnchor.constraint(equalTo: controlRow.heightAnchor),
             deleteButton.heightAnchor.constraint(equalTo: controlRow.heightAnchor),
             returnButton.heightAnchor.constraint(equalTo: controlRow.heightAnchor)
-        ])
+        ]
+
+        // Добавляем ограничения для кнопки стикеров только если она существует
+        if let stickersButton = stickersButton {
+            heightConstraints.append(stickersButton.heightAnchor.constraint(equalTo: controlRow.heightAnchor))
+        }
+
+        constraints.append(contentsOf: heightConstraints)
 
         // Вертикальное выравнивание
-        constraints.append(contentsOf: [
+        var topConstraints: [NSLayoutConstraint] = [
             abcButton.topAnchor.constraint(equalTo: controlRow.topAnchor),
             toggleButton.topAnchor.constraint(equalTo: controlRow.topAnchor),
             spaceButton.topAnchor.constraint(equalTo: controlRow.topAnchor),
             sallaButton.topAnchor.constraint(equalTo: controlRow.topAnchor),
             deleteButton.topAnchor.constraint(equalTo: controlRow.topAnchor),
             returnButton.topAnchor.constraint(equalTo: controlRow.topAnchor)
-        ])
+        ]
+
+        // Добавляем ограничения для кнопки стикеров только если она существует
+        if let stickersButton = stickersButton {
+            topConstraints.append(stickersButton.topAnchor.constraint(equalTo: controlRow.topAnchor))
+        }
+
+        constraints.append(contentsOf: topConstraints)
 
         // Горизонтальное расположение
         constraints.append(contentsOf: [
             abcButton.leadingAnchor.constraint(equalTo: controlRow.leadingAnchor),
-            abcButton.widthAnchor.constraint(equalToConstant: 45),
+            abcButton.widthAnchor.constraint(equalToConstant: 40),
 
-            toggleButton.leadingAnchor.constraint(equalTo: abcButton.trailingAnchor, constant: 8),
-            toggleButton.widthAnchor.constraint(equalToConstant: 55)
+            toggleButton.leadingAnchor.constraint(equalTo: abcButton.trailingAnchor, constant: 6),
+            toggleButton.widthAnchor.constraint(equalToConstant: 45)
         ])
+
+        // Определяем последнюю кнопку перед пробелом
+        let lastButtonBeforeSpace: UIButton
+        if let stickersButton = stickersButton {
+            constraints.append(contentsOf: [
+                stickersButton.leadingAnchor.constraint(equalTo: toggleButton.trailingAnchor, constant: 6),
+                stickersButton.widthAnchor.constraint(equalToConstant: 35)
+            ])
+            lastButtonBeforeSpace = stickersButton
+        } else {
+            lastButtonBeforeSpace = toggleButton
+        }
 
         if let langButton = languageButton {
             // Если есть кнопка языка
             constraints.append(contentsOf: [
                 langButton.heightAnchor.constraint(equalTo: controlRow.heightAnchor),
                 langButton.topAnchor.constraint(equalTo: controlRow.topAnchor),
-                langButton.leadingAnchor.constraint(equalTo: toggleButton.trailingAnchor, constant: 8),
-                langButton.widthAnchor.constraint(equalToConstant: 40),
+                langButton.leadingAnchor.constraint(equalTo: lastButtonBeforeSpace.trailingAnchor, constant: 6),
+                langButton.widthAnchor.constraint(equalToConstant: 35),
 
-                spaceButton.leadingAnchor.constraint(equalTo: langButton.trailingAnchor, constant: 8),
-                spaceButton.widthAnchor.constraint(equalToConstant: 80)
+                spaceButton.leadingAnchor.constraint(equalTo: langButton.trailingAnchor, constant: 6),
+                spaceButton.widthAnchor.constraint(equalToConstant: 70)
             ])
         } else {
             // Если нет кнопки языка, пробел больше
+            let spaceWidth: CGFloat = 105 // Фиксированная ширина, так как кнопка стикеров всегда есть
             constraints.append(contentsOf: [
-                spaceButton.leadingAnchor.constraint(equalTo: toggleButton.trailingAnchor, constant: 8),
-                spaceButton.widthAnchor.constraint(equalToConstant: 120)
+                spaceButton.leadingAnchor.constraint(equalTo: lastButtonBeforeSpace.trailingAnchor, constant: 6),
+                spaceButton.widthAnchor.constraint(equalToConstant: spaceWidth)
             ])
         }
 
         constraints.append(contentsOf: [
-            sallaButton.leadingAnchor.constraint(equalTo: spaceButton.trailingAnchor, constant: 8),
-            sallaButton.widthAnchor.constraint(equalToConstant: 40),
+            sallaButton.leadingAnchor.constraint(equalTo: spaceButton.trailingAnchor, constant: 6),
+            sallaButton.widthAnchor.constraint(equalToConstant: 35),
 
-            deleteButton.leadingAnchor.constraint(equalTo: sallaButton.trailingAnchor, constant: 8),
-            deleteButton.widthAnchor.constraint(equalToConstant: 45),
+            deleteButton.leadingAnchor.constraint(equalTo: sallaButton.trailingAnchor, constant: 6),
+            deleteButton.widthAnchor.constraint(equalToConstant: 40),
 
-            returnButton.leadingAnchor.constraint(equalTo: deleteButton.trailingAnchor, constant: 8),
+            returnButton.leadingAnchor.constraint(equalTo: deleteButton.trailingAnchor, constant: 6),
             returnButton.trailingAnchor.constraint(equalTo: controlRow.trailingAnchor),
-            returnButton.widthAnchor.constraint(equalToConstant: 50)
+            returnButton.widthAnchor.constraint(equalToConstant: 45)
         ])
 
         NSLayoutConstraint.activate(constraints)
@@ -535,8 +864,8 @@ class KeyboardViewController: UIInputViewController {
     private func setButtonWidthConstraints(button: UIButton, keyType: KeyType, buttons: [UIButton], row: [KeyType]) {
         switch keyType {
         case .space:
-            // Пробел занимает оставшееся место между другими кнопками
-            // Не устанавливаем фиксированную ширину - она будет вычислена автоматически
+            // Пробел - увеличенная ширина для удобства
+            button.widthAnchor.constraint(greaterThanOrEqualToConstant: 120).isActive = true
             break
         case .shift, .delete:
             // Shift и Delete - фиксированная ширина как в iOS
@@ -550,6 +879,9 @@ class KeyboardViewController: UIInputViewController {
         case .moon, .globe:
             // Специальные кнопки - маленькие как в iOS
             button.widthAnchor.constraint(equalToConstant: 42).isActive = true
+        case .symbol(let sym) where sym == ".":
+            // Точка - уменьшенная ширина
+            button.widthAnchor.constraint(equalToConstant: 32).isActive = true
         case .islamicPhrase, .islamicDua:
             // Исламские кнопки - равномерно распределяем по ширине
             if row.allSatisfy({
@@ -572,7 +904,10 @@ class KeyboardViewController: UIInputViewController {
             let regularButtons = buttons.enumerated().compactMap { (index, btn) -> UIButton? in
                 let keyType = row[index]
                 switch keyType {
-                case .letter, .number, .symbol:
+                case .letter, .number:
+                    return btn
+                case .symbol(let sym) where sym != ".":
+                    // Исключаем точку из обычных символов
                     return btn
                 default:
                     return nil
@@ -657,6 +992,14 @@ class KeyboardViewController: UIInputViewController {
             // Кнопка переключения Дуа/Фразы - используем цвет темы
             button.backgroundColor = colorManager.keyboardButtonColor
             button.setTitleColor(colorManager.keyboardButtonTextColor, for: .normal)
+        case .stickers:
+            // Кнопка стикеров - используем цвет темы
+            button.backgroundColor = colorManager.keyboardButtonColor
+            button.setTitleColor(colorManager.keyboardButtonTextColor, for: .normal)
+        case .stickerBack:
+            // Кнопка возврата из стикеров - серый фон для белого интерфейса
+            button.backgroundColor = UIColor.systemGray5
+            button.setTitleColor(.black, for: .normal)
         case .symbol(let sym) where sym == "ﷺ":
             // Специальная кнопка ﷺ - используем цвет темы
             button.backgroundColor = colorManager.keyboardButtonColor
@@ -678,6 +1021,8 @@ class KeyboardViewController: UIInputViewController {
             button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         case .islamicToggle:
             button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        case .stickers:
+            button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         case .moon:
             button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .regular)
         default:
@@ -837,6 +1182,14 @@ class KeyboardViewController: UIInputViewController {
         case .islamicDua(let text):
             button.setTitle(text, for: .normal)
             button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        case .stickers:
+            // Показываем иконку стикеров со смайликом
+            button.setTitle("😊", for: .normal)
+            button.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+        case .stickerBack:
+            // Кнопка возврата из стикеров - только стрелочка
+            button.setTitle("←", for: .normal)
+            button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         }
     }
 
@@ -857,6 +1210,8 @@ class KeyboardViewController: UIInputViewController {
         case .islamicPhrase(let text): return "phrase:\(text)"
         case .islamicDua(let text): return "dua:\(text)"
         case .islamicToggle: return "islamicToggle"
+        case .stickers: return "stickers"
+        case .stickerBack: return "stickerBack"
         }
     }
 
@@ -881,6 +1236,8 @@ class KeyboardViewController: UIInputViewController {
         case "phrase": return .islamicPhrase(value)
         case "dua": return .islamicDua(value)
         case "islamicToggle": return .islamicToggle
+        case "stickers": return .stickers
+        case "stickerBack": return .stickerBack
         default: return .letter("A")
         }
     }
@@ -989,6 +1346,12 @@ class KeyboardViewController: UIInputViewController {
 
         case .islamicToggle:
             toggleIslamicContent()
+
+        case .stickers:
+            showStickerLibrary()
+
+        case .stickerBack:
+            returnToIslamicKeyboard()
         }
 
         // Тактильная обратная связь
@@ -1001,6 +1364,434 @@ class KeyboardViewController: UIInputViewController {
         if currentMode == .islamic {
             createIslamicKeyboard()
         }
+    }
+
+    private func showStickerLibrary() {
+        // Создаем и показываем библиотеку стикеров в клавиатуре
+        if currentMode == .islamic {
+            createStickerKeyboard()
+        }
+    }
+
+    private func createStickerKeyboard() {
+        // Увеличиваем высоту клавиатуры для стикеров
+        updateKeyboardHeight(300) // Увеличиваем до 300 пикселей
+
+        // Очищаем текущий контент
+        keyboardView.subviews.forEach { $0.removeFromSuperview() }
+
+        // Принудительно перезагружаем стикеры из UserDefaults
+        stickerManager.loadStickers()
+
+        // ПРИНУДИТЕЛЬНО создаем демо-стикеры если их нет
+        if stickerManager.savedStickers.isEmpty {
+            print("🎨 No stickers found, creating demo stickers...")
+            stickerManager.createDemoStickersForKeyboard()
+        }
+
+        // Получаем только выбранные стикеры для клавиатуры
+        let stickers = stickerManager.getStickersForKeyboard()
+
+        print("🎨 Creating sticker keyboard with \(stickers.count) selected stickers")
+        print("🎨 Total saved stickers: \(stickerManager.savedStickers.count)")
+        print("🎨 Selected stickers for keyboard: \(stickers.count)")
+
+        // Выводим информацию о каждом стикере
+        for (index, sticker) in stickers.enumerated() {
+            print("🎨 Sticker \(index): '\(sticker.prompt)' (ID: \(sticker.id))")
+        }
+
+        if stickers.isEmpty {
+            // Показываем сообщение о пустой библиотеке
+            createEmptyStickerView()
+        } else {
+            // Показываем стикеры
+            createStickerGrid(stickers: stickers)
+        }
+    }
+
+    private func createEmptyStickerView() {
+        let emptyView = UIView()
+        emptyView.translatesAutoresizingMaskIntoConstraints = false
+        emptyView.backgroundColor = .white
+        keyboardView.addSubview(emptyView)
+
+        let messageLabel = UILabel()
+        messageLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        // Отладочная информация
+        let totalStickers = stickerManager.savedStickers.count
+        let debugText = "🎨 DEBUG INFO\n\nTotal saved stickers: \(totalStickers)\nFiltered stickers: 0\n\nОткройте приложение и создайте\nваш первый исламский стикер!"
+
+        messageLabel.text = debugText
+        messageLabel.textColor = .darkGray
+        messageLabel.textAlignment = .center
+        messageLabel.numberOfLines = 0
+        messageLabel.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+        emptyView.addSubview(messageLabel)
+
+        // Кнопка возврата - только стрелочка
+        let backButton = createKeyButton(for: .stickerBack, rowIndex: 0, keyIndex: 0)
+        emptyView.addSubview(backButton)
+
+        NSLayoutConstraint.activate([
+            emptyView.topAnchor.constraint(equalTo: keyboardView.topAnchor),
+            emptyView.leadingAnchor.constraint(equalTo: keyboardView.leadingAnchor),
+            emptyView.trailingAnchor.constraint(equalTo: keyboardView.trailingAnchor),
+            emptyView.bottomAnchor.constraint(equalTo: keyboardView.bottomAnchor),
+
+            messageLabel.centerXAnchor.constraint(equalTo: emptyView.centerXAnchor),
+            messageLabel.centerYAnchor.constraint(equalTo: emptyView.centerYAnchor, constant: -20),
+
+            backButton.bottomAnchor.constraint(equalTo: emptyView.bottomAnchor, constant: -10),
+            backButton.leadingAnchor.constraint(equalTo: emptyView.leadingAnchor, constant: 10),
+            backButton.widthAnchor.constraint(equalToConstant: 80),
+            backButton.heightAnchor.constraint(equalToConstant: 40)
+        ])
+    }
+
+    private func createStickerGrid(stickers: [SavedSticker]) {
+
+        let containerView = UIView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.backgroundColor = .white
+        keyboardView.addSubview(containerView)
+
+        // Добавляем заголовок с отладочной информацией
+        let headerLabel = UILabel()
+        headerLabel.translatesAutoresizingMaskIntoConstraints = false
+        headerLabel.text = "🎨 Stickers: \(stickers.count) / \(stickerManager.savedStickers.count)"
+        headerLabel.textColor = .darkGray
+        headerLabel.textAlignment = .center
+        headerLabel.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+        containerView.addSubview(headerLabel)
+
+        // Создаем скролл-вью для стикеров
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = true // Включаем вертикальный скролл
+        scrollView.isScrollEnabled = true
+        scrollView.bounces = true
+        containerView.addSubview(scrollView)
+
+        let contentView = UIView()
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(contentView)
+
+        // Создаем кнопки стикеров - увеличенный размер для лучшего отображения
+        let stickersPerRow = 4
+        let stickerSize: CGFloat = 60
+        let spacing: CGFloat = 12
+        let margin: CGFloat = 16
+
+        var stickerButtons: [UIButton] = []
+
+        print("🎨 Creating \(stickers.count) sticker buttons...")
+
+        for (index, sticker) in stickers.enumerated() {
+            print("🎨 Creating button \(index) for sticker: '\(sticker.prompt)'")
+            let button = UIButton(type: .custom)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.tag = index
+
+            // Упрощенное отображение - показываем текст стикера
+            let displayText = sticker.prompt.count > 8 ? String(sticker.prompt.prefix(8)) + "..." : sticker.prompt
+            button.setTitle(displayText, for: .normal)
+            button.setTitleColor(.black, for: .normal)
+            button.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.3)
+            button.titleLabel?.font = UIFont.systemFont(ofSize: 10, weight: .medium)
+            button.titleLabel?.numberOfLines = 2
+            button.titleLabel?.textAlignment = .center
+
+            button.layer.cornerRadius = 8
+            button.clipsToBounds = true
+            button.layer.borderWidth = 1
+            button.layer.borderColor = UIColor.systemGray3.cgColor
+
+            // Добавляем тень для лучшего визуального эффекта
+            button.layer.shadowColor = UIColor.black.cgColor
+            button.layer.shadowOffset = CGSize(width: 0, height: 1)
+            button.layer.shadowOpacity = 0.1
+            button.layer.shadowRadius = 2
+            button.layer.masksToBounds = false
+
+            // Эффект нажатия
+            button.addTarget(self, action: #selector(stickerButtonPressed(_:)), for: .touchDown)
+            button.addTarget(self, action: #selector(stickerButtonReleased(_:)), for: [.touchUpInside, .touchUpOutside, .touchCancel])
+
+            // Добавляем действие
+            button.addTarget(self, action: #selector(stickerButtonTapped(_:)), for: .touchUpInside)
+
+            contentView.addSubview(button)
+            stickerButtons.append(button)
+            print("🎨 Added button \(index) to contentView")
+        }
+
+        print("🎨 Total buttons created and added: \(stickerButtons.count)")
+
+        // Кнопка возврата - только стрелочка
+        let backButton = createKeyButton(for: .stickerBack, rowIndex: 0, keyIndex: 0)
+        containerView.addSubview(backButton)
+
+        // Настраиваем ограничения
+        NSLayoutConstraint.activate([
+            containerView.topAnchor.constraint(equalTo: keyboardView.topAnchor),
+            containerView.leadingAnchor.constraint(equalTo: keyboardView.leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: keyboardView.trailingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: keyboardView.bottomAnchor),
+
+            // Заголовок
+            headerLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 5),
+            headerLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            headerLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            headerLabel.heightAnchor.constraint(equalToConstant: 20),
+
+            scrollView.topAnchor.constraint(equalTo: headerLabel.bottomAnchor, constant: 5),
+            scrollView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -50),
+
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+
+            backButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -5),
+            backButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10),
+            backButton.widthAnchor.constraint(equalToConstant: 80),
+            backButton.heightAnchor.constraint(equalToConstant: 40)
+        ])
+
+        // Размещаем кнопки стикеров в сетке
+        let rows = (stickers.count + stickersPerRow - 1) / stickersPerRow
+        let contentHeight = CGFloat(rows) * (stickerSize + spacing) + margin
+
+        print("🎨 Grid layout: \(stickers.count) stickers, \(rows) rows, content height: \(contentHeight)")
+
+        contentView.heightAnchor.constraint(equalToConstant: contentHeight).isActive = true
+
+        for (index, button) in stickerButtons.enumerated() {
+            let row = index / stickersPerRow
+            let col = index % stickersPerRow
+
+            let x = margin + CGFloat(col) * (stickerSize + spacing)
+            let y = margin + CGFloat(row) * (stickerSize + spacing)
+
+            print("🎨 Button \(index): row=\(row), col=\(col), x=\(x), y=\(y)")
+
+            NSLayoutConstraint.activate([
+                button.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: x),
+                button.topAnchor.constraint(equalTo: contentView.topAnchor, constant: y),
+                button.widthAnchor.constraint(equalToConstant: stickerSize),
+                button.heightAnchor.constraint(equalToConstant: stickerSize)
+            ])
+        }
+    }
+
+    @objc private func stickerButtonPressed(_ sender: UIButton) {
+        // Анимация нажатия
+        UIView.animate(withDuration: 0.1) {
+            sender.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+            sender.alpha = 0.8
+        }
+    }
+
+    @objc private func stickerButtonReleased(_ sender: UIButton) {
+        // Анимация отпускания
+        UIView.animate(withDuration: 0.1) {
+            sender.transform = CGAffineTransform.identity
+            sender.alpha = 1.0
+        }
+    }
+
+    @objc private func stickerButtonTapped(_ sender: UIButton) {
+        let index = sender.tag
+        let stickers = stickerManager.getStickersForKeyboard()
+
+        guard index < stickers.count else { return }
+
+        let sticker = stickers[index]
+
+        // Пытаемся вставить стикер как изображение в PNG формате
+        if let image = UIImage(data: sticker.imageData) {
+            print("🎨 Processing sticker: '\(sticker.prompt)' as PNG image")
+            insertStickerImage(image)
+        } else {
+            // Fallback - вставляем текст с индикатором PNG
+            print("🎨 No image data found, inserting text fallback")
+            textDocumentProxy.insertText("🎨 \(sticker.prompt) [PNG]")
+        }
+
+        // Возвращаемся к исламской клавиатуре
+        createIslamicKeyboard()
+
+        // Тактильная обратная связь
+        let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
+        impactFeedback.impactOccurred()
+    }
+
+    private func insertStickerImage(_ image: UIImage) {
+        print("🎨 Attempting to insert sticker image as PNG")
+
+        // Метод 1: Современный API для iOS 13+
+        if #available(iOS 13.0, *) {
+            insertImageWithModernAPI(image)
+            return
+        }
+
+        // Метод 2: Попытка вставить изображение через UIPasteboard
+        if insertImageViaPasteboard(image) {
+            print("🎨 Sticker inserted via pasteboard")
+            return
+        }
+
+        // Метод 3: Попытка вставить изображение через NSTextAttachment (если поддерживается)
+        if insertImageViaTextAttachment(image) {
+            print("🎨 Sticker inserted via text attachment")
+            return
+        }
+
+        // Метод 4: Fallback - сохраняем как PNG файл и вставляем индикатор
+        insertImageViaPhotosLibrary(image)
+    }
+
+    private func insertImageViaPasteboard(_ image: UIImage) -> Bool {
+        // Конвертируем изображение в PNG данные
+        guard let pngData = image.pngData() else {
+            print("🎨 Failed to convert image to PNG data")
+            return false
+        }
+
+        // Создаем NSItemProvider для изображения
+        let itemProvider = NSItemProvider(item: pngData as NSData, typeIdentifier: "public.png")
+
+        // Сохраняем изображение в буфер обмена с правильным типом
+        let pasteboard = UIPasteboard.general
+        pasteboard.itemProviders = [itemProvider]
+
+        // Альтернативный способ - устанавливаем изображение напрямую
+        pasteboard.image = image
+
+        // Пытаемся использовать специальный метод для вставки изображений (iOS 10+)
+        if #available(iOS 10.0, *) {
+            // Создаем NSTextAttachment для более корректной вставки
+            let attachment = NSTextAttachment()
+            attachment.image = image
+
+            // Масштабируем изображение для удобства
+            let maxSize: CGFloat = 120
+            let aspectRatio = image.size.width / image.size.height
+            let newSize: CGSize
+
+            if aspectRatio > 1 {
+                // Широкое изображение
+                newSize = CGSize(width: maxSize, height: maxSize / aspectRatio)
+            } else {
+                // Высокое изображение
+                newSize = CGSize(width: maxSize * aspectRatio, height: maxSize)
+            }
+
+            attachment.bounds = CGRect(origin: .zero, size: newSize)
+        }
+
+        // Добавляем пробел перед изображением если есть текст
+        if textDocumentProxy.hasText {
+            textDocumentProxy.insertText(" ")
+        }
+
+        // Вставляем индикатор изображения с информацией о PNG
+        let fileSizeKB = Double(pngData.count) / 1024.0
+        let sizeText = fileSizeKB > 1 ? String(format: "%.1fKB", fileSizeKB) : "\(pngData.count)B"
+        textDocumentProxy.insertText("🖼️ PNG (\(sizeText))")
+
+        print("🎨 Image saved to pasteboard as PNG (\(pngData.count) bytes, \(sizeText))")
+        return true
+    }
+
+    private func insertImageViaTextAttachment(_ image: UIImage) -> Bool {
+        // Создаем NSTextAttachment с изображением
+        let attachment = NSTextAttachment()
+        attachment.image = image
+
+        // Устанавливаем размер изображения (например, 100x100 пикселей)
+        let imageSize = CGSize(width: 100, height: 100)
+        attachment.bounds = CGRect(origin: .zero, size: imageSize)
+
+        // Создаем attributed string с изображением
+        let attributedString = NSAttributedString(attachment: attachment)
+
+        // Пытаемся вставить attributed string
+        // Примечание: не все приложения поддерживают это
+        if textDocumentProxy is UITextInput & UITextInputTraits {
+            // Этот метод может не работать во всех приложениях
+            textDocumentProxy.insertText(attributedString.string)
+            return true
+        }
+
+        return false
+    }
+
+    private func insertImageViaPhotosLibrary(_ image: UIImage) {
+        // Сохраняем изображение во временную папку как PNG
+        if let pngData = image.pngData() {
+            let tempDir = FileManager.default.temporaryDirectory
+            let fileName = "islamic_sticker_\(UUID().uuidString).png"
+            let fileURL = tempDir.appendingPathComponent(fileName)
+
+            do {
+                try pngData.write(to: fileURL)
+                print("🎨 Sticker saved as PNG: \(fileURL.path)")
+
+                // Сохраняем путь к файлу в буфер обмена для возможного использования
+                let pasteboard = UIPasteboard.general
+                pasteboard.string = fileURL.absoluteString
+
+                // Вставляем индикатор с информацией о файле
+                textDocumentProxy.insertText("🖼️ PNG")
+
+            } catch {
+                print("🎨 Failed to save PNG file: \(error)")
+                textDocumentProxy.insertText("🖼️ [Исламский стикер]")
+            }
+        } else {
+            print("🎨 Failed to convert image to PNG data")
+            textDocumentProxy.insertText("🖼️ [Исламский стикер]")
+        }
+    }
+
+    // MARK: - Advanced Image Insertion Methods
+
+    private func insertImageWithModernAPI(_ image: UIImage) {
+        // Для iOS 13+ можно использовать более современные API
+        if #available(iOS 13.0, *) {
+            insertImageWithDragAndDrop(image)
+        } else {
+            _ = insertImageViaPasteboard(image)
+        }
+    }
+
+    @available(iOS 13.0, *)
+    private func insertImageWithDragAndDrop(_ image: UIImage) {
+        // Создаем NSItemProvider для изображения
+        guard let pngData = image.pngData() else { return }
+
+        let itemProvider = NSItemProvider()
+        itemProvider.registerDataRepresentation(forTypeIdentifier: "public.png", visibility: .all) { completion in
+            completion(pngData, nil)
+            return nil
+        }
+
+        // Сохраняем в буфер обмена с современным API
+        UIPasteboard.general.itemProviders = [itemProvider]
+
+        // Вставляем индикатор с информацией о PNG
+        let fileSizeKB = Double(pngData.count) / 1024.0
+        let sizeText = fileSizeKB > 1 ? String(format: "%.1fKB", fileSizeKB) : "\(pngData.count)B"
+        textDocumentProxy.insertText("🖼️ PNG (\(sizeText))")
+
+        print("🎨 Image prepared with modern API (iOS 13+) - PNG size: \(sizeText)")
     }
 
     private func handleDeleteTap() {
@@ -1044,6 +1835,29 @@ class KeyboardViewController: UIInputViewController {
         } else {
             createKeyRows()
         }
+    }
+
+    private func returnToIslamicKeyboard() {
+        // Возвращаем стандартную высоту клавиатуры
+        updateKeyboardHeight(keyboardHeight)
+
+        // Всегда возвращаемся к исламской клавиатуре
+        currentMode = .islamic
+        // Удаляем старую клавиатуру и создаем исламскую
+        keyboardView.subviews.forEach { $0.removeFromSuperview() }
+        createIslamicKeyboard()
+    }
+
+    private func updateKeyboardHeight(_ height: CGFloat) {
+        // Обновляем constraint высоты клавиатуры
+        for constraint in self.view.constraints {
+            if constraint.firstAttribute == .height {
+                constraint.constant = height
+                break
+            }
+        }
+        self.view.layoutIfNeeded()
+        print("🎨 Updated keyboard height to: \(height)")
     }
 
     private func handleIslamicPhraseTap(_ displayText: String) {
@@ -1096,6 +1910,35 @@ class KeyboardViewController: UIInputViewController {
         updateKeyboard()
     }
 
+    @objc private func stickerSettingsChanged() {
+        print("🎨 Sticker settings changed notification received")
+        DispatchQueue.main.async {
+            // Пересоздаем клавиатуру, чтобы обновить кнопку стикеров
+            if self.currentMode == .islamic {
+                self.createIslamicKeyboard()
+            }
+        }
+    }
+
+    @objc private func stickerSelectionChanged() {
+        print("🎨 Sticker selection changed notification received")
+        DispatchQueue.main.async {
+            // Обновляем счетчик на кнопке стикеров
+            if self.currentMode == .islamic {
+                self.createIslamicKeyboard()
+            }
+        }
+    }
+
+    @objc private func stickerVisibilityChanged() {
+        print("🎨 Sticker visibility changed notification received")
+        DispatchQueue.main.async {
+            // Пересоздаем клавиатуру, чтобы показать/скрыть кнопку стикеров
+            if self.currentMode == .islamic {
+                self.createIslamicKeyboard()
+            }
+        }
+    }
 
     private func updateAppearance() {
         // Обновляем внешний вид при изменении контекста

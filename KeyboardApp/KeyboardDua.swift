@@ -395,6 +395,19 @@ class KeyboardDuaManager {
                 russianTranslation: "Би амани Ллях",
                 kazakhTranslation: "Би амани Ллях",
                 arabicTranslation: "بِأَمَانِ اللَّهِ"
+            ),
+            KeyboardDua(
+                key: "rain",
+                icon: "cloud.rain.fill",
+                englishTitle: "Rain Dua",
+                russianTitle: "Дуа от дождя",
+                kazakhTitle: "Жаңбыр дұғасы",
+                arabicTitle: "دعاء المطر",
+                arabicText: "اللَّهُمَّ صَيِّبًا نَافِعًا",
+                englishTranslation: "Allahumma sayyiban nafi'an",
+                russianTranslation: "Аллаахумма сойибэн наафи'а",
+                kazakhTranslation: "Аллаһумма сайибан нафиа",
+                arabicTranslation: "اللَّهُمَّ صَيِّبًا نَافِعًا"
             )
         ]
         

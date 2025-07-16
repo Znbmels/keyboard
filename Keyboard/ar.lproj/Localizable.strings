@@ -39,6 +39,7 @@
 // MARK: - Tab Bar
 "tab_home" = "الرئيسية";
 "tab_phrases" = "العبارات";
+"tab_stickers" = "الملصقات";
 "tab_keyboard" = "لوحة المفاتيح";
 "tab_settings" = "الإعدادات";
 
@@ -209,6 +210,84 @@
 // MARK: - Terms and Conditions
 "terms_conditions_title" = "شروط الاستخدام";
 
+// MARK: - Sticker Generator
+"sticker_generator_title" = "مولد الملصقات";
+"sticker_generator_subtitle" = "نظام ذكي لتوليد الملصقات الإسلامية مع تحليل الذكاء الاصطناعي";
+"sticker_content_type_title" = "نوع المحتوى";
+"sticker_type_textual" = "نصي";
+"sticker_type_visual" = "بصري";
+"sticker_type_textual_desc" = "خط العبارات الإسلامية";
+"sticker_type_visual_desc" = "الرسوم والأنماط";
+"sticker_examples_title" = "أمثلة";
+"sticker_input_title" = "عبارتك أو وصفك";
+"sticker_input_placeholder" = "أدخل عبارة إسلامية أو وصف...";
+"sticker_input_limit" = "الحد الأقصى 200 حرف";
+"sticker_generate_button" = "🎨 إنشاء ملصق";
+"sticker_generating_button" = "جاري الإنشاء...";
+"sticker_generating_status" = "الذكاء الاصطناعي يحلل عبارتك وينشئ ملصقاً فريداً...";
+"sticker_share_button" = "مشاركة";
+"sticker_generation_success" = "تم إنشاء الملصق بنجاح!";
+"sticker_generation_time" = "وقت التوليد:";
+"sticker_generation_error" = "خطأ في إنشاء الملصق. يرجى المحاولة مرة أخرى.";
+"sticker_analysis_title" = "تحليل الذكاء الاصطناعي";
+"sticker_analysis_type" = "النوع";
+"sticker_analysis_emotion" = "المشاعر";
+"sticker_analysis_style" = "الأسلوب";
+"sticker_analysis_colors" = "الألوان";
+"sticker_preview_title" = "معاينة";
+"sticker_preview_placeholder" = "ملصقك جاهز!";
+"sticker_api_offline_note" = "API غير متاح. استخدام الوضع التجريبي.";
+"sticker_offline_mode" = "(وضع عدم الاتصال)";
+
+// Progress messages
+"sticker_progress_connecting" = "الاتصال بالخادم...";
+"sticker_progress_sending" = "إرسال طلب الإنشاء...";
+"sticker_progress_analyzing" = "تحليل النص...";
+"sticker_progress_creating" = "إنشاء الصورة...";
+"sticker_progress_processing" = "معالجة النتيجة...";
+"sticker_progress_saving" = "حفظ الملصق...";
+"sticker_progress_complete" = "مكتمل!";
+"sticker_progress_long_wait" = "قد يستغرق الإنشاء حتى 10 دقائق...";
+"sticker_progress_unique_design" = "إنشاء تصميم فريد...";
+"sticker_server_overloaded" = "عذراً، خوادمنا محملة بشكل زائد حالياً، يرجى المحاولة مرة أخرى خلال 5 دقائق. نحن نعمل على حل هذه المشكلة.";
+"sticker_server_wait_time" = "⏱️ وقت الانتظار الموصى به: 5 دقائق";
+"sticker_server_try_later" = "🔄 حاول مرة أخرى لاحقاً";
+"sticker_retry_countdown" = "⏱️ إعادة المحاولة خلال: %@";
+
+// New sticker generator strings
+"stickers_enabled_keyboard" = "تفعيل الملصقات في لوحة المفاتيح";
+"create_new_sticker" = "إنشاء ملصق جديد";
+"enter_your_text" = "أدخل النص الخاص بك:";
+"content_type" = "نوع المحتوى:";
+"generate_sticker" = "إنشاء ملصق";
+"generating" = "جاري الإنشاء...";
+"your_stickers" = "ملصقاتك";
+"select_for_keyboard" = "اختيار للوحة المفاتيح";
+"done" = "تم";
+"select_stickers_keyboard" = "اختر الملصقات لعرضها في لوحة المفاتيح";
+"select_all" = "اختيار الكل";
+"deselect_all" = "إلغاء اختيار الكل";
+
+// MARK: - Sticker Library
+"sticker_library_title" = "مكتبة الملصقات";
+"sticker_library_empty_title" = "لا توجد ملصقات بعد";
+"sticker_library_empty_subtitle" = "أنشئ أول ملصق لك في المولد";
+"sticker_library_create_first" = "إنشاء ملصق";
+"sticker_library_delete_title" = "حذف الملصق؟";
+"sticker_library_delete_message" = "لا يمكن التراجع عن هذا الإجراء";
+"sticker_library_clear_all_title" = "مسح المكتبة بالكامل؟";
+"sticker_library_clear_all_message" = "سيتم حذف جميع الملصقات إلى الأبد";
+"sticker_library_clear_all" = "مسح الكل";
+"sticker_library_statistics" = "الإحصائيات";
+"sticker_detail_title" = "تفاصيل الملصق";
+"sticker_detail_prompt" = "الطلب";
+"sticker_detail_type" = "النوع";
+"sticker_detail_created" = "تم الإنشاء";
+"sticker_detail_style" = "الأسلوب";
+"sticker_detail_colors" = "الألوان";
+"delete" = "حذف";
+"cancel" = "إلغاء";
+
 // MARK: - Support Section
 "support_subtitle" = "أنا أقوم ببناء لوحة مفاتيح المسلم الذكية - لأنني أريد أن يتواصل المسلمون بشكل أكثر راحة في الدردشة.";
 "support_project_title" = "ادعم المشروع:";
@@ -237,3 +316,7 @@
 "troubleshooting_restart_step1" = "أعد تشغيل جهازك بالكامل";
 "troubleshooting_restart_step2" = "احذف وأعد إضافة لوحة المفاتيح في الإعدادات";
 "troubleshooting_restart_step3" = "فعّل 'السماح بالوصول الكامل' إذا لزم الأمر";
+
+// MARK: - Stickers Settings
+"stickers_show_button_title" = "إظهار الملصقات";
+"stickers_show_button_subtitle" = "عرض زر الملصقات في لوحة المفاتيح";

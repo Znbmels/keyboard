@@ -21,13 +21,21 @@ struct MainTabView: View {
                 }
                 .tag(0)
 
-            // Keyboard Tab when is select 
+            // Stickers Tab
+            StickerGeneratorView()
+                .tabItem {
+                    Image(systemName: "face.smiling.fill")
+                    Text("tab_stickers")
+                }
+                .tag(1)
+
+            // Keyboard Tab when is select
             KeyboardInstructionsView()
                 .tabItem {
                     Image(systemName: "keyboard.fill")
                     Text("tab_keyboard")
                 }
-                .tag(1)
+                .tag(2)
 
             // Settings Tab
             SettingsView()
@@ -35,7 +43,7 @@ struct MainTabView: View {
                     Image(systemName: "gear.circle.fill")
                     Text("tab_settings")
                 }
-                .tag(2)
+                .tag(3)
         }
         .environment(\.layoutDirection, .leftToRight)
         .accentColor(.islamicGreen)

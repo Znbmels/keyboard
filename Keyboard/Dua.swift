@@ -557,6 +557,23 @@ class DuaManager: ObservableObject {
                 russianUsage: "Как прощание, пожелание безопасности, особенно в пути.",
                 kazakhUsage: "Қоштасу кезінде, қауіпсіздік тілеу, әсіресе сапарда.",
                 arabicUsage: "كوداع، تمني السلامة، خاصة عند السفر."
+            ),
+            Dua(
+                key: "rain",
+                icon: "cloud.rain.fill",
+                englishTitle: "Rain Dua",
+                russianTitle: "Дуа от дождя",
+                kazakhTitle: "Жаңбыр дұғасы",
+                arabicTitle: "دعاء المطر",
+                arabicText: "اللَّهُمَّ صَيِّبًا نَافِعًا",
+                englishTranslation: "Allahumma sayyiban nafi'an",
+                russianTranslation: "Аллаахумма сойибэн наафи'а",
+                kazakhTranslation: "Аллаһумма сайибан нафиа",
+                arabicTranslation: "اللَّهُمَّ صَيِّبًا نَافِعًا",
+                englishUsage: "When it rains, recite three times. Asking Allah for beneficial rain.",
+                russianUsage: "Во время дождя, читать три раза. Просим у Аллаха полезный дождь.",
+                kazakhUsage: "Жаңбыр жауғанда үш рет оқу. Аллаһтан пайдалы жаңбыр сұрау.",
+                arabicUsage: "عند المطر، يُقرأ ثلاث مرات. طلب المطر النافع من الله."
             )
         ]
     }

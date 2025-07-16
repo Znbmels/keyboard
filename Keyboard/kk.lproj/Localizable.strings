@@ -39,6 +39,7 @@
 // MARK: - Tab Bar
 "tab_home" = "Басты";
 "tab_phrases" = "Сөздер";
+"tab_stickers" = "Стикерлер";
 "tab_keyboard" = "Пернетақта";
 "tab_settings" = "Параметрлер";
 
@@ -154,6 +155,84 @@
 "add_to_keyboard" = "Пернетақтаға қосу";
 "remove_from_keyboard" = "Пернетақтадан алу";
 
+// MARK: - Sticker Generator
+"sticker_generator_title" = "Стикер генераторы";
+"sticker_generator_subtitle" = "AI талдауымен ислами стикерлер жасаудың ақылды жүйесі";
+"sticker_content_type_title" = "Мазмұн түрі";
+"sticker_type_textual" = "Мәтіндік";
+"sticker_type_visual" = "Көрнекі";
+"sticker_type_textual_desc" = "Ислами сөздердің каллиграфиясы";
+"sticker_type_visual_desc" = "Иллюстрациялар мен үлгілер";
+"sticker_examples_title" = "Мысалдар";
+"sticker_input_title" = "Сіздің сөзіңіз немесе сипаттамаңыз";
+"sticker_input_placeholder" = "Ислами сөз немесе сипаттама енгізіңіз...";
+"sticker_input_limit" = "Максимум 200 таңба";
+"sticker_generate_button" = "🎨 Стикер жасау";
+"sticker_generating_button" = "Жасалуда...";
+"sticker_generating_status" = "AI сіздің сөзіңізді талдап, бірегей стикер жасауда...";
+"sticker_share_button" = "Бөлісу";
+"sticker_generation_success" = "Стикер сәтті жасалды!";
+"sticker_generation_time" = "Жасау уақыты:";
+"sticker_generation_error" = "Стикер жасауда қате. Қайта көріңіз.";
+"sticker_analysis_title" = "AI Талдауы";
+"sticker_analysis_type" = "Түрі";
+"sticker_analysis_emotion" = "Эмоция";
+"sticker_analysis_style" = "Стилі";
+"sticker_analysis_colors" = "Түстер";
+"sticker_preview_title" = "Алдын ала қарау";
+"sticker_preview_placeholder" = "Сіздің стикеріңіз дайын!";
+"sticker_api_offline_note" = "API қолжетімсіз. Демо режимін пайдалану.";
+"sticker_offline_mode" = "(Офлайн режимі)";
+
+// Progress messages
+"sticker_progress_connecting" = "Серверге қосылу...";
+"sticker_progress_sending" = "Генерация сұрауын жіберу...";
+"sticker_progress_analyzing" = "Мәтінді талдау...";
+"sticker_progress_creating" = "Сурет жасау...";
+"sticker_progress_processing" = "Нәтижені өңдеу...";
+"sticker_progress_saving" = "Стикерді сақтау...";
+"sticker_progress_complete" = "Дайын!";
+"sticker_progress_long_wait" = "Генерация 10 минутқа дейін уақыт алуы мүмкін...";
+"sticker_progress_unique_design" = "Бірегей дизайн жасау...";
+"sticker_server_overloaded" = "Кешіріңіз, біздің серверлер қазір жүктелген, 5 минуттан кейін қайталап көріңіз. Біз бұл мәселемен жұмыс істеп жатырмыз.";
+"sticker_server_wait_time" = "⏱️ Ұсынылған күту уақыты: 5 минут";
+"sticker_server_try_later" = "🔄 Кейінірек қайталап көріңіз";
+"sticker_retry_countdown" = "⏱️ Қайталау: %@";
+
+// New sticker generator strings
+"stickers_enabled_keyboard" = "Пернетақтада стикерлерді қосу";
+"create_new_sticker" = "Жаңа стикер жасау";
+"enter_your_text" = "Мәтініңізді енгізіңіз:";
+"content_type" = "Мазмұн түрі:";
+"generate_sticker" = "Стикер жасау";
+"generating" = "Жасалуда...";
+"your_stickers" = "Сіздің стикерлеріңіз";
+"select_for_keyboard" = "Пернетақта үшін таңдау";
+"done" = "Дайын";
+"select_stickers_keyboard" = "Пернетақтада көрсету үшін стикерлерді таңдаңыз";
+"select_all" = "Барлығын таңдау";
+"deselect_all" = "Барлығын алып тастау";
+
+// MARK: - Sticker Library
+"sticker_library_title" = "Стикер кітапханасы";
+"sticker_library_empty_title" = "Әлі стикерлер жоқ";
+"sticker_library_empty_subtitle" = "Генераторда алғашқы стикеріңізді жасаңыз";
+"sticker_library_create_first" = "Стикер жасау";
+"sticker_library_delete_title" = "Стикерді жою керек пе?";
+"sticker_library_delete_message" = "Бұл әрекетті кері қайтару мүмкін емес";
+"sticker_library_clear_all_title" = "Бүкіл кітапхананы тазалау керек пе?";
+"sticker_library_clear_all_message" = "Барлық стикерлер мәңгілікке жойылады";
+"sticker_library_clear_all" = "Барлығын тазалау";
+"sticker_library_statistics" = "Статистика";
+"sticker_detail_title" = "Стикер мәліметтері";
+"sticker_detail_prompt" = "Сұрау";
+"sticker_detail_type" = "Түрі";
+"sticker_detail_created" = "Жасалды";
+"sticker_detail_style" = "Стилі";
+"sticker_detail_colors" = "Түстер";
+"delete" = "Жою";
+"cancel" = "Болдырмау";
+
 // MARK: - Support
 "support_title" = "Қолдау";
 "support_description" = "Сұрақтарыңыз бар ма? Біз көмектесуге дайынбыз!";
@@ -237,3 +316,7 @@
 "troubleshooting_restart_step1" = "Құрылғыны толығымен қайта іске қосыңыз";
 "troubleshooting_restart_step2" = "Параметрлерде пернетақтаны жойып, қайта қосыңыз";
 "troubleshooting_restart_step3" = "Қажет болса 'Толық қол жетімділікті рұқсат ету' опциясын қосыңыз";
+
+// MARK: - Stickers Settings
+"stickers_show_button_title" = "Стикерлерді көрсету";
+"stickers_show_button_subtitle" = "Пернетақтада стикерлер түймесін көрсету";

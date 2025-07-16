@@ -14,6 +14,7 @@ struct SettingsView: View {
     @State private var showSupport = false
     @State private var showPrivacyPolicy = false
     @State private var showTermsConditions = false
+    @State private var showStickersInKeyboard = true
     
     var body: some View {
         NavigationView {
@@ -102,6 +103,35 @@ struct SettingsView: View {
                                     subtitle: "Choose duas for keyboard"
                                 )
                             }
+
+                            SettingsDivider()
+
+                            // Stickers toggle setting
+                            HStack {
+                                Image(systemName: "face.smiling.fill")
+                                    .foregroundColor(.islamicGreen)
+                                    .font(.title2)
+                                    .frame(width: 30)
+
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("stickers_show_button_title")
+                                        .foregroundColor(.white)
+                                        .font(.system(size: 16, weight: .medium))
+
+                                    Text("stickers_show_button_subtitle")
+                                        .foregroundColor(.gray)
+                                        .font(.system(size: 14))
+                                }
+
+                                Spacer()
+
+                                Toggle("", isOn: $showStickersInKeyboard)
+                                    .labelsHidden()
+                                    .onChange(of: showStickersInKeyboard) { _, newValue in
+                                        saveStickersSetting(newValue)
+                                    }
+                            }
+                            .padding(.vertical, 8)
                         }
 
                         // Appearance Section
@@ -192,6 +222,30 @@ struct SettingsView: View {
         .sheet(isPresented: $showTermsConditions) {
             TermsConditionsView()
         }
+        .onAppear {
+            loadStickersSetting()
+        }
+    }
+
+    // MARK: - Stickers Settings Functions
+
+    private func loadStickersSetting() {
+        // Используем App Groups для синхронизации
+        let userDefaults = UserDefaults(suiteName: "group.school.nfactorial.muslim.keyboard") ?? UserDefaults.standard
+        showStickersInKeyboard = userDefaults.object(forKey: "show_stickers_in_keyboard") as? Bool ?? true
+        print("🎨 Settings: Loaded stickers setting: \(showStickersInKeyboard)")
+    }
+
+    private func saveStickersSetting(_ enabled: Bool) {
+        // Используем App Groups для синхронизации
+        let userDefaults = UserDefaults(suiteName: "group.school.nfactorial.muslim.keyboard") ?? UserDefaults.standard
+        userDefaults.set(enabled, forKey: "show_stickers_in_keyboard")
+        userDefaults.synchronize()
+
+        // Отправляем уведомление об изменении настроек
+        NotificationCenter.default.post(name: NSNotification.Name("StickerVisibilityChanged"), object: nil)
+
+        print("🎨 Settings: Saved stickers setting: \(enabled)")
     }
 }
 
@@ -371,7 +425,7 @@ struct SettingsLanguageSelectionRow: View {
                 Spacer()
 
                 // Selected value and arrow
-                VStack(alignment: .trailing, spacing: 4) {
+                HStack(alignment: .center, spacing: 8) {
                     Text(displayText)
                         .font(.caption)
                         .foregroundColor(.islamicGreen)
@@ -441,7 +495,7 @@ struct SettingsDuaLanguageSelectionRow: View {
                 Spacer()
 
                 // Selected value and arrow
-                VStack(alignment: .trailing, spacing: 4) {
+                HStack(alignment: .center, spacing: 8) {
                     Text(displayText)
                         .font(.caption)
                         .foregroundColor(.islamicGreen)
@@ -507,7 +561,7 @@ struct SettingsArabicDisplayModeRow: View {
                 Spacer()
 
                 // Selected value and arrow
-                VStack(alignment: .trailing, spacing: 4) {
+                HStack(alignment: .center, spacing: 8) {
                     Text(displayText)
                         .font(.caption)
                         .foregroundColor(.islamicGreen)

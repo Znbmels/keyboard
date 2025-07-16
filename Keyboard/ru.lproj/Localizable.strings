@@ -39,6 +39,7 @@
 // MARK: - Tab Bar
 "tab_home" = "Главная";
 "tab_phrases" = "Фразы";
+"tab_stickers" = "Стикеры";
 "tab_keyboard" = "Клавиатура";
 "tab_settings" = "Настройки";
 
@@ -89,12 +90,12 @@
 "selected" = "выбрано";
 
 // Islamic Phrases - Russian
-"phrase_assalamu_alaikum" = "Ассаламу алейкум";
-"phrase_wa_alaikum_assalam" = "Уа алейкум ассалям";
-"phrase_bismillah" = "Бисмиллях";
-"phrase_alhamdulillah" = "Альхамдулиллях";
-"phrase_subhanallah" = "Субханаллах";
-"phrase_allahu_akbar" = "Аллаху Акбар";
+"phrase_assalamu_alaikum" = "Ассаляму 'аляйкум";
+"phrase_wa_alaikum_assalam" = "Уа 'аляйкум ассалям";
+"phrase_bismillah" = "Бисмилляh";
+"phrase_alhamdulillah" = "Альхамдулиллаh";
+"phrase_subhanallah" = "СубхьанАллаh";
+"phrase_allahu_akbar" = "Аллаhу Акбар";
 "phrase_la_ilaha_illallah" = "Ля иляха илляллах";
 "phrase_astaghfirullah" = "Астагфируллах";
 "phrase_inshallah" = "ИншаАллах";
@@ -207,6 +208,85 @@
 "color_deep_teal" = "Глубокий бирюзовый";
 "color_warm_orange" = "Тёплый оранжевый";
 
+// MARK: - Sticker Generator
+"sticker_generator_title" = "Генератор стикеров";
+"sticker_generator_subtitle" = "Интеллектуальная система генерации исламских стикеров с AI-анализом";
+"sticker_content_type_title" = "Тип контента";
+"sticker_type_textual" = "Текстовый";
+"sticker_type_visual" = "Визуальный";
+"sticker_type_textual_desc" = "Каллиграфия исламских фраз";
+"sticker_type_visual_desc" = "Иллюстрации и узоры";
+"sticker_examples_title" = "Примеры";
+"sticker_input_title" = "Ваша фраза или описание";
+"sticker_input_placeholder" = "Введите исламскую фразу или описание...";
+"sticker_input_limit" = "Максимум 200 символов";
+"sticker_generate_button" = "Создать стикер";
+"sticker_generating_button" = "Создание...";
+"sticker_generating_status" = "AI анализирует вашу фразу и создает уникальный стикер...";
+"sticker_share_button" = "Поделиться";
+"sticker_generation_success" = "Стикер успешно создан!";
+"sticker_generation_time" = "Время генерации:";
+"sticker_generation_error" = "Ошибка при создании стикера. Попробуйте еще раз.";
+"sticker_analysis_title" = "AI Анализ";
+"sticker_analysis_type" = "Тип";
+"sticker_analysis_emotion" = "Эмоция";
+"sticker_analysis_style" = "Стиль";
+"sticker_analysis_colors" = "Цвета";
+"sticker_preview_title" = "Предварительный просмотр";
+"sticker_preview_placeholder" = "Ваш стикер готов!";
+"sticker_api_offline_note" = "API недоступен. Используется демо-режим.";
+"sticker_offline_mode" = "(Офлайн режим)";
+
+// Progress messages
+"sticker_progress_connecting" = "Подключение к серверу...";
+"sticker_progress_sending" = "Отправка запроса на генерацию...";
+"sticker_progress_analyzing" = "Анализ текста...";
+"sticker_progress_creating" = "Создание изображения...";
+"sticker_progress_processing" = "Обработка результата...";
+"sticker_progress_saving" = "Сохранение стикера...";
+"sticker_progress_complete" = "Готово!";
+"sticker_progress_long_wait" = "Генерация может занять до 10 минут...";
+"sticker_progress_unique_design" = "Создание уникального дизайна...";
+"sticker_server_overloaded" = "Извините, наши сервера сейчас перегружены, попробуйте через 5 минут. Мы уже работаем над этим.";
+"sticker_server_wait_time" = "⏱️ Рекомендуемое время ожидания: 5 минут";
+"sticker_server_try_later" = "🔄 Попробуйте снова позже";
+"sticker_retry_countdown" = "⏱️ Повторная попытка через: %@";
+"sticker_offline_creating" = "Создание стикера в офлайн режиме...";
+
+// New sticker generator strings
+"stickers_enabled_keyboard" = "Включить стикеры в клавиатуре";
+"create_new_sticker" = "Создать новый стикер";
+"enter_your_text" = "Введите ваш текст:";
+"content_type" = "Тип контента:";
+"generate_sticker" = "Создать стикер";
+"generating" = "Создание...";
+"your_stickers" = "Ваши стикеры";
+"select_for_keyboard" = "Выбрать для клавиатуры";
+"done" = "Готово";
+"select_stickers_keyboard" = "Выберите стикеры для отображения в клавиатуре";
+"select_all" = "Выбрать все";
+"deselect_all" = "Отменить все";
+
+// MARK: - Sticker Library
+"sticker_library_title" = "Библиотека стикеров";
+"sticker_library_empty_title" = "Пока нет стикеров";
+"sticker_library_empty_subtitle" = "Создайте свой первый стикер в генераторе";
+"sticker_library_create_first" = "Создать стикер";
+"sticker_library_delete_title" = "Удалить стикер?";
+"sticker_library_delete_message" = "Это действие нельзя отменить";
+"sticker_library_clear_all_title" = "Очистить всю библиотеку?";
+"sticker_library_clear_all_message" = "Все стикеры будут удалены навсегда";
+"sticker_library_clear_all" = "Очистить все";
+"sticker_library_statistics" = "Статистика";
+"sticker_detail_title" = "Детали стикера";
+"sticker_detail_prompt" = "Промпт";
+"sticker_detail_type" = "Тип";
+"sticker_detail_created" = "Создан";
+"sticker_detail_style" = "Стиль";
+"sticker_detail_colors" = "Цвета";
+"delete" = "Удалить";
+"cancel" = "Отмена";
+
 // MARK: - Support Section
 "support_title" = "Поддержка";
 "support_subtitle" = "Я создаю Muslim AI Keyboard - потому что хочу, чтобы мусульмане общались комфортнее в чате.";
@@ -236,3 +316,7 @@
 "troubleshooting_restart_step1" = "Полностью перезагрузите устройство";
 "troubleshooting_restart_step2" = "Удалите и заново добавьте клавиатуру в настройках";
 "troubleshooting_restart_step3" = "Включите 'Разрешить полный доступ' при необходимости";
+
+// MARK: - Stickers Settings
+"stickers_show_button_title" = "Показать стикеры";
+"stickers_show_button_subtitle" = "Отображать кнопку стикеров в клавиатуре";
