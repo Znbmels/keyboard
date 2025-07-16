@@ -443,7 +443,7 @@ final class StickerAPIService: ObservableObject {
                 print("   - status: \(status.status.rawValue)")
                 print("   - progress: \(status.progress)%")
                 print("   - currentStep: \(status.currentStep)")
-                print("   - message: \(status.message ?? "nil")")
+                print("   - errorMessage: \(status.errorMessage ?? "nil")")
 
                 switch status.status {
                 case .completed:
