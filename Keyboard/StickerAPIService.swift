@@ -395,7 +395,7 @@ final class StickerAPIService: ObservableObject {
     }
 
     /// Запускает генерацию стикера и возвращает task_id
-    private func startStickerGeneration(phrase: String, username: String) async throws -> StickerTaskResponse {
+    func startStickerGeneration(phrase: String, username: String) async throws -> StickerTaskResponse {
         print("🚀 Starting sticker generation request...")
         print("📝 Phrase: '\(phrase)'")
         print("👤 Username: '\(username)'")
@@ -443,7 +443,7 @@ final class StickerAPIService: ObservableObject {
     }
 
     /// Получает результат завершенной задачи
-    private func getTaskResult(taskId: String) async throws -> StickerGenerationResponse {
+    func getTaskResult(taskId: String) async throws -> StickerGenerationResponse {
         print("📋 Getting task result for ID: \(taskId)")
         print("🔗 Request URL: \(baseURL)/task-result/\(taskId)")
 
@@ -1030,7 +1030,7 @@ final class StickerAPIService: ObservableObject {
         }
     }
     
-    private func downloadImage(from urlString: String) async throws -> Data {
+    func downloadImage(from urlString: String) async throws -> Data {
         guard let url = URL(string: urlString) else {
             throw APIError.invalidImageURL
         }

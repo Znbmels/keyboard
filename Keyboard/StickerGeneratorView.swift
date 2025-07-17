@@ -17,6 +17,7 @@ struct StickerGeneratorView: View {
     @State private var selectedStickersForKeyboard: Set<String> = []
     @State private var stickersEnabledInKeyboard = true
     @State private var showSaveSuccess = false
+    @State private var showingInstructions = false
     @State private var isTestingConnection = false
     @State private var connectionTestResult: String?
     @State private var isSyncing = false
@@ -31,250 +32,224 @@ struct StickerGeneratorView: View {
 
     private let apiService = StickerAPIService.shared
 
+    // Computed property to check if all stickers are selected
+    private var allStickersSelected: Bool {
+        !stickerManager.savedStickers.isEmpty &&
+        stickerManager.savedStickers.allSatisfy { selectedStickersForKeyboard.contains($0.id) }
+    }
+
     var body: some View {
         NavigationView {
             ZStack {
                 Color.black.ignoresSafeArea()
 
                 VStack(spacing: 40) {
-                    // Clean Header
-                    Text("Генератор стикеров")
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .padding(.top, 20)
+                    // Clean Header with Instructions Button
+                    VStack(spacing: 12) {
+                        Text(NSLocalizedString("sticker_generator", comment: "Sticker Generator"))
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
 
-                    // Clean Input Section
+                        // Instructions Button
+                        Button(action: {
+                            showingInstructions = true
+                        }) {
+                            HStack(spacing: 8) {
+                                Image(systemName: "info.circle")
+                                    .font(.system(size: 16))
+                                Text("sticker_read_instructions")
+                                    .font(.system(size: 14, weight: .medium))
+                            }
+                            .foregroundColor(.islamicGreen)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.islamicGreen, lineWidth: 1)
+                            )
+                        }
+                    }
+                    .padding(.top, 20)
+
+                    // Input Section
                     VStack(spacing: 20) {
-                        TextField("Опишите ваш стикер...", text: $inputText, axis: .vertical)
-                            .padding(16)
-                            .background(Color.white)
-                            .foregroundColor(.black)
-                            .cornerRadius(12)
-                            .lineLimit(2...4)
-                            .font(.body)
-                            .disabled(isGenerating)
+                        TextField(NSLocalizedString("enter_sticker_text", comment: "Enter sticker text"), text: $inputText)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .font(.system(size: 16))
+                            .padding(.horizontal, 20)
                             .overlay(
-                                RoundedRectangle(cornerRadius: 12)
+                                RoundedRectangle(cornerRadius: 8)
                                     .stroke(Color.green, lineWidth: 2)
+                                    .padding(.horizontal, 20)
                             )
 
                         // Generate Button
                         Button(action: generateSticker) {
-                            HStack(spacing: 12) {
+                            HStack {
                                 if isGenerating {
                                     ProgressView()
-                                        .scaleEffect(0.9)
                                         .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                                    Text("Генерируем...")
-                                        .font(.headline)
-                                        .fontWeight(.semibold)
-                                } else {
-                                    Image(systemName: "sparkles")
-                                        .font(.title2)
-                                    Text("Создать стикер")
-                                        .font(.headline)
-                                        .fontWeight(.semibold)
+                                        .scaleEffect(0.8)
                                 }
+                                Text(isGenerating ? NSLocalizedString("generating", comment: "Generating...") : NSLocalizedString("create_sticker", comment: "Create Sticker"))
+                                    .font(.system(size: 16, weight: .semibold))
+                                    .foregroundColor(.white)
                             }
-                            .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
-                            .frame(height: 56)
-                            .background(Color.green)
-                            .cornerRadius(12)
-                        }
-
-                                // Progress bar and details
-                                if isGenerating {
-                                    VStack(spacing: 4) {
-                                        // Progress bar
-                                        ProgressView(value: Double(generationProgress), total: 100.0)
-                                            .progressViewStyle(LinearProgressViewStyle(tint: .white))
-                                            .scaleEffect(y: 0.5)
-
-                                        // Progress details
-                                        HStack {
-                                            Text("\(generationProgress)%")
-                                                .font(.system(size: 11))
-                                                .opacity(0.8)
-
-                                            Spacer()
-
-                                            HStack(spacing: 4) {
-                                                Text("\(elapsedTime)с")
-                                                    .font(.system(size: 11))
-                                                    .opacity(0.8)
-
-                                                if let timeRemaining = estimatedTimeRemaining, timeRemaining > 0 {
-                                                    Text("/ ~\(timeRemaining)с")
-                                                        .font(.system(size: 11))
-                                                        .opacity(0.6)
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, isGenerating ? 12 : 16)
+                            .frame(height: 50)
                             .background(
                                 RoundedRectangle(cornerRadius: 12)
-                                    .fill(inputText.isEmpty || isGenerating ? Color.gray : Color.islamicGreen)
+                                    .fill(Color.green)
                             )
                         }
-                        .disabled(inputText.isEmpty || isGenerating)
+                        .disabled(isGenerating || inputText.isEmpty)
+                        .padding(.horizontal, 20)
 
-                        // Beautiful Progress Section
+                        // Progress Section
                         if isGenerating {
-                            VStack(spacing: 16) {
-                                // Progress Circle with Animation
-                                ZStack {
-                                    Circle()
-                                        .stroke(Color.white.opacity(0.3), lineWidth: 8)
-                                        .frame(width: 80, height: 80)
+                            VStack(spacing: 12) {
+                                ProgressView(value: Double(generationProgress), total: 100)
+                                    .progressViewStyle(LinearProgressViewStyle(tint: .green))
+                                    .padding(.horizontal, 20)
 
-                                    Circle()
-                                        .trim(from: 0, to: CGFloat(generationProgress) / 100.0)
-                                        .stroke(Color.green, style: StrokeStyle(lineWidth: 8, lineCap: .round))
-                                        .frame(width: 80, height: 80)
-                                        .rotationEffect(.degrees(-90))
-                                        .animation(.easeInOut(duration: 0.5), value: generationProgress)
+                                Text(currentStep.isEmpty ? "Сейчас произойдет чудо... ✨" : currentStep)
+                                    .font(.system(size: 14))
+                                    .foregroundColor(.white.opacity(0.8))
 
-                                    Text("\(generationProgress)%")
-                                        .font(.title2)
-                                        .fontWeight(.bold)
-                                        .foregroundColor(.white)
+                                if elapsedTime > 0 {
+                                    Text("Прошло времени: \(elapsedTime)с")
+                                        .font(.system(size: 12))
+                                        .foregroundColor(.white.opacity(0.6))
                                 }
+                            }
+                        }
 
-                                // Current Step
-                                if !currentStep.isEmpty {
-                                    Text(currentStep)
-                                        .font(.body)
-                                        .foregroundColor(.white)
-                                        .multilineTextAlignment(.center)
-                                }
+                        // Messages
+                        if let error = errorMessage {
+                            Text(getUserFriendlyErrorMessage(error))
+                                .font(.system(size: 14))
+                                .foregroundColor(.red)
+                                .padding(.horizontal, 20)
+                        }
 
-                                // Time Info
-                                HStack(spacing: 20) {
-                                    VStack {
-                                        Text("\(elapsedTime)с")
-                                            .font(.title3)
-                                            .fontWeight(.semibold)
-                                            .foregroundColor(.green)
-                                        Text("Прошло")
+                        if let success = successMessage {
+                            Text(success)
+                                .font(.system(size: 14))
+                                .foregroundColor(.green)
+                                .padding(.horizontal, 20)
+                        }
+                    }
+
+                    // Sticker Library
+                    if !stickerManager.savedStickers.isEmpty {
+                        VStack(alignment: .leading, spacing: 16) {
+                            HStack {
+                                Text(NSLocalizedString("sticker_library", comment: "Sticker Library"))
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+
+                                Spacer()
+
+                                // Select All Button
+                                Button(action: toggleSelectAll) {
+                                    HStack(spacing: 4) {
+                                        Image(systemName: allStickersSelected ? "checkmark.square.fill" : "square")
+                                            .foregroundColor(allStickersSelected ? .green : .white)
+                                            .font(.system(size: 14))
+                                        Text(NSLocalizedString("select_all", comment: "Select All"))
                                             .font(.caption)
-                                            .foregroundColor(.white.opacity(0.7))
-                                    }
-
-                                    if let timeRemaining = estimatedTimeRemaining, timeRemaining > 0 {
-                                        VStack {
-                                            Text("~\(timeRemaining)с")
-                                                .font(.title3)
-                                                .fontWeight(.semibold)
-                                                .foregroundColor(.white)
-                                            Text("Осталось")
-                                                .font(.caption)
-                                                .foregroundColor(.white.opacity(0.7))
-                                        }
-                                    }
-                                }
-
-                                // Cancel Button
-                                if let currentTaskId = taskId {
-                                    Button(action: {
-                                        cancelGeneration(taskId: currentTaskId)
-                                    }) {
-                                        HStack(spacing: 8) {
-                                            Image(systemName: "xmark")
-                                                .font(.body)
-                                            Text("Отменить")
-                                                .font(.body)
-                                                .fontWeight(.medium)
-                                        }
-                                        .foregroundColor(.white)
-                                        .frame(width: 120, height: 40)
-                                        .background(Color.white.opacity(0.2))
-                                        .cornerRadius(8)
+                                            .foregroundColor(.white)
                                     }
                                 }
                             }
-                            .padding(.vertical, 20)
-                        }
+                            .padding(.horizontal, 20)
 
-                        // Sticker Library
-                        if !stickerManager.savedStickers.isEmpty {
-                            VStack(spacing: 16) {
-                                // Library Header
-                                HStack {
-                                    Text("Библиотека стикеров")
-                                        .font(.title2)
-                                        .fontWeight(.bold)
-                                        .foregroundColor(.white)
-
-                                    Spacer()
-
-                                    Text("\(stickerManager.savedStickers.count)")
-                                        .font(.title3)
-                                        .fontWeight(.semibold)
-                                        .foregroundColor(.green)
-                                        .padding(.horizontal, 12)
-                                        .padding(.vertical, 6)
-                                        .background(Color.green.opacity(0.2))
-                                        .cornerRadius(8)
-                                }
-
-                                // Stickers Grid
-                                LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: 3), spacing: 12) {
-                                    ForEach(stickerManager.savedStickers, id: \.id) { sticker in
+                            ScrollView {
+                                LazyVGrid(
+                                    columns: [
+                                        GridItem(.flexible(), spacing: 8),
+                                        GridItem(.flexible(), spacing: 8),
+                                        GridItem(.flexible(), spacing: 8)
+                                    ],
+                                    spacing: 12,
+                                    pinnedViews: []
+                                ) {
+                                    ForEach(stickerManager.savedStickers.reversed()) { sticker in
                                         StickerGridItem(
                                             sticker: sticker,
-                                            isSelected: stickerManager.selectedStickers.contains(sticker.id),
+                                            isSelected: selectedStickersForKeyboard.contains(sticker.id),
                                             onToggleSelection: {
-                                                stickerManager.toggleStickerSelection(sticker.id)
+                                                if selectedStickersForKeyboard.contains(sticker.id) {
+                                                    selectedStickersForKeyboard.remove(sticker.id)
+                                                } else {
+                                                    selectedStickersForKeyboard.insert(sticker.id)
+                                                }
+                                                syncSelectedStickers()
                                             },
                                             onDelete: {
-                                                stickerManager.deleteSticker(sticker.id)
+                                                stickerManager.deleteSticker(id: sticker.id)
+                                                selectedStickersForKeyboard.remove(sticker.id)
+                                                syncSelectedStickers()
                                             }
                                         )
                                     }
                                 }
+                                .padding(.horizontal, 20)
+                            }
+
+                            // Save Button
+                            if !stickerManager.savedStickers.isEmpty {
+                                Button(action: {
+                                    syncSelectedStickers()
+                                    showSaveSuccess = true
+
+                                    // Hide success message after 2 seconds
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                        showSaveSuccess = false
+                                    }
+                                }) {
+                                    HStack {
+                                        if showSaveSuccess {
+                                            Image(systemName: "checkmark.circle.fill")
+                                                .foregroundColor(.white)
+                                                .font(.system(size: 16))
+                                        }
+                                        Text(showSaveSuccess ? NSLocalizedString("saved", comment: "Saved") : NSLocalizedString("save_selection", comment: "Save Selection"))
+                                            .font(.system(size: 16, weight: .semibold))
+                                            .foregroundColor(.white)
+                                    }
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 14)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .fill(showSaveSuccess ? Color.green : Color.islamicGreen)
+                                    )
+                                }
+                                .padding(.horizontal, 20)
+                                .padding(.top, 10)
                             }
                         }
-                    }
-                    .padding(.horizontal, 20)
-
-                    // Clean Status Messages
-                    if let successMessage = successMessage {
-                        HStack(spacing: 8) {
-                            Image(systemName: "checkmark.circle.fill")
-                                .foregroundColor(.green)
-                            Text(successMessage)
-                                .foregroundColor(.white)
-                                .font(.body)
-                        }
-                        .padding(.vertical, 8)
-                        .transition(.opacity.combined(with: .move(edge: .top)))
-                        .animation(.easeInOut(duration: 0.3), value: successMessage)
-                    }
-
-                    if let errorMessage = errorMessage {
-                        HStack(spacing: 8) {
-                            Image(systemName: "exclamationmark.circle.fill")
-                                .foregroundColor(.red)
-                            Text(errorMessage)
-                                .foregroundColor(.white)
-                                .font(.body)
-                        }
-                        .padding(.vertical, 8)
-                        .transition(.opacity.combined(with: .move(edge: .top)))
-                        .animation(.easeInOut(duration: 0.3), value: errorMessage)
                     }
 
                     Spacer()
                 }
                 .padding(.horizontal, 20)
             }
+        }
+        .navigationTitle("sticker_generator_title")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarItems(
+            trailing: Button(action: {
+                showingInstructions = true
+            }) {
+                Image(systemName: "questionmark.circle")
+                    .foregroundColor(.islamicGreen)
+                    .font(.title2)
+            }
+        )
+        .sheet(isPresented: $showingInstructions) {
+            StickerInstructionsView()
         }
         .onAppear {
             loadSelectedStickers()
@@ -318,412 +293,154 @@ struct StickerGeneratorView: View {
 
         generationTask?.cancel()
         generationTask = Task { @MainActor in
-            print("🔄 Setting up generation state...")
-            isGenerating = true
-            errorMessage = nil
-            successMessage = nil
-            generationProgress = 0
-            currentStep = "Подготовка..."
-            taskId = nil
-            estimatedTimeRemaining = 30
-            generationStartTime = Date()
-            elapsedTime = 0
-
-            // Запускаем таймер для отслеживания времени
-            startElapsedTimeTimer()
-
-            print("✅ Generation state initialized")
-
-            // Проверяем подключение к API перед началом
-            print("🔍 Checking API health before generation...")
-            print("🌐 API Service base URL: \(apiService.baseURL)")
-            let isHealthy = await apiService.checkAPIHealth()
-            if !isHealthy {
-                print("❌ API health check failed")
-                print("🔧 Setting error state...")
-                errorMessage = "Сервер недоступен. Попробуйте позже."
-                isGenerating = false
-                generationProgress = 0
-                currentStep = ""
-                taskId = nil
-                estimatedTimeRemaining = nil
-                generationStartTime = nil
-                elapsedTime = 0
-                print("❌ Generation aborted due to health check failure")
-                return
-            }
-            print("✅ API health check passed - proceeding with generation")
-
             do {
-                print("🚀 Starting async sticker generation...")
-                print("🔧 API Base URL: \(apiService.baseURL)")
-                print("🔧 Full generate URL: \(apiService.baseURL)/generate-sticker")
-
-                // Simple approach: start generation and sync after delay
-                print("🚀 Starting simple sticker generation...")
-                let generatedTaskId = try await apiService.generateStickerSimple(phrase: promptText)
-
-                print("✅ Generation started with task ID: \(generatedTaskId)")
-                self.taskId = generatedTaskId
-                self.currentStep = "Генерация запущена..."
-                self.generationProgress = 10
-
-                // Wait for generation to complete (estimated time)
-                print("⏳ Waiting for generation to complete...")
-                self.currentStep = "Генерируем изображение..."
-                self.generationProgress = 50
-
-                // Wait 30 seconds for generation
-                try await Task.sleep(nanoseconds: 30_000_000_000)
-
-                self.currentStep = "Сохраняем стикер..."
-                self.generationProgress = 80
-
-                // Wait a bit more
-                try await Task.sleep(nanoseconds: 10_000_000_000)
-
-                self.currentStep = "Синхронизируем с библиотекой..."
-                self.generationProgress = 90
-
-                // Sync with server to get new stickers
-                print("🔄 Starting automatic sync after generation...")
-                await stickerManager.syncWithServer()
-                print("✅ Automatic sync completed after generation")
-
-                self.generationProgress = 100
-                self.currentStep = "Готово!"
-
-                print("✅ Simple generation process completed!")
-
-                // Update UI on main thread
-                await MainActor.run {
-                    // Stop generation state
-                    isGenerating = false
-                    generationProgress = 0
-                    currentStep = ""
-                    taskId = nil
-                    estimatedTimeRemaining = nil
-
-                    // Clear input
-                    inputText = ""
-
-                    // Show success message
-                    successMessage = "🎉 Стикер успешно создан и добавлен в библиотеку!"
-
-                    print("🔄 UI updated - generation stopped, input cleared, success message shown")
-                    print("📊 UI sees \(stickerManager.savedStickers.count) stickers")
-                }
-
-                // Clear success message after 3 seconds
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-                    self.successMessage = nil
-                }
-
-                print("🎉 Simple sticker generation process completed successfully!")
-
-            } catch {
-                print("❌ === ASYNC STICKER GENERATION FAILED ===")
-                print("🔍 Error type: \(type(of: error))")
-                print("📄 Error description: \(error.localizedDescription)")
-                print("🔧 Full error: \(error)")
-
-                // Handle timeout error specifically
-                if error is TimeoutError {
-                    print("⏰ TIMEOUT ERROR: Generation took too long (10+ minutes)")
-                }
-
-                if let apiError = error as? APIError {
-                    print(" APIError detected: \(apiError)")
-                }
-
-                // Более понятные сообщения об ошибках для пользователя
-                let userFriendlyMessage: String
-                if error is TimeoutError {
-                    userFriendlyMessage = "⏰ Генерация заняла слишком много времени (более 10 минут). Попробуйте еще раз или обратитесь в поддержку."
-                } else if let apiError = error as? APIError {
-                    print("🔍 Processing APIError...")
-                    switch apiError {
-                    case .noImageURL:
-                        print("🔍 Specific error: noImageURL")
-                        userFriendlyMessage = "Не удалось получить изображение с сервера. Попробуйте еще раз."
-                    case .networkError:
-                        print("🔍 Specific error: networkError")
-                        userFriendlyMessage = "Проблема с интернет-соединением. Проверьте подключение к сети."
-                    case .timeout:
-                        print("🔍 Specific error: timeout")
-                        userFriendlyMessage = "Время ожидания истекло. Попробуйте еще раз."
-                    case .serverOverloaded:
-                        print("🔍 Specific error: serverOverloaded")
-                        userFriendlyMessage = "Сервер перегружен. Попробуйте через несколько минут."
-                    case .generationFailed(let message):
-                        print("🔍 Specific error: generationFailed with message: \(message)")
-                        // Переводим техническое сообщение в понятное пользователю
-                        if message.lowercased().contains("inappropriate") || message.lowercased().contains("content") {
-                            userFriendlyMessage = "Текст не подходит для создания стикера. Попробуйте другую фразу."
-                        } else if message.lowercased().contains("timeout") {
-                            userFriendlyMessage = "Генерация заняла слишком много времени. Попробуйте еще раз."
-                        } else if message.lowercased().contains("server") {
-                            userFriendlyMessage = "Проблема на сервере. Попробуйте позже."
-                        } else {
-                            userFriendlyMessage = "Не удалось создать стикер. Попробуйте другую фразу."
-                        }
-                    case .decodingError:
-                        print("🔍 Specific error: decodingError")
-                        userFriendlyMessage = "Ошибка обработки данных. Попробуйте еще раз."
-                    default:
-                        print("🔍 Other APIError: \(apiError)")
-                        userFriendlyMessage = "Произошла ошибка. Попробуйте еще раз."
-                    }
-                } else {
-                    print("🔍 Non-APIError: \(error)")
-                    // Переводим системные ошибки в понятные сообщения
-                    let errorDescription = error.localizedDescription.lowercased()
-                    if errorDescription.contains("network") || errorDescription.contains("internet") {
-                        userFriendlyMessage = "Проблема с интернет-соединением. Проверьте подключение к сети."
-                    } else if errorDescription.contains("timeout") {
-                        userFriendlyMessage = "Время ожидания истекло. Попробуйте еще раз."
-                    } else if errorDescription.contains("server") {
-                        userFriendlyMessage = "Проблема на сервере. Попробуйте позже."
-                    } else {
-                        userFriendlyMessage = "Произошла ошибка. Попробуйте еще раз."
-                    }
-                }
-
-                print("🔄 Setting error message: \(userFriendlyMessage)")
-                errorMessage = userFriendlyMessage
-                print("❌ Error state set - generation process failed")
-                // Don't clear input on error so user can try again
-            }
-
-            // Reset progress state
-            isGenerating = false
-            generationProgress = 0
-            currentStep = ""
-            taskId = nil
-            estimatedTimeRemaining = nil
-            generationStartTime = nil
-            elapsedTime = 0
-        }
-    }
-
-    private func cancelGeneration(taskId: String) {
-        print("🚫 === CANCELLING GENERATION ===")
-        print("📋 Task ID: \(taskId)")
-        print("⏰ Cancel timestamp: \(Date())")
-
-        // Cancel the current generation task
-        print("🔄 Cancelling local generation task...")
-        generationTask?.cancel()
-        print("✅ Local generation task cancelled")
-
-        // Try to cancel the server task
-        Task {
-            do {
-                print("🌐 Sending cancel request to server...")
-                try await apiService.cancelTask(taskId: taskId)
-                print("✅ Server task cancelled successfully")
-            } catch {
-                print("⚠️ Failed to cancel server task: \(error)")
-                print("🔍 Cancel error type: \(type(of: error))")
-                // Continue with local cancellation even if server cancellation fails
-            }
-
-            await MainActor.run {
-                print("🔄 Resetting UI state after cancellation...")
-                isGenerating = false
-                generationProgress = 0
-                currentStep = ""
-                self.taskId = nil
-                estimatedTimeRemaining = nil
-                generationStartTime = nil
-                elapsedTime = 0
-                errorMessage = "Генерация отменена"
-                print("✅ UI state reset after cancellation")
-
-                // Clear error message after 3 seconds
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-                    errorMessage = nil
-                }
-            }
-        }
-    }
-
-    private func testServerConnection() {
-        Task { @MainActor in
-            isTestingConnection = true
-            connectionTestResult = nil
-
-            do {
-                print("🧪 Starting server connection test...")
-
-                // Тест 1: Базовая проверка /test endpoint
-                let testResponse = try await apiService.testConnection()
-                let testResult = "✅ Сервер доступен\n📄 Статус: \(testResponse.status)\n📄 Сообщение: \(testResponse.message)\n⏱️ Время генерации: ~26-30с"
-
-                // Тест 2: Проверка /generate-sticker endpoint через OPTIONS
-                let generateURL = URL(string: apiService.baseURL + "/generate-sticker")!
-                var optionsRequest = URLRequest(url: generateURL)
-                optionsRequest.httpMethod = "OPTIONS"
-                optionsRequest.timeoutInterval = 10.0
-
-                let session = URLSession.shared
-                let (_, optionsResponse) = try await session.data(for: optionsRequest)
-
-                if let httpResponse = optionsResponse as? HTTPURLResponse {
-                    let endpointResult = "✅ /generate-sticker endpoint: HTTP \(httpResponse.statusCode)"
-                    connectionTestResult = testResult + "\n" + endpointResult
-                } else {
-                    connectionTestResult = testResult + "\n⚠️ /generate-sticker endpoint check failed"
-                }
-
-                print("✅ Connection test successful")
-
-            } catch {
-                print("❌ Connection test failed: \(error)")
-                connectionTestResult = "❌ Connection failed\n🔧 Error: \(error.localizedDescription)\n🌐 Server: http://207.154.222.27"
-            }
-
-            isTestingConnection = false
-
-            // Скрываем результат через 10 секунд
-            DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
-                connectionTestResult = nil
-            }
-        }
-    }
-
-    private func syncStickers() {
-        Task { @MainActor in
-            isSyncing = true
-            errorMessage = nil
-            successMessage = nil
-
-            print("🔄 Manual sticker sync started...")
-
-            await stickerManager.syncWithServer()
-
-            isSyncing = false
-            successMessage = "✅ Стикеры синхронизированы!"
-
-            // Clear success message after 3 seconds
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                isGenerating = true
+                errorMessage = nil
                 successMessage = nil
+                generationProgress = 0
+                currentStep = "Инициализация..."
+                generationStartTime = Date()
+                elapsedTime = 0
+
+                // Start elapsed time tracking
+                startElapsedTimeTracking()
+
+                print("🚀 Starting sticker generation...")
+                currentStep = "Создание задачи генерации..."
+                generationProgress = 10
+
+                // Step 1: Start generation and get task ID
+                let taskResponse = try await apiService.startStickerGeneration(phrase: promptText, username: "ios_user")
+                taskId = taskResponse.taskId
+                print("✅ Task created with ID: \(taskResponse.taskId)")
+
+                currentStep = "Обработка запроса..."
+                generationProgress = 30
+
+                // Step 2: Poll for completion with shorter intervals
+                var attempts = 0
+                let maxAttempts = 120 // 2 minutes max (checking every 1 second)
+
+                while attempts < maxAttempts {
+                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    attempts += 1
+
+                    currentStep = "Генерация стикера... (\(attempts)с)"
+                    generationProgress = min(30 + (attempts * 60 / maxAttempts), 90)
+
+                    let statusResponse = try await apiService.getTaskStatus(taskId: taskResponse.taskId)
+                    print("📊 Task status: \(statusResponse.status) - Progress: \(statusResponse.progress)%")
+
+                    // Update progress from server
+                    generationProgress = max(generationProgress, statusResponse.progress)
+                    if !statusResponse.currentStep.isEmpty {
+                        currentStep = statusResponse.currentStep
+                    }
+
+                    if statusResponse.status == .completed {
+                        print("🎉 Generation completed!")
+                        currentStep = "Получение результата..."
+                        generationProgress = 95
+
+                        // Get the final result
+                        let result = try await apiService.getTaskResult(taskId: taskResponse.taskId)
+
+                        guard result.success, let imageUrl = result.imageUrl else {
+                            throw NSError(domain: "StickerGeneration", code: -1, userInfo: [NSLocalizedDescriptionKey: result.message])
+                        }
+
+                        // Download image
+                        let imageData = try await apiService.downloadImage(from: imageUrl)
+
+                        currentStep = "Сохранение стикера..."
+
+                        // Save the sticker
+                        stickerManager.saveSticker(
+                            prompt: promptText,
+                            contentType: result.analysis?.contentType ?? "TEXTUAL",
+                            imageData: imageData,
+                            analysis: nil
+                        )
+
+                        generationProgress = 100
+                        currentStep = "Готово!"
+                        successMessage = "Альхамдуллилях, ваш стикер готов! 🎉"
+                        inputText = ""
+
+                        print("✅ Sticker saved successfully")
+                        break
+
+                    } else if statusResponse.status == .failed {
+                        let errorMsg = statusResponse.errorMessage ?? "Generation failed"
+                        throw NSError(domain: "StickerGeneration", code: -1, userInfo: [NSLocalizedDescriptionKey: errorMsg])
+                    }
+                }
+
+                if attempts >= maxAttempts {
+                    throw NSError(domain: "StickerGeneration", code: -2, userInfo: [NSLocalizedDescriptionKey: "Generation timed out after \(maxAttempts) seconds"])
+                }
+
+            } catch {
+                print("❌ Generation failed: \(error.localizedDescription)")
+                errorMessage = error.localizedDescription
+                currentStep = ""
+                generationProgress = 0
             }
 
-            print("✅ Manual sticker sync completed")
+            isGenerating = false
+            taskId = nil
         }
-    }
-
-    private func toggleStickerSelection(_ stickerId: String) {
-        if selectedStickersForKeyboard.contains(stickerId) {
-            selectedStickersForKeyboard.remove(stickerId)
-        } else {
-            selectedStickersForKeyboard.insert(stickerId)
-        }
-        // Не сохраняем автоматически - только при нажатии кнопки "Сохранить"
     }
 
     private func loadSelectedStickers() {
-        print("🎨 Loading selected stickers...")
-        print("🎨 Total available stickers: \(stickerManager.savedStickers.count)")
-
-        // Используем App Groups для синхронизации
+        // Используем App Groups UserDefaults для синхронизации с клавиатурой
         let userDefaults = UserDefaults(suiteName: "group.school.nfactorial.muslim.keyboard") ?? UserDefaults.standard
 
         if let data = userDefaults.data(forKey: "selected_stickers_for_keyboard"),
            let selected = try? JSONDecoder().decode(Set<String>.self, from: data) {
             selectedStickersForKeyboard = selected
-            print("🎨 Loaded \(selected.count) selected stickers from App Groups UserDefaults")
+            print("🎨 Loaded \(selected.count) selected stickers from App Groups")
         } else {
-            // Select all by default
-            selectedStickersForKeyboard = Set(stickerManager.savedStickers.map { $0.id })
-            print("🎨 No saved selection found, selecting all \(selectedStickersForKeyboard.count) stickers by default")
+            print("🎨 No selected stickers found in App Groups")
         }
 
-        stickersEnabledInKeyboard = userDefaults.object(forKey: "stickers_enabled_in_keyboard") as? Bool ?? true
-        print("🎨 Stickers enabled in keyboard: \(stickersEnabledInKeyboard)")
+        stickersEnabledInKeyboard = userDefaults.bool(forKey: "stickers_enabled_in_keyboard")
     }
 
-    private func saveSelectedStickers() {
-        print("🎨 Saving selected stickers: \(selectedStickersForKeyboard.count)")
-        print("🎨 Selected IDs: \(Array(selectedStickersForKeyboard))")
-
-        // Используем App Groups для синхронизации
+    private func syncSelectedStickers() {
+        // Используем App Groups UserDefaults для синхронизации с клавиатурой
         let userDefaults = UserDefaults(suiteName: "group.school.nfactorial.muslim.keyboard") ?? UserDefaults.standard
 
         if let data = try? JSONEncoder().encode(selectedStickersForKeyboard) {
             userDefaults.set(data, forKey: "selected_stickers_for_keyboard")
             userDefaults.synchronize()
-            print("🎨 Selected stickers saved successfully to App Groups")
+            print("🎨 Synced \(selectedStickersForKeyboard.count) selected stickers to App Groups")
 
-            // Проверяем, что данные сохранились
-            if let savedData = userDefaults.data(forKey: "selected_stickers_for_keyboard"),
-               let savedIds = try? JSONDecoder().decode(Set<String>.self, from: savedData) {
-                print("🎨 Verification: Saved \(savedIds.count) selected stickers to App Groups")
-            }
-
-            // Показываем сообщение об успешном сохранении
-            errorMessage = nil
-        } else {
-            print("❌ Failed to encode selected stickers")
-            errorMessage = "Ошибка сохранения выбора стикеров"
+            // Отправляем уведомление об изменении выбора стикеров
+            NotificationCenter.default.post(name: NSNotification.Name("StickerSelectionChanged"), object: nil)
         }
     }
 
-    private func syncWithKeyboard() {
-        // Используем App Groups для синхронизации
-        let userDefaults = UserDefaults(suiteName: "group.school.nfactorial.muslim.keyboard") ?? UserDefaults.standard
-
-        userDefaults.set(stickersEnabledInKeyboard, forKey: "stickers_enabled_in_keyboard")
-        userDefaults.synchronize()
-        NotificationCenter.default.post(name: NSNotification.Name("StickerSettingsChanged"), object: nil)
-        print("🎨 Synced with keyboard via App Groups: enabled=\(stickersEnabledInKeyboard), selected=\(selectedStickersForKeyboard.count)")
-
-        // Показываем сообщение об успешной синхронизации
-        errorMessage = nil
-    }
-
-    // MARK: - Helper Functions
-
-    /// Переводит технические статусы с сервера в понятные пользователю сообщения
-    private func translateStepToUserFriendly(_ step: String) -> String {
-        let lowercaseStep = step.lowercased()
-
-        // Основные этапы генерации
-        if lowercaseStep.contains("analyzing") || lowercaseStep.contains("analysis") {
-            return "Анализ текста..."
-        } else if lowercaseStep.contains("creating") || lowercaseStep.contains("generating") {
-            return "Создание изображения..."
-        } else if lowercaseStep.contains("processing") || lowercaseStep.contains("process") {
-            return "Обработка..."
-        } else if lowercaseStep.contains("finalizing") || lowercaseStep.contains("finishing") {
-            return "Завершение..."
-        } else if lowercaseStep.contains("uploading") || lowercaseStep.contains("saving") {
-            return "Сохранение..."
-        } else if lowercaseStep.contains("completed") || lowercaseStep.contains("done") {
-            return "Готово!"
-        } else if lowercaseStep.contains("waiting") || lowercaseStep.contains("queue") {
-            return "Ожидание..."
-        } else if lowercaseStep.contains("starting") || lowercaseStep.contains("initializing") {
-            return "Запуск..."
-        } else if lowercaseStep.contains("prompt") {
-            return "Подготовка запроса..."
-        } else if lowercaseStep.contains("style") {
-            return "Выбор стиля..."
-        } else if lowercaseStep.contains("render") {
-            return "Отрисовка..."
-        } else if lowercaseStep.contains("error") || lowercaseStep.contains("failed") {
-            return "Ошибка"
+    private func toggleSelectAll() {
+        if allStickersSelected {
+            // Deselect all
+            selectedStickersForKeyboard.removeAll()
         } else {
-            // Если не можем перевести, возвращаем оригинал, но делаем первую букву заглавной
-            return step.prefix(1).uppercased() + step.dropFirst() + "..."
+            // Select all
+            selectedStickersForKeyboard = Set(stickerManager.savedStickers.map { $0.id })
         }
+        syncSelectedStickers()
     }
 
-    /// Запускает таймер для отслеживания времени генерации
-    private func startElapsedTimeTimer() {
+    private func getUserFriendlyErrorMessage(_ error: String) -> String {
+        return "Извините, сейчас эта страница только проходит тестирование... Попробуйте снова и обратитесь к поддержке 🛠️"
+    }
+
+    private func startElapsedTimeTracking() {
+        guard let startTime = generationStartTime else { return }
+
         Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
-            guard isGenerating, let startTime = generationStartTime else {
+            if !isGenerating {
                 timer.invalidate()
                 return
             }
@@ -743,50 +460,62 @@ struct StickerGridItem: View {
     let onDelete: () -> Void
 
     var body: some View {
-        VStack(spacing: 8) {
+        ZStack {
             // Sticker Image
-            AsyncImage(url: URL(string: sticker.imageURL)) { image in
-                image
+            if let uiImage = UIImage(data: sticker.imageData) {
+                Image(uiImage: uiImage)
                     .resizable()
-                    .aspectRatio(contentMode: .fit)
-            } placeholder: {
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(Color.white.opacity(0.1))
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 100, height: 100)
+                    .clipped()
+                    .cornerRadius(12)
+            } else {
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(Color.gray.opacity(0.3))
+                    .frame(width: 100, height: 100)
                     .overlay(
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                        Image(systemName: "photo")
+                            .foregroundColor(.white.opacity(0.5))
+                            .font(.system(size: 24))
                     )
             }
-            .frame(height: 80)
-            .cornerRadius(8)
 
-            // Selection and Delete Controls
-            HStack(spacing: 8) {
-                // Selection Button
-                Button(action: onToggleSelection) {
-                    Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
-                        .foregroundColor(isSelected ? .green : .white.opacity(0.6))
-                        .font(.title3)
+            // Selection indicator
+            VStack {
+                HStack {
+                    Spacer()
+                    Button(action: onToggleSelection) {
+                        Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
+                            .foregroundColor(isSelected ? .green : .white)
+                            .font(.system(size: 20))
+                            .background(
+                                Circle()
+                                    .fill(Color.black.opacity(0.5))
+                                    .frame(width: 24, height: 24)
+                            )
+                    }
                 }
-
                 Spacer()
-
-                // Delete Button
-                Button(action: onDelete) {
-                    Image(systemName: "trash")
-                        .foregroundColor(.white.opacity(0.6))
-                        .font(.body)
+                HStack {
+                    Spacer()
+                    Button(action: onDelete) {
+                        Image(systemName: "trash.fill")
+                            .foregroundColor(.red)
+                            .font(.system(size: 16))
+                            .background(
+                                Circle()
+                                    .fill(Color.black.opacity(0.7))
+                                    .frame(width: 24, height: 24)
+                            )
+                    }
                 }
             }
+            .padding(6)
         }
-        .padding(12)
+        .frame(width: 100, height: 100)
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .fill(Color.white.opacity(0.05))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(isSelected ? Color.green : Color.clear, lineWidth: 2)
-                )
+                .stroke(isSelected ? Color.green : Color.clear, lineWidth: 2)
         )
     }
 }
@@ -803,7 +532,7 @@ func withTimeout<T>(seconds: TimeInterval, operation: @escaping () async throws 
     return try await withThrowingTaskGroup(of: T.self) { group in
         // Add the main operation
         group.addTask {
-            try await operation()
+            return try await operation()
         }
 
         // Add timeout task
@@ -824,4 +553,3 @@ struct TimeoutError: Error, LocalizedError {
         return "Operation timed out"
     }
 }
-

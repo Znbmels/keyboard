@@ -107,31 +107,16 @@ struct SettingsView: View {
                             SettingsDivider()
 
                             // Stickers toggle setting
-                            HStack {
-                                Image(systemName: "photo.on.rectangle.angled")
-                                    .foregroundColor(.islamicGreen)
-                                    .font(.title2)
-                                    .frame(width: 30)
-
-                                VStack(alignment: .leading, spacing: 2) {
-                                    Text("stickers_show_button_title")
-                                        .foregroundColor(.white)
-                                        .font(.system(size: 16, weight: .medium))
-
-                                    Text("stickers_show_button_subtitle")
-                                        .foregroundColor(.gray)
-                                        .font(.system(size: 14))
+                            SettingsToggleRow(
+                                icon: "photo.on.rectangle.angled",
+                                title: "stickers_show_button_title",
+                                subtitle: "stickers_show_button_subtitle",
+                                isOn: showStickersInKeyboard,
+                                onToggle: { newValue in
+                                    showStickersInKeyboard = newValue
+                                    saveStickersSetting(newValue)
                                 }
-
-                                Spacer()
-
-                                Toggle("", isOn: $showStickersInKeyboard)
-                                    .labelsHidden()
-                                    .onChange(of: showStickersInKeyboard) { _, newValue in
-                                        saveStickersSetting(newValue)
-                                    }
-                            }
-                            .padding(.vertical, 8)
+                            )
                         }
 
                         // Appearance Section

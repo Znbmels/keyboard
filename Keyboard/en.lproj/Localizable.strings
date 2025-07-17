@@ -210,6 +210,14 @@
 
 // MARK: - Sticker Generator
 "sticker_generator_title" = "Sticker Generator";
+"sticker_read_instructions" = "Read Instructions Before Using";
+"sticker_input_placeholder" = "Enter text for sticker...";
+"sticker_create_button" = "Create Sticker";
+"sticker_library_title" = "Sticker Library";
+"sticker_select_all" = "Select All";
+"sticker_save_selection" = "Save Selection";
+"sticker_saving" = "Saving sticker...";
+"sticker_success_message" = "Alhamdulillah, your sticker is ready! 🎉";
 "sticker_generator_subtitle" = "Intelligent Islamic sticker generation system with AI analysis";
 "sticker_content_type_title" = "Content Type";
 "sticker_type_textual" = "Textual";
@@ -218,7 +226,6 @@
 "sticker_type_visual_desc" = "Illustrations and patterns";
 "sticker_examples_title" = "Examples";
 "sticker_input_title" = "Your phrase or description";
-"sticker_input_placeholder" = "Enter Islamic phrase or description...";
 "sticker_input_limit" = "Maximum 200 characters";
 "sticker_generate_button" = "🎨 Generate Sticker";
 "sticker_generating_button" = "Generating...";
@@ -319,4 +326,57 @@
 
 // MARK: - Stickers Settings
 "stickers_show_button_title" = "Show Stickers in Keyboard";
-"stickers_show_button_subtitle" = "Enable stickers button and functionality in keyboard";
+"stickers_show_button_subtitle" = "Enable stickers button in keyboard";
+
+// MARK: - New Sticker Generator
+"sticker_generator" = "Sticker Generator";
+"enter_sticker_text" = "Enter text for sticker...";
+"create_sticker" = "Create Sticker";
+"generating" = "Generating...";
+"sticker_library" = "Sticker Library";
+"select_all" = "Select All";
+"sticker_timeout_error" = "This feature is still being developed. Thank you for your understanding!";
+"sticker_network_error" = "Connection issues. Please try again later.";
+"sticker_general_error" = "This feature is still being developed. Thank you for your understanding!";
+"saved" = "Saved!";
+
+// Sticker Instructions
+"sticker_read_instructions" = "Read Instructions Before Using";
+"sticker_instructions_title" = "Bismillah - Sticker Generator Guide";
+"sticker_instructions_nav_title" = "Instructions";
+"sticker_what_can_generate" = "What You Can Generate:";
+"sticker_can_islamic_phrases" = "Islamic phrases (Alhamdulillah, SubhanAllah, etc.)";
+"sticker_can_duas" = "Beautiful duas and supplications";
+"sticker_can_quran_verses" = "Quranic verses in Arabic calligraphy";
+"sticker_can_islamic_art" = "Islamic geometric patterns and art";
+"sticker_can_mosque_images" = "Mosque silhouettes and Islamic architecture";
+"sticker_can_calligraphy" = "Arabic calligraphy designs";
+
+"sticker_what_cannot_generate" = "What You Cannot Generate:";
+"sticker_cannot_people" = "Images of people or faces";
+"sticker_cannot_animals" = "Images of living creatures";
+"sticker_cannot_inappropriate" = "Inappropriate or offensive content";
+"sticker_cannot_non_islamic" = "Non-Islamic religious content";
+
+"sticker_prompt_examples" = "Example Prompts:";
+"sticker_example_alhamdulillah" = "'Alhamdulillahi Rabbil Alameen' in golden calligraphy";
+"sticker_example_bismillah" = "'Bismillah' with green Islamic pattern";
+"sticker_example_mosque" = "Beautiful mosque silhouette at sunset";
+"sticker_example_ramadan" = "'Ramadan Mubarak' with crescent moon";
+"sticker_example_eid" = "'Eid Mubarak' with Islamic geometric design";
+
+"sticker_how_to_use" = "How to Use:";
+"sticker_step_1_write_prompt" = "Write your Islamic prompt in the text field";
+"sticker_step_2_wait_generation" = "Wait for generation (may take 20-30 seconds)";
+"sticker_step_3_select_stickers" = "Select stickers you want to use in keyboard";
+"sticker_step_4_use_in_keyboard" = "Open keyboard and tap sticker button (😊)";
+"sticker_step_5_tap_to_copy" = "Tap on sticker to copy it to clipboard";
+"sticker_step_6_paste_in_chat" = "Paste in any chat app using Ctrl+V";
+
+"sticker_important_notes" = "Important Notes:";
+"sticker_note_beta_feature" = "This feature is in development - expect occasional issues";
+"sticker_note_generation_time" = "Generation takes time - please be patient";
+"sticker_note_contact_support" = "Contact developer if you experience problems";
+"sticker_note_disable_feature" = "You can disable stickers in Settings if needed";
+
+"sticker_thanks_understanding" = "Jazakallahu Khairan for your understanding";

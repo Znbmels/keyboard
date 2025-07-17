@@ -60,7 +60,7 @@ struct StickerLibraryView: View {
                     // Sticker Grid
                     ScrollView {
                         LazyVGrid(columns: columns, spacing: 12) {
-                            ForEach(stickerManager.savedStickers) { sticker in
+                            ForEach(stickerManager.savedStickers.reversed()) { sticker in
                                 StickerLibraryCard(
                                     sticker: sticker,
                                     onDelete: {
