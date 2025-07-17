@@ -386,35 +386,32 @@ struct StickerGeneratorView: View {
                 self.generationProgress = 90
 
                 // Sync with server to get new stickers
+                print("🔄 Starting automatic sync after generation...")
                 await stickerManager.syncWithServer()
+                print("✅ Automatic sync completed after generation")
 
                 self.generationProgress = 100
                 self.currentStep = "Готово!"
 
                 print("✅ Simple generation process completed!")
 
-                // Синхронизируемся с сервером для получения нового стикера
-                print("🔄 Starting automatic sync after generation...")
-                await stickerManager.syncWithServer()
-                print("✅ Automatic sync completed after generation")
-
                 // Update UI on main thread
-                DispatchQueue.main.async {
+                await MainActor.run {
                     // Stop generation state
-                    self.isGenerating = false
-                    self.generationProgress = 0
-                    self.currentStep = ""
-                    self.taskId = nil
-                    self.estimatedTimeRemaining = nil
+                    isGenerating = false
+                    generationProgress = 0
+                    currentStep = ""
+                    taskId = nil
+                    estimatedTimeRemaining = nil
 
                     // Clear input
-                    self.inputText = ""
+                    inputText = ""
 
                     // Show success message
-                    self.successMessage = "Стикер создан!"
+                    successMessage = "🎉 Стикер успешно создан и добавлен в библиотеку!"
 
                     print("🔄 UI updated - generation stopped, input cleared, success message shown")
-                    print("📊 UI sees \(self.stickerManager.savedStickers.count) stickers")
+                    print("📊 UI sees \(stickerManager.savedStickers.count) stickers")
                 }
 
                 // Clear success message after 3 seconds
