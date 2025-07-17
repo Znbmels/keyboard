@@ -36,93 +36,53 @@ struct StickerGeneratorView: View {
             ZStack {
                 Color.black.ignoresSafeArea()
 
-                VStack(spacing: 30) {
-                    // Header with development warning
-                    VStack(spacing: 8) {
-                        HStack {
-                            Text("Sticker Generator")
-                                .font(.title2)
-                                .fontWeight(.bold)
-                                .foregroundColor(.white)
+                VStack(spacing: 40) {
+                    // Clean Header
+                    Text("Генератор стикеров")
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .padding(.top, 20)
 
-                            Spacer()
+                    // Clean Input Section
+                    VStack(spacing: 20) {
+                        TextField("Опишите ваш стикер...", text: $inputText, axis: .vertical)
+                            .padding(16)
+                            .background(Color.white)
+                            .foregroundColor(.black)
+                            .cornerRadius(12)
+                            .lineLimit(2...4)
+                            .font(.body)
+                            .disabled(isGenerating)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(Color.green, lineWidth: 2)
+                            )
 
-                            // Development warning badge
-                            HStack(spacing: 4) {
-                                Image(systemName: "exclamationmark.triangle.fill")
-                                    .foregroundColor(.orange)
-                                    .font(.caption)
-                                Text("В разработке")
-                                    .font(.caption)
-                                    .foregroundColor(.orange)
-                            }
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 4)
-                            .background(Color.orange.opacity(0.2))
-                            .cornerRadius(8)
-                        }
-
-                        Text("⚠️ Функция находится в стадии разработки. Возможны ошибки и сбои.")
-                            .font(.caption)
-                            .foregroundColor(.yellow)
-                            .multilineTextAlignment(.center)
-                    }
-                    .padding(.top, 20)
-                    .padding(.horizontal, 20)
-
-                    // Input Section
-                    VStack(spacing: 16) {
-                        VStack(alignment: .leading, spacing: 8) {
-                            TextField("Enter Islamic phrase or text...", text: $inputText)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                                .font(.body)
-                                .disabled(isGenerating)
-
-                            if !isGenerating {
-                                Text("💡 Example: \"Alhamdulillah\", \"Bismillah\", \"SubhanAllah\"")
-                                    .font(.caption)
-                                    .foregroundColor(.gray)
-                                    .padding(.horizontal, 4)
-
-                                // Async generation info
-                                HStack {
-                                    Image(systemName: "clock.arrow.circlepath")
-                                        .foregroundColor(.blue)
-                                        .font(.system(size: 12))
-                                    Text("Отслеживание в реальном времени • ~26-30с генерация")
-                                        .font(.system(size: 11))
-                                        .foregroundColor(.secondary)
-                                    Spacer()
-                                }
-                                .padding(.horizontal, 4)
-                                .padding(.top, 2)
-                            }
-                        }
-
-                        // Generate Button with Progress
+                        // Generate Button
                         Button(action: generateSticker) {
-                            VStack(spacing: 8) {
-                                HStack {
-                                    if isGenerating {
-                                        ProgressView()
-                                            .scaleEffect(0.8)
-                                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                                        VStack(alignment: .leading, spacing: 2) {
-                                            Text("Generating Sticker...")
-                                                .font(.system(size: 16, weight: .medium))
-                                            if !currentStep.isEmpty {
-                                                Text(currentStep)
-                                                    .font(.system(size: 12))
-                                                    .opacity(0.8)
-                                            }
-                                        }
-                                    } else {
-                                        Image(systemName: "wand.and.stars")
-                                            .font(.system(size: 16))
-                                        Text("Generate Sticker")
-                                            .font(.system(size: 16, weight: .medium))
-                                    }
+                            HStack(spacing: 12) {
+                                if isGenerating {
+                                    ProgressView()
+                                        .scaleEffect(0.9)
+                                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                                    Text("Генерируем...")
+                                        .font(.headline)
+                                        .fontWeight(.semibold)
+                                } else {
+                                    Image(systemName: "sparkles")
+                                        .font(.title2)
+                                    Text("Создать стикер")
+                                        .font(.headline)
+                                        .fontWeight(.semibold)
                                 }
+                            }
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 56)
+                            .background(Color.green)
+                            .cornerRadius(12)
+                        }
 
                                 // Progress bar and details
                                 if isGenerating {
@@ -165,213 +125,155 @@ struct StickerGeneratorView: View {
                         }
                         .disabled(inputText.isEmpty || isGenerating)
 
-                        // Cancel Button (only show during generation)
-                        if isGenerating, let currentTaskId = taskId {
-                            Button(action: {
-                                cancelGeneration(taskId: currentTaskId)
-                            }) {
+                        // Beautiful Progress Section
+                        if isGenerating {
+                            VStack(spacing: 16) {
+                                // Progress Circle with Animation
+                                ZStack {
+                                    Circle()
+                                        .stroke(Color.white.opacity(0.3), lineWidth: 8)
+                                        .frame(width: 80, height: 80)
+
+                                    Circle()
+                                        .trim(from: 0, to: CGFloat(generationProgress) / 100.0)
+                                        .stroke(Color.green, style: StrokeStyle(lineWidth: 8, lineCap: .round))
+                                        .frame(width: 80, height: 80)
+                                        .rotationEffect(.degrees(-90))
+                                        .animation(.easeInOut(duration: 0.5), value: generationProgress)
+
+                                    Text("\(generationProgress)%")
+                                        .font(.title2)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.white)
+                                }
+
+                                // Current Step
+                                if !currentStep.isEmpty {
+                                    Text(currentStep)
+                                        .font(.body)
+                                        .foregroundColor(.white)
+                                        .multilineTextAlignment(.center)
+                                }
+
+                                // Time Info
+                                HStack(spacing: 20) {
+                                    VStack {
+                                        Text("\(elapsedTime)с")
+                                            .font(.title3)
+                                            .fontWeight(.semibold)
+                                            .foregroundColor(.green)
+                                        Text("Прошло")
+                                            .font(.caption)
+                                            .foregroundColor(.white.opacity(0.7))
+                                    }
+
+                                    if let timeRemaining = estimatedTimeRemaining, timeRemaining > 0 {
+                                        VStack {
+                                            Text("~\(timeRemaining)с")
+                                                .font(.title3)
+                                                .fontWeight(.semibold)
+                                                .foregroundColor(.white)
+                                            Text("Осталось")
+                                                .font(.caption)
+                                                .foregroundColor(.white.opacity(0.7))
+                                        }
+                                    }
+                                }
+
+                                // Cancel Button
+                                if let currentTaskId = taskId {
+                                    Button(action: {
+                                        cancelGeneration(taskId: currentTaskId)
+                                    }) {
+                                        HStack(spacing: 8) {
+                                            Image(systemName: "xmark")
+                                                .font(.body)
+                                            Text("Отменить")
+                                                .font(.body)
+                                                .fontWeight(.medium)
+                                        }
+                                        .foregroundColor(.white)
+                                        .frame(width: 120, height: 40)
+                                        .background(Color.white.opacity(0.2))
+                                        .cornerRadius(8)
+                                    }
+                                }
+                            }
+                            .padding(.vertical, 20)
+                        }
+
+                        // Sticker Library
+                        if !stickerManager.savedStickers.isEmpty {
+                            VStack(spacing: 16) {
+                                // Library Header
                                 HStack {
-                                    Image(systemName: "xmark.circle")
-                                        .font(.system(size: 16))
-                                    Text("Cancel Generation")
-                                        .font(.system(size: 16, weight: .medium))
-                                }
-                                .foregroundColor(.red)
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 12)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .stroke(Color.red, lineWidth: 1)
-                                )
-                            }
-                        }
-
-                        // Test Connection Button
-                        Button(action: testServerConnection) {
-                            HStack {
-                                if isTestingConnection {
-                                    ProgressView()
-                                        .scaleEffect(0.8)
-                                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                                    Text("Testing...")
-                                } else {
-                                    Image(systemName: "network")
-                                    Text("Test Server Connection")
-                                }
-                            }
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 12)
-                            .background(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(isTestingConnection ? Color.gray : Color.blue)
-                            )
-                        }
-                        .disabled(isTestingConnection || isGenerating)
-
-                        // Sync Stickers Button
-                        Button(action: syncStickers) {
-                            HStack {
-                                if isSyncing {
-                                    ProgressView()
-                                        .scaleEffect(0.8)
-                                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                                    Text("Syncing...")
-                                } else {
-                                    Image(systemName: "arrow.clockwise")
-                                    Text("Sync Stickers")
-                                }
-                            }
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 12)
-                            .background(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(isSyncing ? Color.gray : Color.green)
-                            )
-                        }
-                        .disabled(isSyncing || isGenerating)
-                    }
-                    .padding(.horizontal, 20)
-
-                    // Success Message
-                    if let successMessage = successMessage {
-                        Text(successMessage)
-                            .foregroundColor(.islamicGreen)
-                            .font(.system(size: 14, weight: .medium))
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 8)
-                            .background(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill(Color.islamicGreen.opacity(0.1))
-                            )
-                            .padding(.horizontal, 20)
-                            .transition(.opacity.combined(with: .scale))
-                            .animation(.easeInOut(duration: 0.3), value: successMessage)
-                    }
-
-                    // Error Message
-                    if let errorMessage = errorMessage {
-                        Text(errorMessage)
-                            .foregroundColor(.red)
-                            .font(.system(size: 14, weight: .medium))
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 8)
-                            .background(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill(Color.red.opacity(0.1))
-                            )
-                            .padding(.horizontal, 20)
-                            .transition(.opacity.combined(with: .scale))
-                            .animation(.easeInOut(duration: 0.3), value: errorMessage)
-                    }
-
-                    // Connection Test Result
-                    if let connectionTestResult = connectionTestResult {
-                        Text(connectionTestResult)
-                            .foregroundColor(connectionTestResult.contains("✅") ? .green : .red)
-                            .font(.caption)
-                            .padding(.horizontal, 20)
-                            .multilineTextAlignment(.center)
-                    }
-
-                    // Stickers Library
-                    if !stickerManager.savedStickers.isEmpty {
-                        VStack(alignment: .leading, spacing: 16) {
-                            VStack(spacing: 12) {
-                                HStack {
-                                    Text("Generated Stickers")
-                                        .font(.headline)
+                                    Text("Библиотека стикеров")
+                                        .font(.title2)
+                                        .fontWeight(.bold)
                                         .foregroundColor(.white)
 
                                     Spacer()
 
-                                    // Enable/Disable toggle
-                                    Toggle("", isOn: $stickersEnabledInKeyboard)
-                                        .labelsHidden()
-                                        .onChange(of: stickersEnabledInKeyboard) { _, enabled in
-                                            UserDefaults.standard.set(enabled, forKey: "stickers_enabled_in_keyboard")
-                                            syncWithKeyboard()
-                                        }
+                                    Text("\(stickerManager.savedStickers.count)")
+                                        .font(.title3)
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.green)
+                                        .padding(.horizontal, 12)
+                                        .padding(.vertical, 6)
+                                        .background(Color.green.opacity(0.2))
+                                        .cornerRadius(8)
                                 }
 
-                                // Quick selection buttons
-                                HStack(spacing: 12) {
-                                    Button("Выбрать все") {
-                                        selectedStickersForKeyboard = Set(stickerManager.savedStickers.map { $0.id })
-                                    }
-                                    .foregroundColor(.white)
-                                    .font(.system(size: 14, weight: .medium))
-                                    .frame(maxWidth: .infinity)
-                                    .frame(height: 36)
-                                    .background(Color.blue)
-                                    .cornerRadius(6)
-
-                                    Button("Снять все") {
-                                        selectedStickersForKeyboard.removeAll()
-                                    }
-                                    .foregroundColor(.white)
-                                    .font(.system(size: 14, weight: .medium))
-                                    .frame(maxWidth: .infinity)
-                                    .frame(height: 36)
-                                    .background(Color.red)
-                                    .cornerRadius(6)
-                                }
-                                .padding(.horizontal, 20)
-
-                                // Save button
-                                Button(action: {
-                                    saveSelectedStickers()
-                                    syncWithKeyboard()
-                                    showSaveSuccess = true
-
-                                    // Скрываем сообщение через 2 секунды
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                                        showSaveSuccess = false
-                                    }
-                                }) {
-                                    HStack {
-                                        Image(systemName: showSaveSuccess ? "checkmark.circle.fill" : "square.and.arrow.down")
-                                        Text(showSaveSuccess ? "Сохранено!" : "Сохранить выбор")
-                                    }
-                                    .foregroundColor(.white)
-                                    .font(.system(size: 16, weight: .medium))
-                                    .frame(maxWidth: .infinity)
-                                    .frame(height: 44)
-                                    .background(showSaveSuccess ? Color.green : Color.islamicGreen)
-                                    .cornerRadius(8)
-                                    .animation(.easeInOut(duration: 0.3), value: showSaveSuccess)
-                                }
-                                .padding(.horizontal, 20)
-                            }
-
-                            // Selection info
-                            HStack {
-                                Text("Выбрано: \(selectedStickersForKeyboard.count) из \(stickerManager.savedStickers.count)")
-                                    .font(.caption)
-                                    .foregroundColor(.gray)
-                                Spacer()
-                            }
-                            .padding(.horizontal, 20)
-
-                            // Stickers Grid
-                            ScrollView {
-                                LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: 3), spacing: 10) {
+                                // Stickers Grid
+                                LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: 3), spacing: 12) {
                                     ForEach(stickerManager.savedStickers, id: \.id) { sticker in
                                         StickerGridItem(
                                             sticker: sticker,
-                                            isSelected: selectedStickersForKeyboard.contains(sticker.id),
-                                            onToggle: { toggleStickerSelection(sticker.id) }
+                                            isSelected: stickerManager.selectedStickers.contains(sticker.id),
+                                            onToggleSelection: {
+                                                stickerManager.toggleStickerSelection(sticker.id)
+                                            },
+                                            onDelete: {
+                                                stickerManager.deleteSticker(sticker.id)
+                                            }
                                         )
                                     }
                                 }
-                                .padding(.horizontal, 20)
                             }
                         }
+                    }
+                    .padding(.horizontal, 20)
+
+                    // Clean Status Messages
+                    if let successMessage = successMessage {
+                        HStack(spacing: 8) {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundColor(.green)
+                            Text(successMessage)
+                                .foregroundColor(.white)
+                                .font(.body)
+                        }
+                        .padding(.vertical, 8)
+                        .transition(.opacity.combined(with: .move(edge: .top)))
+                        .animation(.easeInOut(duration: 0.3), value: successMessage)
+                    }
+
+                    if let errorMessage = errorMessage {
+                        HStack(spacing: 8) {
+                            Image(systemName: "exclamationmark.circle.fill")
+                                .foregroundColor(.red)
+                            Text(errorMessage)
+                                .foregroundColor(.white)
+                                .font(.body)
+                        }
+                        .padding(.vertical, 8)
+                        .transition(.opacity.combined(with: .move(edge: .top)))
+                        .animation(.easeInOut(duration: 0.3), value: errorMessage)
                     }
 
                     Spacer()
                 }
+                .padding(.horizontal, 20)
             }
         }
         .onAppear {
@@ -509,7 +411,7 @@ struct StickerGeneratorView: View {
                     self.inputText = ""
 
                     // Show success message
-                    self.successMessage = "🎉 Стикер успешно создан и добавлен в библиотеку!"
+                    self.successMessage = "Стикер создан!"
 
                     print("🔄 UI updated - generation stopped, input cleared, success message shown")
                     print("📊 UI sees \(self.stickerManager.savedStickers.count) stickers")
@@ -836,51 +738,58 @@ struct StickerGeneratorView: View {
     }
 }
 
-// MARK: - Supporting Views
-
+// MARK: - Sticker Grid Item Component
 struct StickerGridItem: View {
     let sticker: SavedSticker
     let isSelected: Bool
-    let onToggle: () -> Void
+    let onToggleSelection: () -> Void
+    let onDelete: () -> Void
 
     var body: some View {
         VStack(spacing: 8) {
             // Sticker Image
-            if let uiImage = UIImage(data: sticker.imageData) {
-                Image(uiImage: uiImage)
+            AsyncImage(url: URL(string: sticker.imageURL)) { image in
+                image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(height: 80)
-                    .cornerRadius(8)
-            } else {
+            } placeholder: {
                 RoundedRectangle(cornerRadius: 8)
-                    .fill(Color.gray.opacity(0.3))
-                    .frame(height: 80)
+                    .fill(Color.white.opacity(0.1))
                     .overlay(
-                        Image(systemName: "photo")
-                            .foregroundColor(.gray)
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
                     )
             }
+            .frame(height: 80)
+            .cornerRadius(8)
 
-            // Prompt text
-            Text(sticker.prompt)
-                .font(.caption)
-                .foregroundColor(.white)
-                .lineLimit(2)
-                .multilineTextAlignment(.center)
+            // Selection and Delete Controls
+            HStack(spacing: 8) {
+                // Selection Button
+                Button(action: onToggleSelection) {
+                    Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
+                        .foregroundColor(isSelected ? .green : .white.opacity(0.6))
+                        .font(.title3)
+                }
 
-            // Selection checkbox
-            Button(action: onToggle) {
-                Image(systemName: isSelected ? "checkmark.square.fill" : "square")
-                    .foregroundColor(isSelected ? .islamicGreen : .gray)
-                    .font(.title3)
+                Spacer()
+
+                // Delete Button
+                Button(action: onDelete) {
+                    Image(systemName: "trash")
+                        .foregroundColor(.white.opacity(0.6))
+                        .font(.body)
+                }
             }
         }
-        .padding(8)
+        .padding(12)
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .fill(Color.white.opacity(0.1))
-                .stroke(isSelected ? Color.islamicGreen : Color.clear, lineWidth: 2)
+                .fill(Color.white.opacity(0.05))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(isSelected ? Color.green : Color.clear, lineWidth: 2)
+                )
         )
     }
 }

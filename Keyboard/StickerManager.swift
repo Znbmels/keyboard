@@ -41,9 +41,10 @@ struct StickerAnalysisData: Codable {
 @MainActor
 class StickerManager: ObservableObject {
     static let shared = StickerManager()
-    
+
     @Published var savedStickers: [SavedSticker] = []
-    
+    @Published var selectedStickers: Set<String> = []
+
     private let userDefaults: UserDefaults
     private let stickersKey = "saved_stickers"
     private let maxStickers = 50 // Лимит стикеров для экономии места
@@ -133,9 +134,33 @@ class StickerManager: ObservableObject {
     /// Удалить стикер
     func deleteSticker(id: String) {
         savedStickers.removeAll { $0.id == id }
+        selectedStickers.remove(id)
         saveStickers()
+        saveSelectedStickers()
 
         print("🗑️ Стикер удален: \(id)")
+    }
+
+    /// Переключить выбор стикера
+    func toggleStickerSelection(_ id: String) {
+        if selectedStickers.contains(id) {
+            selectedStickers.remove(id)
+        } else {
+            selectedStickers.insert(id)
+        }
+        saveSelectedStickers()
+        print("🎨 Стикер \(id) \(selectedStickers.contains(id) ? "выбран" : "снят с выбора")")
+    }
+
+    /// Сохранить выбранные стикеры
+    private func saveSelectedStickers() {
+        do {
+            let data = try JSONEncoder().encode(selectedStickers)
+            userDefaults.set(data, forKey: "selected_stickers_for_keyboard")
+            userDefaults.synchronize()
+        } catch {
+            print("❌ Ошибка сохранения выбранных стикеров: \(error)")
+        }
     }
 
     /// Добавить стикер в выбранные для клавиатуры
@@ -370,17 +395,30 @@ class StickerManager: ObservableObject {
     // MARK: - Private Methods
 
     private func loadStickers() {
-        guard let data = userDefaults.data(forKey: stickersKey) else {
+        // Загружаем стикеры
+        if let data = userDefaults.data(forKey: stickersKey) {
+            do {
+                savedStickers = try JSONDecoder().decode([SavedSticker].self, from: data)
+                print("📱 Загружено стикеров: \(savedStickers.count)")
+            } catch {
+                print("❌ Ошибка загрузки стикеров: \(error)")
+                savedStickers = []
+            }
+        } else {
             print("📱 Нет сохраненных стикеров")
-            return
         }
-        
-        do {
-            savedStickers = try JSONDecoder().decode([SavedSticker].self, from: data)
-            print("📱 Загружено стикеров: \(savedStickers.count)")
-        } catch {
-            print("❌ Ошибка загрузки стикеров: \(error)")
-            savedStickers = []
+
+        // Загружаем выбранные стикеры
+        if let data = userDefaults.data(forKey: "selected_stickers_for_keyboard") {
+            do {
+                selectedStickers = try JSONDecoder().decode(Set<String>.self, from: data)
+                print("📱 Загружено выбранных стикеров: \(selectedStickers.count)")
+            } catch {
+                print("❌ Ошибка загрузки выбранных стикеров: \(error)")
+                selectedStickers = []
+            }
+        } else {
+            print("📱 Нет выбранных стикеров")
         }
     }
     
