@@ -1,0 +1,246 @@
+/* 
+  Localizable.strings
+  Keyboard
+
+  Created by Zainab on 21.07.2025.
+  Spanish Localization
+*/
+
+// MARK: - App Information
+"app_name" = "Teclado Musulmán IA";
+"app_name_arabic" = "مسلم الذكية لوحة المفاتيح";
+
+// MARK: - Language Selection
+"language_selection_title" = "Elige tu idioma";
+"language_selection_subtitle" = "Selecciona tu idioma preferido";
+"language_english" = "English";
+"language_russian" = "Русский";
+"language_continue" = "Continuar";
+
+// MARK: - Onboarding
+"onboarding_page1_title" = "Bienvenido al Teclado Musulmán IA";
+"onboarding_page1_description" = "Esta aplicación te ayuda a escribir frases musulmanas más rápido y correctamente.";
+
+"onboarding_page2_title" = "Escritura impulsada por IA";
+"onboarding_page2_description" = "Puedes usar el teclado impulsado por IA con duas y expresiones islámicas.";
+
+"onboarding_page3_title" = "Listo para comenzar";
+"onboarding_page3_description" = "¡Solo agrega el teclado en configuración y estarás listo!";
+
+// MARK: - Buttons
+"button_add_keyboard" = "Agregar teclado";
+"button_get_started" = "Comenzar";
+"button_next" = "Siguiente";
+"button_done" = "Hecho";
+"button_skip" = "Omitir";
+"button_continue" = "Continuar";
+"close" = "Cerrar";
+
+// MARK: - Tab Bar
+"tab_home" = "Inicio";
+"tab_phrases" = "Frases";
+"tab_stickers" = "Pegatinas";
+"tab_keyboard" = "Teclado";
+"tab_settings" = "Configuración";
+
+// MARK: - Home
+"home_title" = "Teclado Musulmán IA";
+"home_subtitle" = "Tu compañero para la escritura islámica";
+
+// MARK: - Keyboard Instructions
+"keyboard_title" = "Instrucciones de instalación";
+"keyboard_subtitle" = "Sigue estos pasos para agregar el teclado";
+"keyboard_step1" = "1. Toca el botón 'Agregar teclado'";
+"keyboard_step2" = "2. Ve a Configuración > General > Teclado";
+"keyboard_step3" = "3. Toca 'Teclados' luego 'Agregar nuevo teclado'";
+"keyboard_step4" = "4. Selecciona 'Teclado Musulmán IA'";
+"keyboard_step5" = "5. Habilita 'Permitir acceso completo' para funciones de IA";
+"keyboard_how_to_use" = "Cómo usar";
+"keyboard_usage_description" = "Una vez instalado, puedes cambiar al Teclado Musulmán IA en cualquier aplicación tocando el ícono del globo en tu teclado.";
+
+// MARK: - Islamic Phrases
+"islamic_phrases_title" = "Frases islámicas";
+"islamic_phrases_subtitle" = "Selecciona frases para mostrar en el teclado";
+
+// MARK: - Settings
+"settings_title" = "Configuración";
+"settings_language_title" = "Idioma de la aplicación";
+"settings_language_subtitle" = "Cambiar idioma de la interfaz";
+"settings_keyboard_languages_title" = "Idiomas del teclado";
+"settings_keyboard_languages_subtitle" = "Gestionar idiomas del teclado";
+"settings_keyboard_colors_title" = "Colores del teclado";
+"settings_keyboard_colors_subtitle" = "Personalizar apariencia del teclado";
+"settings_support_title" = "Soporte";
+"settings_support_subtitle" = "Obtener ayuda y comentarios";
+"settings_privacy_title" = "Política de privacidad";
+"settings_terms_title" = "Términos de uso";
+
+// MARK: - Islamic Phrases - Spanish
+"phrase_assalamu_alaikum" = "Assalamu Alaikum";
+"phrase_wa_alaikum_assalam" = "Wa Alaikum Assalam";
+"phrase_bismillah" = "Bismillah";
+"phrase_alhamdulillah" = "Alhamdulillah";
+"phrase_subhanallah" = "SubhanAllah";
+"phrase_allahu_akbar" = "Allahu Akbar";
+"phrase_la_ilaha_illallah" = "La ilaha illallah";
+"phrase_astaghfirullah" = "Astaghfirullah";
+"phrase_inshallah" = "InshaAllah";
+"phrase_mashallah" = "MashaAllah";
+"phrase_jazakallahu_khairan" = "JazakAllahu Khairan";
+"phrase_barakallahu_feek" = "BarakAllahu Feek";
+"phrase_ameen" = "Ameen";
+"phrase_la_hawla" = "La hawla wa la quwwata illa billah";
+"phrase_tawakkaltu" = "Tawakkaltu 'ala Allah";
+"phrase_rahimahu_allah" = "Rahimahu Allah";
+"phrase_fi_amanillah" = "Fi Amanillah";
+
+// MARK: - Phrase Meanings - Spanish
+"meaning_assalamu_alaikum" = "La paz sea contigo";
+"meaning_wa_alaikum_assalam" = "Y contigo también la paz";
+"meaning_bismillah" = "En el nombre de Allah";
+"meaning_alhamdulillah" = "Alabado sea Allah";
+"meaning_subhanallah" = "Gloria a Allah";
+"meaning_allahu_akbar" = "Allah es el más grande";
+"meaning_la_ilaha_illallah" = "No hay dios sino Allah";
+"meaning_astaghfirullah" = "Pido perdón a Allah";
+"meaning_inshallah" = "Si Allah quiere";
+"meaning_mashallah" = "Lo que Allah ha querido";
+"meaning_jazakallahu_khairan" = "Que Allah te recompense con el bien";
+"meaning_barakallahu_feek" = "Que Allah te bendiga";
+"meaning_ameen" = "Amén";
+"meaning_la_hawla" = "No hay fuerza ni poder sino en Allah";
+"meaning_tawakkaltu" = "Confío en Allah";
+"meaning_rahimahu_allah" = "Que Allah tenga misericordia de él";
+"meaning_fi_amanillah" = "Bajo la protección de Allah";
+
+// MARK: - When to Use - Spanish
+"when_assalamu_alaikum" = "Saludo islámico estándar";
+"when_wa_alaikum_assalam" = "Respuesta a Assalamu Alaikum";
+"when_bismillah" = "Antes de comenzar cualquier acción";
+"when_alhamdulillah" = "Para expresar gratitud";
+"when_subhanallah" = "Para expresar asombro";
+"when_allahu_akbar" = "Para expresar la grandeza de Allah";
+"when_la_ilaha_illallah" = "Declaración de fe";
+"when_astaghfirullah" = "Al pedir perdón";
+"when_inshallah" = "Al hablar de planes futuros";
+"when_mashallah" = "Al admirar algo";
+"when_jazakallahu_khairan" = "Al agradecer a alguien";
+"when_barakallahu_feek" = "Al bendecir a alguien";
+"when_ameen" = "Después de una oración o dua";
+"when_la_hawla" = "En momentos difíciles";
+"when_tawakkaltu" = "Al confiar los asuntos a Allah";
+"when_rahimahu_allah" = "Al mencionar a una persona fallecida";
+"when_fi_amanillah" = "Al despedirse";
+
+// MARK: - Keyboard Settings
+"keyboard_settings" = "Configuración del teclado";
+"keyboard_languages_title" = "Idiomas del teclado";
+"keyboard_languages_subtitle" = "Elige idiomas para mostrar en el teclado";
+"keyboard_arabic_text_title" = "Idioma del texto árabe";
+"keyboard_arabic_text_subtitle" = "Elige el idioma que debe insertar texto árabe";
+"keyboard_arabic_dua_text_title" = "Idioma de las duas árabes";
+"keyboard_arabic_dua_text_subtitle" = "Elige el idioma que debe insertar duas árabes (solo texto árabe)";
+"save_selection" = "Guardar selección";
+
+// MARK: - Keyboard Colors
+"keyboard_colors_title" = "Colores del teclado";
+"keyboard_colors_subtitle" = "Elige el color del teclado";
+
+// MARK: - Arabic Language Selection
+"arabic_language_selection_title" = "Configuración del texto árabe";
+"arabic_language_selection_subtitle" = "Elige el idioma que inserta texto árabe en lugar de transliteración";
+"arabic_disabled" = "Deshabilitado";
+"arabic_disabled_description" = "Todos los idiomas insertarán transliteración";
+"arabic_english_description" = "El inglés insertará texto árabe";
+"arabic_russian_description" = "El ruso insertará texto árabe";
+"arabic_kazakh_description" = "El kazajo insertará texto árabe";
+"arabic_arabic_description" = "El árabe insertará texto árabe";
+
+// MARK: - Arabic Dua Language Selection
+"arabic_dua_language_selection_title" = "Configuración de duas árabes";
+"arabic_dua_language_selection_description" = "Elige el idioma que inserta duas árabes (solo texto árabe)";
+"arabic_dua_disabled_description" = "Todos los idiomas insertarán solo traducción";
+"arabic_dua_english_description" = "El inglés insertará duas árabes (solo texto árabe)";
+"arabic_dua_russian_description" = "El ruso insertará duas árabes (solo texto árabe)";
+"arabic_dua_kazakh_description" = "El kazajo insertará duas árabes (solo texto árabe)";
+"arabic_dua_arabic_description" = "El árabe insertará duas árabes (solo texto árabe)";
+
+// MARK: - Arabic Display Mode
+"arabic_display_arabic" = "Texto árabe";
+"arabic_display_english" = "Traducción al inglés";
+"arabic_display_mode_title" = "Modo de visualización árabe";
+"arabic_display_mode_subtitle" = "Elige cómo el árabe muestra el contenido";
+"arabic_display_arabic_description" = "Mostrar texto árabe y transliteración";
+"arabic_display_english_description" = "Mostrar traducción al inglés en lugar del árabe";
+
+// MARK: - Phrase Details
+"transliteration" = "Transliteración";
+"meaning" = "Significado";
+"when_to_use" = "Cuándo usar";
+
+// MARK: - Keyboard Preview
+"keyboard_preview_title" = "Vista previa del teclado";
+"keyboard_preview_description" = "Ve cómo funciona el Teclado Musulmán IA en conversaciones reales. Toca las frases islámicas para insertarlas en tus mensajes.";
+
+// MARK: - Short Duas
+"short_duas_title" = "Duas cortas";
+"short_duas_subtitle" = "Selecciona duas para mostrar en el teclado";
+
+// MARK: - Dua Names - Spanish
+"dua_before_meal" = "Antes de comer";
+"dua_after_meal" = "Después de comer";
+"dua_before_sleep" = "Antes de dormir";
+"dua_waking_up" = "Al despertar";
+"dua_entering_home" = "Al entrar a casa";
+"dua_leaving_home" = "Al salir de casa";
+"dua_before_travel" = "Antes de viajar";
+"dua_entering_mosque" = "Al entrar a la mezquita";
+"dua_leaving_mosque" = "Al salir de la mezquita";
+"dua_seeking_knowledge" = "Al buscar conocimiento";
+
+// MARK: - Dua Descriptions - Spanish
+"dua_before_meal_desc" = "Recitado antes de comer";
+"dua_after_meal_desc" = "Recitado después de comer";
+"dua_before_sleep_desc" = "Recitado antes de dormir";
+"dua_waking_up_desc" = "Recitado al despertar";
+"dua_entering_home_desc" = "Recitado al entrar a casa";
+"dua_leaving_home_desc" = "Recitado al salir de casa";
+"dua_before_travel_desc" = "Recitado antes de viajar";
+"dua_entering_mosque_desc" = "Recitado al entrar a la mezquita";
+"dua_leaving_mosque_desc" = "Recitado al salir de la mezquita";
+"dua_seeking_knowledge_desc" = "Recitado al buscar conocimiento";
+
+// MARK: - Support
+"support_title" = "Soporte";
+"support_contact_title" = "Contáctanos";
+"support_contact_subtitle" = "Obtén ayuda o envía comentarios";
+"support_instagram_title" = "Síguenos en Instagram";
+"support_instagram_subtitle" = "Mantente conectado con nosotros";
+"support_rate_title" = "Calificar la aplicación";
+"support_rate_subtitle" = "Ayúdanos a mejorar";
+
+// MARK: - Stickers Settings
+"stickers_show_button_title" = "Mostrar pegatinas en el teclado";
+"stickers_show_button_subtitle" = "Habilitar botón de pegatinas en el teclado";
+
+// MARK: - New Sticker Generator
+"sticker_generator" = "Generador de pegatinas";
+"sticker_read_instructions" = "Leer instrucciones antes de usar";
+"enter_sticker_text" = "Ingresa texto para la pegatina...";
+"create_sticker" = "Crear pegatina";
+"generating" = "Generando...";
+"sticker_library" = "Biblioteca de pegatinas";
+"select_all" = "Seleccionar todo";
+"sticker_timeout_error" = "Esta función aún no está completamente lista, se está trabajando en ella. ¡Gracias por tu comprensión!";
+"sticker_network_error" = "Problemas de conexión. Inténtalo de nuevo más tarde.";
+"sticker_general_error" = "Esta función aún no está completamente lista, se está trabajando en ella. ¡Gracias por tu comprensión!";
+"saved" = "¡Guardado!";
+"save_selection" = "Guardar selección";
+"cancel" = "Cancelar";
+"sticker_miracle_happening" = "Un milagro está por suceder... ✨";
+"sticker_elapsed_time" = "Tiempo transcurrido";
+"sticker_seconds_short" = "s";
+"sticker_progress_starting" = "Iniciando...";
+"sticker_progress_inshallah" = "InshaAllah, creando pegatina...";
+"sticker_progress_complete" = "¡Completado!";
+"sticker_success_message" = "¡Alhamdulillah, tu pegatina está lista! 🎉";

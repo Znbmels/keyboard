@@ -78,7 +78,7 @@ struct Dua: Identifiable, Codable {
         switch currentLanguage {
         case .russian:
             return russianTitle
-        case .english:
+        case .english, .french, .german, .chinese, .hindi, .kyrgyz, .uzbek, .korean, .urdu, .spanish, .italian:
             return englishTitle
         case .kazakh:
             return kazakhTitle
@@ -93,7 +93,7 @@ struct Dua: Identifiable, Codable {
         switch currentLanguage {
         case .russian:
             return russianTranslation
-        case .english:
+        case .english, .french, .german, .chinese, .hindi, .kyrgyz, .uzbek, .korean, .urdu, .spanish, .italian:
             return englishTranslation
         case .kazakh:
             return kazakhTranslation
@@ -108,7 +108,7 @@ struct Dua: Identifiable, Codable {
         switch currentLanguage {
         case .russian:
             return russianUsage
-        case .english:
+        case .english, .french, .german, .chinese, .hindi, .kyrgyz, .uzbek, .korean, .urdu, .spanish, .italian:
             return englishUsage
         case .kazakh:
             return kazakhUsage
@@ -123,7 +123,7 @@ struct Dua: Identifiable, Codable {
         switch currentLanguage {
         case .russian:
             return "Дуа: \(russianTitle)"
-        case .english:
+        case .english, .french, .german, .chinese, .hindi, .kyrgyz, .uzbek, .korean, .urdu, .spanish, .italian:
             return "Dua: \(englishTitle)"
         case .kazakh:
             return "Дұға: \(kazakhTitle)"

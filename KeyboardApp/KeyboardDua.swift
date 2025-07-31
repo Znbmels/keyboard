@@ -66,6 +66,8 @@ struct KeyboardDua {
             return kazakhTitle
         case .arabic:
             return arabicTitle
+        case .french, .german, .chinese, .hindi, .kyrgyz, .uzbek, .korean, .urdu, .spanish, .italian:
+            return englishTitle // Fallback to English for new languages
         }
     }
 
@@ -80,6 +82,8 @@ struct KeyboardDua {
             return kazakhTranslation
         case .arabic:
             return arabicTranslation
+        case .french, .german, .chinese, .hindi, .kyrgyz, .uzbek, .korean, .urdu, .spanish, .italian:
+            return englishTranslation // Fallback to English for new languages
         }
     }
     

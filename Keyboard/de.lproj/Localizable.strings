@@ -1,0 +1,287 @@
+/* 
+  Localizable.strings
+  Keyboard
+
+  Created by Zainab on 21.07.2025.
+  German Localization
+*/
+
+// MARK: - App Information
+"app_name" = "Muslim KI-Tastatur";
+"app_name_arabic" = "مسلم الذكية لوحة المفاتيح";
+
+// MARK: - Language Selection
+"language_selection_title" = "Wählen Sie Ihre Sprache";
+"language_selection_subtitle" = "Wählen Sie Ihre bevorzugte Sprache";
+"language_english" = "English";
+"language_russian" = "Русский";
+"language_continue" = "Weiter";
+
+// MARK: - Onboarding
+"onboarding_page1_title" = "Willkommen bei der Muslim KI-Tastatur";
+"onboarding_page1_description" = "Diese App hilft Ihnen, muslimische Phrasen schneller und korrekt zu schreiben.";
+
+"onboarding_page2_title" = "KI-gestütztes Schreiben";
+"onboarding_page2_description" = "Sie können die KI-gestützte Tastatur mit Duas und islamischen Ausdrücken verwenden.";
+
+"onboarding_page3_title" = "Bereit zum Starten";
+"onboarding_page3_description" = "Fügen Sie einfach die Tastatur in den Einstellungen hinzu und Sie sind bereit!";
+
+// MARK: - Buttons
+"button_add_keyboard" = "Tastatur hinzufügen";
+"button_get_started" = "Loslegen";
+"button_next" = "Weiter";
+"button_done" = "Fertig";
+"button_skip" = "Überspringen";
+"button_continue" = "Weiter";
+"close" = "Schließen";
+
+// MARK: - Tab Bar
+"tab_home" = "Startseite";
+"tab_phrases" = "Phrasen";
+"tab_stickers" = "Aufkleber";
+"tab_keyboard" = "Tastatur";
+"tab_settings" = "Einstellungen";
+
+// MARK: - Home
+"home_title" = "Muslim KI-Tastatur";
+"home_subtitle" = "Ihr Begleiter für islamisches Schreiben";
+
+// MARK: - Keyboard Instructions
+"keyboard_title" = "Installationsanweisungen";
+"keyboard_subtitle" = "Befolgen Sie diese Schritte, um die Tastatur hinzuzufügen";
+"keyboard_step1" = "1. Tippen Sie auf die Schaltfläche 'Tastatur hinzufügen'";
+"keyboard_step2" = "2. Gehen Sie zu Einstellungen > Allgemein > Tastatur";
+"keyboard_step3" = "3. Tippen Sie auf 'Tastaturen' dann 'Neue Tastatur hinzufügen'";
+"keyboard_step4" = "4. Wählen Sie 'Muslim KI-Tastatur'";
+"keyboard_step5" = "5. Aktivieren Sie 'Vollzugriff erlauben' für KI-Funktionen";
+"keyboard_how_to_use" = "Verwendung";
+"keyboard_usage_description" = "Nach der Installation können Sie in jeder App zur Muslim KI-Tastatur wechseln, indem Sie auf das Globus-Symbol Ihrer Tastatur tippen.";
+
+// MARK: - Islamic Phrases
+"islamic_phrases_title" = "Islamische Phrasen";
+"islamic_phrases_subtitle" = "Wählen Sie Phrasen zur Anzeige in der Tastatur";
+
+// MARK: - Settings
+"settings_title" = "Einstellungen";
+"settings_language_title" = "App-Sprache";
+"settings_language_subtitle" = "Sprache der Benutzeroberfläche ändern";
+"settings_keyboard_languages_title" = "Tastatursprachen";
+"settings_keyboard_languages_subtitle" = "Tastatursprachen verwalten";
+"settings_keyboard_colors_title" = "Tastaturfarben";
+"settings_keyboard_colors_subtitle" = "Tastaturaussehen anpassen";
+"settings_support_title" = "Support";
+"settings_support_subtitle" = "Hilfe und Feedback erhalten";
+"settings_privacy_title" = "Datenschutzrichtlinie";
+"settings_terms_title" = "Nutzungsbedingungen";
+
+// MARK: - Islamic Phrases - German
+"phrase_assalamu_alaikum" = "Assalamu Alaikum";
+"phrase_wa_alaikum_assalam" = "Wa Alaikum Assalam";
+"phrase_bismillah" = "Bismillah";
+"phrase_alhamdulillah" = "Alhamdulillah";
+"phrase_subhanallah" = "SubhanAllah";
+"phrase_allahu_akbar" = "Allahu Akbar";
+"phrase_la_ilaha_illallah" = "La ilaha illallah";
+"phrase_astaghfirullah" = "Astaghfirullah";
+"phrase_inshallah" = "InshaAllah";
+"phrase_mashallah" = "MashaAllah";
+"phrase_jazakallahu_khairan" = "JazakAllahu Khairan";
+"phrase_barakallahu_feek" = "BarakAllahu Feek";
+"phrase_ameen" = "Ameen";
+"phrase_la_hawla" = "La hawla wa la quwwata illa billah";
+"phrase_tawakkaltu" = "Tawakkaltu 'ala Allah";
+"phrase_rahimahu_allah" = "Rahimahu Allah";
+"phrase_fi_amanillah" = "Fi Amanillah";
+
+// MARK: - Phrase Meanings - German
+"meaning_assalamu_alaikum" = "Friede sei mit euch";
+"meaning_wa_alaikum_assalam" = "Und Friede sei auch mit euch";
+"meaning_bismillah" = "Im Namen Allahs";
+"meaning_alhamdulillah" = "Lob sei Allah";
+"meaning_subhanallah" = "Gepriesen sei Allah";
+"meaning_allahu_akbar" = "Allah ist der Größte";
+"meaning_la_ilaha_illallah" = "Es gibt keinen Gott außer Allah";
+"meaning_astaghfirullah" = "Ich bitte Allah um Vergebung";
+"meaning_inshallah" = "So Allah will";
+"meaning_mashallah" = "Was Allah gewollt hat";
+"meaning_jazakallahu_khairan" = "Möge Allah euch mit Gutem belohnen";
+"meaning_barakallahu_feek" = "Möge Allah euch segnen";
+"meaning_ameen" = "Amen";
+"meaning_la_hawla" = "Es gibt keine Macht und Kraft außer bei Allah";
+"meaning_tawakkaltu" = "Ich vertraue auf Allah";
+"meaning_rahimahu_allah" = "Möge Allah ihm barmherzig sein";
+"meaning_fi_amanillah" = "Unter Allahs Schutz";
+
+// MARK: - When to Use - German
+"when_assalamu_alaikum" = "Standard islamische Begrüßung";
+"when_wa_alaikum_assalam" = "Antwort auf Assalamu Alaikum";
+"when_bismillah" = "Vor dem Beginn jeder Handlung";
+"when_alhamdulillah" = "Um Dankbarkeit auszudrücken";
+"when_subhanallah" = "Um Erstaunen auszudrücken";
+"when_allahu_akbar" = "Um Allahs Größe auszudrücken";
+"when_la_ilaha_illallah" = "Glaubensbekenntnis";
+"when_astaghfirullah" = "Um Vergebung zu bitten";
+"when_inshallah" = "Bei Zukunftsplänen";
+"when_mashallah" = "Beim Bewundern von etwas";
+"when_jazakallahu_khairan" = "Um jemandem zu danken";
+"when_barakallahu_feek" = "Um jemanden zu segnen";
+"when_ameen" = "Nach einem Gebet oder Dua";
+"when_la_hawla" = "In schwierigen Zeiten";
+"when_tawakkaltu" = "Beim Überlassen der Angelegenheiten an Allah";
+"when_rahimahu_allah" = "Bei Erwähnung einer verstorbenen Person";
+"when_fi_amanillah" = "Beim Verabschieden";
+
+// MARK: - Keyboard Settings
+"keyboard_settings" = "Tastatureinstellungen";
+"keyboard_languages_title" = "Tastatursprachen";
+"keyboard_languages_subtitle" = "Wählen Sie Sprachen zur Anzeige in der Tastatur";
+"keyboard_arabic_text_title" = "Arabische Textsprache";
+"keyboard_arabic_text_subtitle" = "Wählen Sie die Sprache, die arabischen Text einfügen soll";
+"keyboard_arabic_dua_text_title" = "Arabische Dua-Sprache";
+"keyboard_arabic_dua_text_subtitle" = "Wählen Sie die Sprache, die arabische Duas einfügen soll (nur arabischer Text)";
+"save_selection" = "Auswahl speichern";
+
+// MARK: - Keyboard Colors
+"keyboard_colors_title" = "Tastaturfarben";
+"keyboard_colors_subtitle" = "Wählen Sie die Tastaturfarbe";
+
+// MARK: - Arabic Language Selection
+"arabic_language_selection_title" = "Arabische Texteinstellungen";
+"arabic_language_selection_subtitle" = "Wählen Sie die Sprache, die arabischen Text statt Transliteration einfügt";
+"arabic_disabled" = "Deaktiviert";
+"arabic_disabled_description" = "Alle Sprachen fügen Transliteration ein";
+"arabic_english_description" = "Englisch fügt arabischen Text ein";
+"arabic_russian_description" = "Russisch fügt arabischen Text ein";
+"arabic_kazakh_description" = "Kasachisch fügt arabischen Text ein";
+"arabic_arabic_description" = "Arabisch fügt arabischen Text ein";
+
+// MARK: - Arabic Dua Language Selection
+"arabic_dua_language_selection_title" = "Arabische Dua-Einstellungen";
+"arabic_dua_language_selection_description" = "Wählen Sie die Sprache, die arabische Duas einfügt (nur arabischer Text)";
+"arabic_dua_disabled_description" = "Alle Sprachen fügen nur Übersetzung ein";
+"arabic_dua_english_description" = "Englisch fügt arabische Duas ein (nur arabischer Text)";
+"arabic_dua_russian_description" = "Russisch fügt arabische Duas ein (nur arabischer Text)";
+"arabic_dua_kazakh_description" = "Kasachisch fügt arabische Duas ein (nur arabischer Text)";
+"arabic_dua_arabic_description" = "Arabisch fügt arabische Duas ein (nur arabischer Text)";
+
+// MARK: - Arabic Display Mode
+"arabic_display_arabic" = "Arabischer Text";
+"arabic_display_english" = "Englische Übersetzung";
+"arabic_display_mode_title" = "Arabischer Anzeigemodus";
+"arabic_display_mode_subtitle" = "Wählen Sie, wie Arabisch Inhalte anzeigt";
+"arabic_display_arabic_description" = "Arabischen Text und Transliteration anzeigen";
+"arabic_display_english_description" = "Englische Übersetzung statt Arabisch anzeigen";
+
+// MARK: - Phrase Details
+"transliteration" = "Transliteration";
+"meaning" = "Bedeutung";
+"when_to_use" = "Wann zu verwenden";
+
+// MARK: - Keyboard Preview
+"keyboard_preview_title" = "Tastaturvorschau";
+"keyboard_preview_description" = "Sehen Sie, wie die Muslim KI-Tastatur in echten Gesprächen funktioniert. Tippen Sie auf islamische Phrasen, um sie in Ihre Nachrichten einzufügen.";
+
+// MARK: - Short Duas
+"short_duas_title" = "Kurze Duas";
+"short_duas_subtitle" = "Wählen Sie Duas zur Anzeige in der Tastatur";
+
+// MARK: - Dua Names - German
+"dua_before_meal" = "Vor dem Essen";
+"dua_after_meal" = "Nach dem Essen";
+"dua_before_sleep" = "Vor dem Schlafen";
+"dua_waking_up" = "Beim Aufwachen";
+"dua_entering_home" = "Beim Betreten des Hauses";
+"dua_leaving_home" = "Beim Verlassen des Hauses";
+"dua_before_travel" = "Vor der Reise";
+"dua_entering_mosque" = "Beim Betreten der Moschee";
+"dua_leaving_mosque" = "Beim Verlassen der Moschee";
+"dua_seeking_knowledge" = "Beim Suchen nach Wissen";
+
+// MARK: - Dua Descriptions - German
+"dua_before_meal_desc" = "Vor dem Essen rezitiert";
+"dua_after_meal_desc" = "Nach dem Essen rezitiert";
+"dua_before_sleep_desc" = "Vor dem Schlafen rezitiert";
+"dua_waking_up_desc" = "Beim Aufwachen rezitiert";
+"dua_entering_home_desc" = "Beim Betreten des Hauses rezitiert";
+"dua_leaving_home_desc" = "Beim Verlassen des Hauses rezitiert";
+"dua_before_travel_desc" = "Vor der Reise rezitiert";
+"dua_entering_mosque_desc" = "Beim Betreten der Moschee rezitiert";
+"dua_leaving_mosque_desc" = "Beim Verlassen der Moschee rezitiert";
+"dua_seeking_knowledge_desc" = "Beim Suchen nach Wissen rezitiert";
+
+// MARK: - Support
+"support_title" = "Support";
+"support_contact_title" = "Kontaktieren Sie uns";
+"support_contact_subtitle" = "Hilfe erhalten oder Feedback senden";
+"support_instagram_title" = "Folgen Sie uns auf Instagram";
+"support_instagram_subtitle" = "Bleiben Sie mit uns in Verbindung";
+"support_rate_title" = "App bewerten";
+"support_rate_subtitle" = "Helfen Sie uns, uns zu verbessern";
+
+// MARK: - Stickers Settings
+"stickers_show_button_title" = "Aufkleber in Tastatur anzeigen";
+"stickers_show_button_subtitle" = "Aufkleber-Schaltfläche in Tastatur aktivieren";
+
+// MARK: - New Sticker Generator
+"sticker_generator" = "Aufkleber-Generator";
+"sticker_read_instructions" = "Anweisungen vor Gebrauch lesen";
+"enter_sticker_text" = "Text für Aufkleber eingeben...";
+"create_sticker" = "Aufkleber erstellen";
+"generating" = "Generierung...";
+"sticker_library" = "Aufkleber-Bibliothek";
+"select_all" = "Alle auswählen";
+"sticker_timeout_error" = "Diese Funktion ist noch nicht vollständig bereit, es wird daran gearbeitet. Vielen Dank für Ihr Verständnis!";
+"sticker_network_error" = "Verbindungsprobleme. Bitte versuchen Sie es später erneut.";
+"sticker_general_error" = "Diese Funktion ist noch nicht vollständig bereit, es wird daran gearbeitet. Vielen Dank für Ihr Verständnis!";
+"saved" = "Gespeichert!";
+"save_selection" = "Auswahl speichern";
+"cancel" = "Abbrechen";
+"sticker_miracle_happening" = "Ein Wunder wird geschehen... ✨";
+"sticker_elapsed_time" = "Verstrichene Zeit";
+"sticker_seconds_short" = "s";
+"sticker_progress_starting" = "Starten...";
+"sticker_progress_inshallah" = "InshaAllah, Aufkleber wird erstellt...";
+"sticker_progress_complete" = "Fertig!";
+"sticker_success_message" = "Alhamdulillah, Ihr Aufkleber ist bereit! 🎉";
+
+// MARK: - Sticker Instructions
+"sticker_instructions_title" = "Bismillah - Aufkleber-Generator Anleitung";
+"sticker_instructions_nav_title" = "Anweisungen";
+"sticker_what_can_generate" = "Was Sie generieren können:";
+"sticker_can_islamic_phrases" = "Islamische Phrasen (Alhamdulillah, Subhan Allah, etc.)";
+"sticker_can_duas" = "Schöne Duas und Bitten";
+"sticker_can_quran_verses" = "Koranverse (mit Respekt)";
+"sticker_can_islamic_art" = "Islamische Kunst und Kalligrafie";
+"sticker_what_cannot_generate" = "Was Sie NICHT generieren können:";
+"sticker_cannot_inappropriate" = "Unangemessene oder beleidigende Inhalte";
+"sticker_cannot_non_islamic" = "Nicht-islamische Inhalte";
+"sticker_cannot_faces" = "Gesichter oder Formen von Lebewesen";
+"sticker_cannot_controversial" = "Kontroverse Inhalte";
+"sticker_examples_title" = "Beispiele für gute Anfragen:";
+"sticker_example_1" = "• \"Alhamdulillah in schöner Kalligrafie\"";
+"sticker_example_2" = "• \"Islamisches geometrisches Muster mit Bismillah\"";
+"sticker_example_3" = "• \"Moschee mit Halbmond\"";
+"sticker_example_4" = "• \"La ilaha illa Allah in goldener Kalligrafie\"";
+"sticker_tips_title" = "Tipps für bessere Ergebnisse:";
+"sticker_tip_1" = "• Seien Sie spezifisch über den Stil (Kalligrafie, geometrisch, etc.)";
+"sticker_tip_2" = "• Erwähnen Sie bevorzugte Farben";
+"sticker_tip_3" = "• Halten Sie Anfragen respektvoll und islamisch";
+"sticker_tip_4" = "• Verwenden Sie angemessene islamische Begriffe";
+"sticker_important_note" = "Wichtiger Hinweis:";
+"sticker_note_content" = "Alle Aufkleber werden nach islamischen Richtlinien generiert. Unangemessene Inhalte werden automatisch gefiltert.";
+"sticker_close_instructions" = "Anweisungen schließen";
+
+// MARK: - App Rating
+"rating_title" = "Bewerten Sie die Muslim KI-Tastatur";
+"rating_message" = "Gefällt Ihnen unsere App? Ihre Bewertung hilft uns, uns zu verbessern!";
+"rating_rate_button" = "Jetzt bewerten";
+"rating_not_now_button" = "Nicht jetzt";
+"rating_never_button" = "Nicht mehr fragen";
+
+// MARK: - Update Alert
+"update_available_title" = "Update verfügbar";
+"update_available_message" = "Eine neue Version der Muslim KI-Tastatur ist verfügbar mit Verbesserungen und neuen Funktionen.";
+"update_now_button" = "Jetzt aktualisieren";
+"update_later_button" = "Später";
+"update_skip_button" = "Diese Version überspringen";

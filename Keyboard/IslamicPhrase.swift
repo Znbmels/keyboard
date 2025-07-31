@@ -91,7 +91,7 @@ struct IslamicPhrase: Identifiable, Codable {
         switch currentLanguage {
         case .russian:
             return russianTransliteration
-        case .english:
+        case .english, .french, .german, .chinese, .hindi, .kyrgyz, .uzbek, .korean, .urdu, .spanish, .italian:
             return englishTransliteration
         case .kazakh:
             return kazakhTransliteration
@@ -106,7 +106,7 @@ struct IslamicPhrase: Identifiable, Codable {
         switch currentLanguage {
         case .russian:
             return russianMeaning
-        case .english:
+        case .english, .french, .german, .chinese, .hindi, .kyrgyz, .uzbek, .korean, .urdu, .spanish, .italian:
             return englishMeaning
         case .kazakh:
             return kazakhMeaning
@@ -121,7 +121,7 @@ struct IslamicPhrase: Identifiable, Codable {
         switch currentLanguage {
         case .russian:
             return russianUsage
-        case .english:
+        case .english, .french, .german, .chinese, .hindi, .kyrgyz, .uzbek, .korean, .urdu, .spanish, .italian:
             return englishUsage
         case .kazakh:
             return kazakhUsage
@@ -135,7 +135,7 @@ struct IslamicPhrase: Identifiable, Codable {
         switch language {
         case .russian:
             return russianTranslation
-        case .english:
+        case .english, .french, .german, .chinese, .hindi, .kyrgyz, .uzbek, .korean, .urdu, .spanish, .italian:
             return englishTranslation
         case .kazakh:
             return kazakhTranslation

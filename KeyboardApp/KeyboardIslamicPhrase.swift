@@ -67,6 +67,8 @@ struct KeyboardIslamicPhrase {
             return kazakhTransliteration
         case .arabic:
             return arabicTransliteration
+        case .french, .german, .chinese, .hindi, .kyrgyz, .uzbek, .korean, .urdu, .spanish, .italian:
+            return englishTransliteration // Fallback to English for new languages
         }
     }
 
@@ -81,6 +83,8 @@ struct KeyboardIslamicPhrase {
             return kazakhTranslation
         case .arabic:
             return arabicTranslation
+        case .french, .german, .chinese, .hindi, .kyrgyz, .uzbek, .korean, .urdu, .spanish, .italian:
+            return englishTranslation // Fallback to English for new languages
         }
     }
 
@@ -95,6 +99,8 @@ struct KeyboardIslamicPhrase {
             return kazakhMeaning
         case .arabic:
             return arabicMeaning
+        case .french, .german, .chinese, .hindi, .kyrgyz, .uzbek, .korean, .urdu, .spanish, .italian:
+            return englishMeaning // Fallback to English for new languages
         }
     }
 
@@ -109,6 +115,8 @@ struct KeyboardIslamicPhrase {
             return kazakhUsage
         case .arabic:
             return arabicUsage
+        case .french, .german, .chinese, .hindi, .kyrgyz, .uzbek, .korean, .urdu, .spanish, .italian:
+            return englishUsage // Fallback to English for new languages
         }
     }
 

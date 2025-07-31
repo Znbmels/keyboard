@@ -1,0 +1,246 @@
+/* 
+  Localizable.strings
+  Keyboard
+
+  Created by Zainab on 21.07.2025.
+  Uzbek Localization
+*/
+
+// MARK: - App Information
+"app_name" = "Musulmon AI Klaviatura";
+"app_name_arabic" = "مسلم الذكية لوحة المفاتيح";
+
+// MARK: - Language Selection
+"language_selection_title" = "Tilingizni tanlang";
+"language_selection_subtitle" = "O'zingizga mos tilni tanlang";
+"language_english" = "English";
+"language_russian" = "Русский";
+"language_continue" = "Davom etish";
+
+// MARK: - Onboarding
+"onboarding_page1_title" = "Musulmon AI Klaviaturasiga xush kelibsiz";
+"onboarding_page1_description" = "Bu ilova musulmon iboralarini tez va to'g'ri yozishga yordam beradi.";
+
+"onboarding_page2_title" = "AI bilan yozish";
+"onboarding_page2_description" = "Duolar va islomiy iboralar bilan AI klaviaturasidan foydalanishingiz mumkin.";
+
+"onboarding_page3_title" = "Boshlashga tayyor";
+"onboarding_page3_description" = "Sozlamalarda klaviaturani qo'shing va tayyor!";
+
+// MARK: - Buttons
+"button_add_keyboard" = "Klaviatura qo'shish";
+"button_get_started" = "Boshlash";
+"button_next" = "Keyingi";
+"button_done" = "Tayyor";
+"button_skip" = "O'tkazib yuborish";
+"button_continue" = "Davom etish";
+"close" = "Yopish";
+
+// MARK: - Tab Bar
+"tab_home" = "Bosh sahifa";
+"tab_phrases" = "Iboralar";
+"tab_stickers" = "Stikerlar";
+"tab_keyboard" = "Klaviatura";
+"tab_settings" = "Sozlamalar";
+
+// MARK: - Home
+"home_title" = "Musulmon AI Klaviatura";
+"home_subtitle" = "Islomiy yozuv uchun hamkoringiz";
+
+// MARK: - Keyboard Instructions
+"keyboard_title" = "O'rnatish ko'rsatmalari";
+"keyboard_subtitle" = "Klaviaturani qo'shish uchun bu qadamlarni bajaring";
+"keyboard_step1" = "1. 'Klaviatura qo'shish' tugmasini bosing";
+"keyboard_step2" = "2. Sozlamalar > Umumiy > Klaviaturaga o'ting";
+"keyboard_step3" = "3. 'Klaviaturalar' keyin 'Yangi klaviatura qo'shish' bosing";
+"keyboard_step4" = "4. 'Musulmon AI Klaviatura' tanlang";
+"keyboard_step5" = "5. AI funksiyalari uchun 'To'liq ruxsat berish' yoqing";
+"keyboard_how_to_use" = "Qanday foydalanish";
+"keyboard_usage_description" = "O'rnatilgandan so'ng, klaviaturangizdagi globus belgisini bosish orqali istalgan ilovada Musulmon AI Klaviaturasiga o'tishingiz mumkin.";
+
+// MARK: - Islamic Phrases
+"islamic_phrases_title" = "Islomiy iboralar";
+"islamic_phrases_subtitle" = "Klaviaturada ko'rsatish uchun iboralarni tanlang";
+
+// MARK: - Settings
+"settings_title" = "Sozlamalar";
+"settings_language_title" = "Ilova tili";
+"settings_language_subtitle" = "Interfeys tilini o'zgartirish";
+"settings_keyboard_languages_title" = "Klaviatura tillari";
+"settings_keyboard_languages_subtitle" = "Klaviatura tillarini boshqarish";
+"settings_keyboard_colors_title" = "Klaviatura ranglari";
+"settings_keyboard_colors_subtitle" = "Klaviatura ko'rinishini sozlash";
+"settings_support_title" = "Yordam";
+"settings_support_subtitle" = "Yordam olish va fikr bildirish";
+"settings_privacy_title" = "Maxfiylik siyosati";
+"settings_terms_title" = "Foydalanish shartlari";
+
+// MARK: - Islamic Phrases - Uzbek
+"phrase_assalamu_alaikum" = "Assalamu Alaikum";
+"phrase_wa_alaikum_assalam" = "Wa Alaikum Assalam";
+"phrase_bismillah" = "Bismillah";
+"phrase_alhamdulillah" = "Alhamdulillah";
+"phrase_subhanallah" = "SubhanAllah";
+"phrase_allahu_akbar" = "Allahu Akbar";
+"phrase_la_ilaha_illallah" = "La ilaha illallah";
+"phrase_astaghfirullah" = "Astaghfirullah";
+"phrase_inshallah" = "InshaAllah";
+"phrase_mashallah" = "MashaAllah";
+"phrase_jazakallahu_khairan" = "JazakAllahu Khairan";
+"phrase_barakallahu_feek" = "BarakAllahu Feek";
+"phrase_ameen" = "Ameen";
+"phrase_la_hawla" = "La hawla wa la quwwata illa billah";
+"phrase_tawakkaltu" = "Tawakkaltu 'ala Allah";
+"phrase_rahimahu_allah" = "Rahimahu Allah";
+"phrase_fi_amanillah" = "Fi Amanillah";
+
+// MARK: - Phrase Meanings - Uzbek
+"meaning_assalamu_alaikum" = "Sizlarga tinchlik bo'lsin";
+"meaning_wa_alaikum_assalam" = "Sizlarga ham tinchlik bo'lsin";
+"meaning_bismillah" = "Alloh nomi bilan";
+"meaning_alhamdulillah" = "Allohga hamd";
+"meaning_subhanallah" = "Alloh ulug'";
+"meaning_allahu_akbar" = "Alloh eng ulug'";
+"meaning_la_ilaha_illallah" = "Allohdan boshqa iloh yo'q";
+"meaning_astaghfirullah" = "Allohdan kechirim so'rayman";
+"meaning_inshallah" = "Alloh xohlasa";
+"meaning_mashallah" = "Alloh xohlagan narsa";
+"meaning_jazakallahu_khairan" = "Alloh sizni yaxshilik bilan mukofotlasin";
+"meaning_barakallahu_feek" = "Alloh sizga baraka bersin";
+"meaning_ameen" = "Omin";
+"meaning_la_hawla" = "Allohdan boshqa kuch va qudrat yo'q";
+"meaning_tawakkaltu" = "Allohga tayanaman";
+"meaning_rahimahu_allah" = "Alloh unga rahm qilsin";
+"meaning_fi_amanillah" = "Allohning himoyasida";
+
+// MARK: - When to Use - Uzbek
+"when_assalamu_alaikum" = "Standart islomiy salom";
+"when_wa_alaikum_assalam" = "Assalamu Alaikum javob";
+"when_bismillah" = "Har qanday ishni boshlashdan oldin";
+"when_alhamdulillah" = "Minnatdorlik bildirish uchun";
+"when_subhanallah" = "Hayrat bildirish uchun";
+"when_allahu_akbar" = "Allohning ulug'ligini bildirish uchun";
+"when_la_ilaha_illallah" = "E'tiqod e'loni";
+"when_astaghfirullah" = "Kechirim so'rashda";
+"when_inshallah" = "Kelajak rejalar haqida gapirganda";
+"when_mashallah" = "Biror narsani maqtaganda";
+"when_jazakallahu_khairan" = "Kimgadir rahmat aytganda";
+"when_barakallahu_feek" = "Kimgadir duo qilganda";
+"when_ameen" = "Namoz yoki duodan keyin";
+"when_la_hawla" = "Qiyin paytlarda";
+"when_tawakkaltu" = "Ishlarni Allohga topshirganda";
+"when_rahimahu_allah" = "Vafot etgan odamni eslaganda";
+"when_fi_amanillah" = "Xayrlashganda";
+
+// MARK: - Keyboard Settings
+"keyboard_settings" = "Klaviatura sozlamalari";
+"keyboard_languages_title" = "Klaviatura tillari";
+"keyboard_languages_subtitle" = "Klaviaturada ko'rsatish uchun tillarni tanlang";
+"keyboard_arabic_text_title" = "Arab matni tili";
+"keyboard_arabic_text_subtitle" = "Arab matnini kiritadigan tilni tanlang";
+"keyboard_arabic_dua_text_title" = "Arab duo tili";
+"keyboard_arabic_dua_text_subtitle" = "Arab duolarini kiritadigan tilni tanlang (faqat arab matni)";
+"save_selection" = "Tanlovni saqlash";
+
+// MARK: - Keyboard Colors
+"keyboard_colors_title" = "Klaviatura ranglari";
+"keyboard_colors_subtitle" = "Klaviatura rangini tanlang";
+
+// MARK: - Arabic Language Selection
+"arabic_language_selection_title" = "Arab matni sozlamalari";
+"arabic_language_selection_subtitle" = "Transliteratsiya o'rniga arab matnini kiritadigan tilni tanlang";
+"arabic_disabled" = "O'chirilgan";
+"arabic_disabled_description" = "Barcha tillar transliteratsiya kiritadi";
+"arabic_english_description" = "Ingliz tili arab matnini kiritadi";
+"arabic_russian_description" = "Rus tili arab matnini kiritadi";
+"arabic_kazakh_description" = "Qozoq tili arab matnini kiritadi";
+"arabic_arabic_description" = "Arab tili arab matnini kiritadi";
+
+// MARK: - Arabic Dua Language Selection
+"arabic_dua_language_selection_title" = "Arab duo sozlamalari";
+"arabic_dua_language_selection_description" = "Arab duolarini kiritadigan tilni tanlang (faqat arab matni)";
+"arabic_dua_disabled_description" = "Barcha tillar faqat tarjima kiritadi";
+"arabic_dua_english_description" = "Ingliz tili arab duolarini kiritadi (faqat arab matni)";
+"arabic_dua_russian_description" = "Rus tili arab duolarini kiritadi (faqat arab matni)";
+"arabic_dua_kazakh_description" = "Qozoq tili arab duolarini kiritadi (faqat arab matni)";
+"arabic_dua_arabic_description" = "Arab tili arab duolarini kiritadi (faqat arab matni)";
+
+// MARK: - Arabic Display Mode
+"arabic_display_arabic" = "Arab matni";
+"arabic_display_english" = "Ingliz tarjimasi";
+"arabic_display_mode_title" = "Arab ko'rsatish rejimi";
+"arabic_display_mode_subtitle" = "Arab tili kontentni qanday ko'rsatishini tanlang";
+"arabic_display_arabic_description" = "Arab matni va transliteratsiyani ko'rsatish";
+"arabic_display_english_description" = "Arab o'rniga ingliz tarjimasini ko'rsatish";
+
+// MARK: - Phrase Details
+"transliteration" = "Transliteratsiya";
+"meaning" = "Ma'no";
+"when_to_use" = "Qachon ishlatish";
+
+// MARK: - Keyboard Preview
+"keyboard_preview_title" = "Klaviatura oldindan ko'rish";
+"keyboard_preview_description" = "Musulmon AI Klaviaturasining haqiqiy suhbatlarda qanday ishlashini ko'ring. Xabarlaringizga islomiy iboralarni kiritish uchun ularga bosing.";
+
+// MARK: - Short Duas
+"short_duas_title" = "Qisqa duolar";
+"short_duas_subtitle" = "Klaviaturada ko'rsatish uchun duolarni tanlang";
+
+// MARK: - Dua Names - Uzbek
+"dua_before_meal" = "Ovqat oldidan";
+"dua_after_meal" = "Ovqatdan keyin";
+"dua_before_sleep" = "Uxlashdan oldin";
+"dua_waking_up" = "Uyg'onganda";
+"dua_entering_home" = "Uyga kirganda";
+"dua_leaving_home" = "Uydan chiqganda";
+"dua_before_travel" = "Sayohat oldidan";
+"dua_entering_mosque" = "Masjidga kirganda";
+"dua_leaving_mosque" = "Masjiddan chiqganda";
+"dua_seeking_knowledge" = "Ilm izlaganda";
+
+// MARK: - Dua Descriptions - Uzbek
+"dua_before_meal_desc" = "Ovqat yeyishdan oldin o'qiladi";
+"dua_after_meal_desc" = "Ovqat yegandan keyin o'qiladi";
+"dua_before_sleep_desc" = "Uxlashdan oldin o'qiladi";
+"dua_waking_up_desc" = "Uyg'onganda o'qiladi";
+"dua_entering_home_desc" = "Uyga kirganda o'qiladi";
+"dua_leaving_home_desc" = "Uydan chiqganda o'qiladi";
+"dua_before_travel_desc" = "Sayohat oldidan o'qiladi";
+"dua_entering_mosque_desc" = "Masjidga kirganda o'qiladi";
+"dua_leaving_mosque_desc" = "Masjiddan chiqganda o'qiladi";
+"dua_seeking_knowledge_desc" = "Ilm izlaganda o'qiladi";
+
+// MARK: - Support
+"support_title" = "Yordam";
+"support_contact_title" = "Biz bilan bog'laning";
+"support_contact_subtitle" = "Yordam oling yoki fikr bildiring";
+"support_instagram_title" = "Instagram'da bizni kuzating";
+"support_instagram_subtitle" = "Biz bilan aloqada bo'ling";
+"support_rate_title" = "Ilovani baholang";
+"support_rate_subtitle" = "Bizni yaxshilashga yordam bering";
+
+// MARK: - Stickers Settings
+"stickers_show_button_title" = "Klaviaturada stikerlarni ko'rsatish";
+"stickers_show_button_subtitle" = "Klaviaturada stiker tugmasini yoqish";
+
+// MARK: - New Sticker Generator
+"sticker_generator" = "Stiker generatori";
+"sticker_read_instructions" = "Ishlatishdan oldin ko'rsatmalarni o'qing";
+"enter_sticker_text" = "Stiker uchun matn kiriting...";
+"create_sticker" = "Stiker yaratish";
+"generating" = "Yaratilmoqda...";
+"sticker_library" = "Stiker kutubxonasi";
+"select_all" = "Barchasini tanlash";
+"sticker_timeout_error" = "Bu funksiya hali to'liq tayyor emas, ishlar olib borilmoqda. Tushunganingiz uchun rahmat!";
+"sticker_network_error" = "Ulanish muammolari. Keyinroq qayta urinib ko'ring.";
+"sticker_general_error" = "Bu funksiya hali to'liq tayyor emas, ishlar olib borilmoqda. Tushunganingiz uchun rahmat!";
+"saved" = "Saqlandi!";
+"save_selection" = "Tanlovni saqlash";
+"cancel" = "Bekor qilish";
+"sticker_miracle_happening" = "Endi mo'jiza sodir bo'ladi... ✨";
+"sticker_elapsed_time" = "O'tgan vaqt";
+"sticker_seconds_short" = "s";
+"sticker_progress_starting" = "Boshlanmoqda...";
+"sticker_progress_inshallah" = "InshaAlloh, stiker yaratilmoqda...";
+"sticker_progress_complete" = "Tayyor!";
+"sticker_success_message" = "Alhamdulilloh, stikeringiz tayyor! 🎉";

@@ -155,7 +155,7 @@ struct ArabicLanguageOptionRow: View {
     private var description: String {
         if let language = language {
             switch language {
-            case .english:
+            case .english, .french, .german, .chinese, .hindi, .kyrgyz, .uzbek, .korean, .urdu, .spanish, .italian:
                 return NSLocalizedString("arabic_english_description", comment: "")
             case .russian:
                 return NSLocalizedString("arabic_russian_description", comment: "")
@@ -172,7 +172,7 @@ struct ArabicLanguageOptionRow: View {
     private var exampleText: String {
         if let language = language {
             switch language {
-            case .english:
+            case .english, .french, .german, .chinese, .hindi, .kyrgyz, .uzbek, .korean, .urdu, .spanish, .italian:
                 return "Bismillah → بسم الله"
             case .russian:
                 return "Бисмиллях → بسم الله"

@@ -14,6 +14,16 @@ enum AppLanguage: String, CaseIterable {
     case russian = "ru"
     case kazakh = "kk"
     case arabic = "ar"
+    case french = "fr"
+    case german = "de"
+    case chinese = "zh"
+    case hindi = "hi"
+    case kyrgyz = "ky"
+    case uzbek = "uz"
+    case korean = "ko"
+    case urdu = "ur"
+    case spanish = "es"
+    case italian = "it"
 
     var displayName: String {
         switch self {
@@ -25,6 +35,26 @@ enum AppLanguage: String, CaseIterable {
             return "Қазақша"
         case .arabic:
             return "العربية"
+        case .french:
+            return "Français"
+        case .german:
+            return "Deutsch"
+        case .chinese:
+            return "中文"
+        case .hindi:
+            return "हिन्दी"
+        case .kyrgyz:
+            return "Кыргызча"
+        case .uzbek:
+            return "O'zbekcha"
+        case .korean:
+            return "한국어"
+        case .urdu:
+            return "اردو"
+        case .spanish:
+            return "Español"
+        case .italian:
+            return "Italiano"
         }
     }
 
@@ -38,6 +68,26 @@ enum AppLanguage: String, CaseIterable {
             return "🇰🇿"
         case .arabic:
             return "🇸🇦"
+        case .french:
+            return "🇫🇷"
+        case .german:
+            return "🇩🇪"
+        case .chinese:
+            return "🇨🇳"
+        case .hindi:
+            return "🇮🇳"
+        case .kyrgyz:
+            return "🇰🇬"
+        case .uzbek:
+            return "🇺🇿"
+        case .korean:
+            return "🇰🇷"
+        case .urdu:
+            return "🇵🇰"
+        case .spanish:
+            return "🇪🇸"
+        case .italian:
+            return "🇮🇹"
         }
     }
 

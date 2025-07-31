@@ -116,7 +116,7 @@ struct DuaSelectionView: View {
         switch currentLanguage {
         case .russian:
             return "Выбрано: \(count)"
-        case .english:
+        case .english, .french, .german, .chinese, .hindi, .kyrgyz, .uzbek, .korean, .urdu, .spanish, .italian:
             return "Selected: \(count)"
         case .kazakh:
             return "Таңдалған: \(count)"

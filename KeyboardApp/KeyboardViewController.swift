@@ -315,7 +315,7 @@ class KeyboardViewController: UIInputViewController {
     // MARK: - Keyboard Layouts
     private func getLetterLayout() -> [[KeyType]] {
         switch currentLanguage {
-        case .english:
+        case .english, .french, .german, .chinese, .hindi, .kyrgyz, .uzbek, .korean, .urdu, .spanish, .italian:
             return [
                 [.letter("Q"), .letter("W"), .letter("E"), .letter("R"), .letter("T"), .letter("Y"), .letter("U"), .letter("I"), .letter("O"), .letter("P")],
                 [.letter("A"), .letter("S"), .letter("D"), .letter("F"), .letter("G"), .letter("H"), .letter("J"), .letter("K"), .letter("L")],
@@ -1050,7 +1050,7 @@ class KeyboardViewController: UIInputViewController {
         case .space:
             let spaceTitle: String
             switch currentLanguage {
-            case .english:
+            case .english, .french, .german, .chinese, .hindi, .kyrgyz, .uzbek, .korean, .urdu, .spanish, .italian:
                 spaceTitle = "space"
             case .russian:
                 spaceTitle = "пробел"
@@ -1121,6 +1121,26 @@ class KeyboardViewController: UIInputViewController {
                     languageText = "KZ"
                 case .arabic:
                     languageText = "AR"
+                case .french:
+                    languageText = "FR"
+                case .german:
+                    languageText = "DE"
+                case .chinese:
+                    languageText = "ZH"
+                case .hindi:
+                    languageText = "HI"
+                case .kyrgyz:
+                    languageText = "KY"
+                case .uzbek:
+                    languageText = "UZ"
+                case .korean:
+                    languageText = "KO"
+                case .urdu:
+                    languageText = "UR"
+                case .spanish:
+                    languageText = "ES"
+                case .italian:
+                    languageText = "IT"
                 }
                 button.setTitle(languageText, for: .normal)
                 button.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .medium)
@@ -1157,7 +1177,7 @@ class KeyboardViewController: UIInputViewController {
             let title: String
             if islamicMode == .phrases {
                 switch currentLanguage {
-                case .english:
+                case .english, .french, .german, .chinese, .hindi, .kyrgyz, .uzbek, .korean, .urdu, .spanish, .italian:
                     title = "Dua"
                 case .russian:
                     title = "Дуа"
@@ -1168,7 +1188,7 @@ class KeyboardViewController: UIInputViewController {
                 }
             } else {
                 switch currentLanguage {
-                case .english:
+                case .english, .french, .german, .chinese, .hindi, .kyrgyz, .uzbek, .korean, .urdu, .spanish, .italian:
                     title = "Phrases"
                 case .russian:
                     title = "Фразы"

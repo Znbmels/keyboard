@@ -180,6 +180,16 @@
 				ru,
 				kk,
 				ar,
+				fr,
+				de,
+				zh,
+				hi,
+				ky,
+				uz,
+				ko,
+				ur,
+				es,
+				it,
 			);
 			mainGroup = FA7A482A2E03EB0500875337;
 			minimizedProjectReferenceProxies = 1;

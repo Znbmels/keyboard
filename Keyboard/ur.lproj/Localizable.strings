@@ -1,0 +1,246 @@
+/* 
+  Localizable.strings
+  Keyboard
+
+  Created by Zainab on 21.07.2025.
+  Urdu Localization
+*/
+
+// MARK: - App Information
+"app_name" = "مسلم AI کی بورڈ";
+"app_name_arabic" = "مسلم الذكية لوحة المفاتيح";
+
+// MARK: - Language Selection
+"language_selection_title" = "اپنی زبان منتخب کریں";
+"language_selection_subtitle" = "اپنی پسندیدہ زبان منتخب کریں";
+"language_english" = "English";
+"language_russian" = "Русский";
+"language_continue" = "جاری رکھیں";
+
+// MARK: - Onboarding
+"onboarding_page1_title" = "مسلم AI کی بورڈ میں خوش آمدید";
+"onboarding_page1_description" = "یہ ایپ آپ کو مسلم جملے تیزی سے اور درست طریقے سے لکھنے میں مدد کرتا ہے۔";
+
+"onboarding_page2_title" = "AI سے چلنے والی تحریر";
+"onboarding_page2_description" = "آپ دعاؤں اور اسلامی تاثرات کے ساتھ AI سے چلنے والا کی بورڈ استعمال کر سکتے ہیں۔";
+
+"onboarding_page3_title" = "شروع کرنے کے لیے تیار";
+"onboarding_page3_description" = "بس سیٹنگز میں کی بورڈ شامل کریں اور آپ تیار ہیں!";
+
+// MARK: - Buttons
+"button_add_keyboard" = "کی بورڈ شامل کریں";
+"button_get_started" = "شروع کریں";
+"button_next" = "اگلا";
+"button_done" = "مکمل";
+"button_skip" = "چھوڑیں";
+"button_continue" = "جاری رکھیں";
+"close" = "بند کریں";
+
+// MARK: - Tab Bar
+"tab_home" = "ہوم";
+"tab_phrases" = "جملے";
+"tab_stickers" = "اسٹیکرز";
+"tab_keyboard" = "کی بورڈ";
+"tab_settings" = "سیٹنگز";
+
+// MARK: - Home
+"home_title" = "مسلم AI کی بورڈ";
+"home_subtitle" = "اسلامی تحریر کے لیے آپ کا ساتھی";
+
+// MARK: - Keyboard Instructions
+"keyboard_title" = "انسٹالیشن کی ہدایات";
+"keyboard_subtitle" = "کی بورڈ شامل کرنے کے لیے یہ قدم اٹھائیں";
+"keyboard_step1" = "1. 'کی بورڈ شامل کریں' بٹن دبائیں";
+"keyboard_step2" = "2. سیٹنگز > عمومی > کی بورڈ پر جائیں";
+"keyboard_step3" = "3. 'کی بورڈز' پھر 'نیا کی بورڈ شامل کریں' دبائیں";
+"keyboard_step4" = "4. 'مسلم AI کی بورڈ' منتخب کریں";
+"keyboard_step5" = "5. AI فیچرز کے لیے 'مکمل رسائی کی اجازت دیں' فعال کریں";
+"keyboard_how_to_use" = "استعمال کا طریقہ";
+"keyboard_usage_description" = "انسٹال ہونے کے بعد، آپ اپنے کی بورڈ کے گلوب آئیکن کو دبا کر کسی بھی ایپ میں مسلم AI کی بورڈ پر سوئچ کر سکتے ہیں۔";
+
+// MARK: - Islamic Phrases
+"islamic_phrases_title" = "اسلامی جملے";
+"islamic_phrases_subtitle" = "کی بورڈ میں دکھانے کے لیے جملے منتخب کریں";
+
+// MARK: - Settings
+"settings_title" = "سیٹنگز";
+"settings_language_title" = "ایپ کی زبان";
+"settings_language_subtitle" = "انٹرفیس کی زبان تبدیل کریں";
+"settings_keyboard_languages_title" = "کی بورڈ کی زبانیں";
+"settings_keyboard_languages_subtitle" = "کی بورڈ کی زبانوں کا انتظام کریں";
+"settings_keyboard_colors_title" = "کی بورڈ کے رنگ";
+"settings_keyboard_colors_subtitle" = "کی بورڈ کی ظاہری شکل کو اپنی مرضی کے مطابق بنائیں";
+"settings_support_title" = "سپورٹ";
+"settings_support_subtitle" = "مدد حاصل کریں اور فیڈبیک دیں";
+"settings_privacy_title" = "پرائیویسی پالیسی";
+"settings_terms_title" = "استعمال کی شرائط";
+
+// MARK: - Islamic Phrases - Urdu
+"phrase_assalamu_alaikum" = "Assalamu Alaikum";
+"phrase_wa_alaikum_assalam" = "Wa Alaikum Assalam";
+"phrase_bismillah" = "Bismillah";
+"phrase_alhamdulillah" = "Alhamdulillah";
+"phrase_subhanallah" = "SubhanAllah";
+"phrase_allahu_akbar" = "Allahu Akbar";
+"phrase_la_ilaha_illallah" = "La ilaha illallah";
+"phrase_astaghfirullah" = "Astaghfirullah";
+"phrase_inshallah" = "InshaAllah";
+"phrase_mashallah" = "MashaAllah";
+"phrase_jazakallahu_khairan" = "JazakAllahu Khairan";
+"phrase_barakallahu_feek" = "BarakAllahu Feek";
+"phrase_ameen" = "Ameen";
+"phrase_la_hawla" = "La hawla wa la quwwata illa billah";
+"phrase_tawakkaltu" = "Tawakkaltu 'ala Allah";
+"phrase_rahimahu_allah" = "Rahimahu Allah";
+"phrase_fi_amanillah" = "Fi Amanillah";
+
+// MARK: - Phrase Meanings - Urdu
+"meaning_assalamu_alaikum" = "آپ پر سلامتی ہو";
+"meaning_wa_alaikum_assalam" = "آپ پر بھی سلامتی ہو";
+"meaning_bismillah" = "اللہ کے نام سے";
+"meaning_alhamdulillah" = "اللہ کا شکر";
+"meaning_subhanallah" = "اللہ پاک ہے";
+"meaning_allahu_akbar" = "اللہ سب سے بڑا ہے";
+"meaning_la_ilaha_illallah" = "اللہ کے سوا کوئی معبود نہیں";
+"meaning_astaghfirullah" = "میں اللہ سے معافی مانگتا ہوں";
+"meaning_inshallah" = "اگر اللہ چاہے";
+"meaning_mashallah" = "جو اللہ نے چاہا";
+"meaning_jazakallahu_khairan" = "اللہ آپ کو بھلائی سے نوازے";
+"meaning_barakallahu_feek" = "اللہ آپ کو برکت دے";
+"meaning_ameen" = "آمین";
+"meaning_la_hawla" = "اللہ کے سوا کوئی طاقت اور قوت نہیں";
+"meaning_tawakkaltu" = "میں اللہ پر بھروسہ کرتا ہوں";
+"meaning_rahimahu_allah" = "اللہ اس پر رحم کرے";
+"meaning_fi_amanillah" = "اللہ کی حفاظت میں";
+
+// MARK: - When to Use - Urdu
+"when_assalamu_alaikum" = "معیاری اسلامی سلام";
+"when_wa_alaikum_assalam" = "Assalamu Alaikum کا جواب";
+"when_bismillah" = "کوئی بھی کام شروع کرنے سے پہلے";
+"when_alhamdulillah" = "شکرگزاری کا اظہار کرنے کے لیے";
+"when_subhanallah" = "حیرت کا اظہار کرنے کے لیے";
+"when_allahu_akbar" = "اللہ کی عظمت کا اظہار کرنے کے لیے";
+"when_la_ilaha_illallah" = "ایمان کا اعلان";
+"when_astaghfirullah" = "معافی مانگتے وقت";
+"when_inshallah" = "مستقبل کے منصوبوں کے بارے میں بات کرتے وقت";
+"when_mashallah" = "کسی چیز کی تعریف کرتے وقت";
+"when_jazakallahu_khairan" = "کسی کا شکریہ ادا کرتے وقت";
+"when_barakallahu_feek" = "کسی کو دعا دیتے وقت";
+"when_ameen" = "نماز یا دعا کے بعد";
+"when_la_hawla" = "مشکل وقتوں میں";
+"when_tawakkaltu" = "معاملات اللہ پر چھوڑتے وقت";
+"when_rahimahu_allah" = "فوت شدہ شخص کا ذکر کرتے وقت";
+"when_fi_amanillah" = "الوداع کہتے وقت";
+
+// MARK: - Keyboard Settings
+"keyboard_settings" = "کی بورڈ کی سیٹنگز";
+"keyboard_languages_title" = "کی بورڈ کی زبانیں";
+"keyboard_languages_subtitle" = "کی بورڈ میں دکھانے کے لیے زبانیں منتخب کریں";
+"keyboard_arabic_text_title" = "عربی متن کی زبان";
+"keyboard_arabic_text_subtitle" = "عربی متن داخل کرنے والی زبان منتخب کریں";
+"keyboard_arabic_dua_text_title" = "عربی دعا کی زبان";
+"keyboard_arabic_dua_text_subtitle" = "عربی دعائیں داخل کرنے والی زبان منتخب کریں (صرف عربی متن)";
+"save_selection" = "انتخاب محفوظ کریں";
+
+// MARK: - Keyboard Colors
+"keyboard_colors_title" = "کی بورڈ کے رنگ";
+"keyboard_colors_subtitle" = "کی بورڈ کا رنگ منتخب کریں";
+
+// MARK: - Arabic Language Selection
+"arabic_language_selection_title" = "عربی متن کی سیٹنگز";
+"arabic_language_selection_subtitle" = "نقل حرفی کے بجائے عربی متن داخل کرنے والی زبان منتخب کریں";
+"arabic_disabled" = "غیر فعال";
+"arabic_disabled_description" = "تمام زبانیں نقل حرفی داخل کریں گی";
+"arabic_english_description" = "انگریزی عربی متن داخل کرے گی";
+"arabic_russian_description" = "روسی عربی متن داخل کرے گی";
+"arabic_kazakh_description" = "قازق عربی متن داخل کرے گی";
+"arabic_arabic_description" = "عربی عربی متن داخل کرے گی";
+
+// MARK: - Arabic Dua Language Selection
+"arabic_dua_language_selection_title" = "عربی دعا کی سیٹنگز";
+"arabic_dua_language_selection_description" = "عربی دعائیں داخل کرنے والی زبان منتخب کریں (صرف عربی متن)";
+"arabic_dua_disabled_description" = "تمام زبانیں صرف ترجمہ داخل کریں گی";
+"arabic_dua_english_description" = "انگریزی عربی دعائیں داخل کرے گی (صرف عربی متن)";
+"arabic_dua_russian_description" = "روسی عربی دعائیں داخل کرے گی (صرف عربی متن)";
+"arabic_dua_kazakh_description" = "قازق عربی دعائیں داخل کرے گی (صرف عربی متن)";
+"arabic_dua_arabic_description" = "عربی عربی دعائیں داخل کرے گی (صرف عربی متن)";
+
+// MARK: - Arabic Display Mode
+"arabic_display_arabic" = "عربی متن";
+"arabic_display_english" = "انگریزی ترجمہ";
+"arabic_display_mode_title" = "عربی ڈسپلے موڈ";
+"arabic_display_mode_subtitle" = "عربی مواد کو کیسے دکھانا ہے منتخب کریں";
+"arabic_display_arabic_description" = "عربی متن اور نقل حرفی دکھائیں";
+"arabic_display_english_description" = "عربی کے بجائے انگریزی ترجمہ دکھائیں";
+
+// MARK: - Phrase Details
+"transliteration" = "نقل حرفی";
+"meaning" = "معنی";
+"when_to_use" = "کب استعمال کریں";
+
+// MARK: - Keyboard Preview
+"keyboard_preview_title" = "کی بورڈ کا پیش منظر";
+"keyboard_preview_description" = "دیکھیں کہ مسلم AI کی بورڈ حقیقی گفتگو میں کیسے کام کرتا ہے۔ اپنے پیغامات میں اسلامی جملے داخل کرنے کے لیے انہیں دبائیں۔";
+
+// MARK: - Short Duas
+"short_duas_title" = "مختصر دعائیں";
+"short_duas_subtitle" = "کی بورڈ میں دکھانے کے لیے دعائیں منتخب کریں";
+
+// MARK: - Dua Names - Urdu
+"dua_before_meal" = "کھانے سے پہلے";
+"dua_after_meal" = "کھانے کے بعد";
+"dua_before_sleep" = "سونے سے پہلے";
+"dua_waking_up" = "بیدار ہونے پر";
+"dua_entering_home" = "گھر میں داخل ہوتے وقت";
+"dua_leaving_home" = "گھر سے نکلتے وقت";
+"dua_before_travel" = "سفر سے پہلے";
+"dua_entering_mosque" = "مسجد میں داخل ہوتے وقت";
+"dua_leaving_mosque" = "مسجد سے نکلتے وقت";
+"dua_seeking_knowledge" = "علم حاصل کرتے وقت";
+
+// MARK: - Dua Descriptions - Urdu
+"dua_before_meal_desc" = "کھانے سے پہلے پڑھی جاتی ہے";
+"dua_after_meal_desc" = "کھانے کے بعد پڑھی جاتی ہے";
+"dua_before_sleep_desc" = "سونے سے پہلے پڑھی جاتی ہے";
+"dua_waking_up_desc" = "بیدار ہونے پر پڑھی جاتی ہے";
+"dua_entering_home_desc" = "گھر میں داخل ہوتے وقت پڑھی جاتی ہے";
+"dua_leaving_home_desc" = "گھر سے نکلتے وقت پڑھی جاتی ہے";
+"dua_before_travel_desc" = "سفر سے پہلے پڑھی جاتی ہے";
+"dua_entering_mosque_desc" = "مسجد میں داخل ہوتے وقت پڑھی جاتی ہے";
+"dua_leaving_mosque_desc" = "مسجد سے نکلتے وقت پڑھی جاتی ہے";
+"dua_seeking_knowledge_desc" = "علم حاصل کرتے وقت پڑھی جاتی ہے";
+
+// MARK: - Support
+"support_title" = "سپورٹ";
+"support_contact_title" = "ہم سے رابطہ کریں";
+"support_contact_subtitle" = "مدد حاصل کریں یا فیڈبیک بھیجیں";
+"support_instagram_title" = "Instagram پر ہمیں فالو کریں";
+"support_instagram_subtitle" = "ہمارے ساتھ جڑے رہیں";
+"support_rate_title" = "ایپ کو ریٹ کریں";
+"support_rate_subtitle" = "ہمیں بہتر بنانے میں مدد کریں";
+
+// MARK: - Stickers Settings
+"stickers_show_button_title" = "کی بورڈ میں اسٹیکرز دکھائیں";
+"stickers_show_button_subtitle" = "کی بورڈ میں اسٹیکر بٹن فعال کریں";
+
+// MARK: - New Sticker Generator
+"sticker_generator" = "اسٹیکر جنریٹر";
+"sticker_read_instructions" = "استعمال سے پہلے ہدایات پڑھیں";
+"enter_sticker_text" = "اسٹیکر کے لیے متن داخل کریں...";
+"create_sticker" = "اسٹیکر بنائیں";
+"generating" = "بن رہا ہے...";
+"sticker_library" = "اسٹیکر لائبریری";
+"select_all" = "سب منتخب کریں";
+"sticker_timeout_error" = "یہ فیچر ابھی مکمل طور پر تیار نہیں ہے، کام جاری ہے۔ آپ کی سمجھ کے لیے شکریہ!";
+"sticker_network_error" = "کنکشن کی خرابی۔ بعد میں دوبارہ کوشش کریں۔";
+"sticker_general_error" = "یہ فیچر ابھی مکمل طور پر تیار نہیں ہے، کام جاری ہے۔ آپ کی سمجھ کے لیے شکریہ!";
+"saved" = "محفوظ ہو گیا!";
+"save_selection" = "انتخاب محفوظ کریں";
+"cancel" = "منسوخ کریں";
+"sticker_miracle_happening" = "اب معجزہ ہونے والا ہے... ✨";
+"sticker_elapsed_time" = "گزرا ہوا وقت";
+"sticker_seconds_short" = "سے";
+"sticker_progress_starting" = "شروع ہو رہا ہے...";
+"sticker_progress_inshallah" = "انشاء اللہ، اسٹیکر بن رہا ہے...";
+"sticker_progress_complete" = "مکمل!";
+"sticker_success_message" = "الحمد للہ، آپ کا اسٹیکر تیار ہے! 🎉";

@@ -138,7 +138,7 @@ struct ArabicDuaLanguageOptionView: View {
     private var description: String {
         if let language = language {
             switch language {
-            case .english:
+            case .english, .french, .german, .chinese, .hindi, .kyrgyz, .uzbek, .korean, .urdu, .spanish, .italian:
                 return NSLocalizedString("arabic_dua_english_description", comment: "")
             case .russian:
                 return NSLocalizedString("arabic_dua_russian_description", comment: "")
@@ -155,7 +155,7 @@ struct ArabicDuaLanguageOptionView: View {
     private var exampleText: String {
         if let language = language {
             switch language {
-            case .english:
+            case .english, .french, .german, .chinese, .hindi, .kyrgyz, .uzbek, .korean, .urdu, .spanish, .italian:
                 return "For Health → اللهم اشفه شفاءً لا يغادر سقماً"
             case .russian:
                 return "За здоровье → اللهم اشفه شفاءً لا يغادر سقماً"

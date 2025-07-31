@@ -13,6 +13,16 @@ enum KeyboardLanguage: String, CaseIterable, Codable {
     case russian = "ru"
     case kazakh = "kk"
     case arabic = "ar"
+    case french = "fr"
+    case german = "de"
+    case chinese = "zh"
+    case hindi = "hi"
+    case kyrgyz = "ky"
+    case uzbek = "uz"
+    case korean = "ko"
+    case urdu = "ur"
+    case spanish = "es"
+    case italian = "it"
 
     var displayName: String {
         switch self {
@@ -24,6 +34,26 @@ enum KeyboardLanguage: String, CaseIterable, Codable {
             return "Қазақша"
         case .arabic:
             return "العربية"
+        case .french:
+            return "Français"
+        case .german:
+            return "Deutsch"
+        case .chinese:
+            return "中文"
+        case .hindi:
+            return "हिन्दी"
+        case .kyrgyz:
+            return "Кыргызча"
+        case .uzbek:
+            return "O'zbekcha"
+        case .korean:
+            return "한국어"
+        case .urdu:
+            return "اردو"
+        case .spanish:
+            return "Español"
+        case .italian:
+            return "Italiano"
         }
     }
 
@@ -37,10 +67,71 @@ enum KeyboardLanguage: String, CaseIterable, Codable {
             return "🇰🇿"
         case .arabic:
             return "🇸🇦"
+        case .french:
+            return "🇫🇷"
+        case .german:
+            return "🇩🇪"
+        case .chinese:
+            return "🇨🇳"
+        case .hindi:
+            return "🇮🇳"
+        case .kyrgyz:
+            return "🇰🇬"
+        case .uzbek:
+            return "🇺🇿"
+        case .korean:
+            return "🇰🇷"
+        case .urdu:
+            return "🇵🇰"
+        case .spanish:
+            return "🇪🇸"
+        case .italian:
+            return "🇮🇹"
         }
     }
 
+    var shortName: String {
+        switch self {
+        case .english:
+            return "Eng"
+        case .russian:
+            return "Рус"
+        case .kazakh:
+            return "Қаз"
+        case .arabic:
+            return "عرب"
+        case .french:
+            return "Fra"
+        case .german:
+            return "Deu"
+        case .chinese:
+            return "中文"
+        case .hindi:
+            return "हिं"
+        case .kyrgyz:
+            return "Кыр"
+        case .uzbek:
+            return "O'z"
+        case .korean:
+            return "한국"
+        case .urdu:
+            return "اردو"
+        case .spanish:
+            return "Esp"
+        case .italian:
+            return "Ita"
+        }
+    }
 
+    // Определяет направление письма для языка
+    var isRTL: Bool {
+        switch self {
+        case .arabic, .urdu:
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 // MARK: - Arabic Display Mode

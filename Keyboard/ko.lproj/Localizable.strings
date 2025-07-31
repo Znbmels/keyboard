@@ -1,0 +1,246 @@
+/* 
+  Localizable.strings
+  Keyboard
+
+  Created by Zainab on 21.07.2025.
+  Korean Localization
+*/
+
+// MARK: - App Information
+"app_name" = "무슬림 AI 키보드";
+"app_name_arabic" = "مسلم الذكية لوحة المفاتيح";
+
+// MARK: - Language Selection
+"language_selection_title" = "언어를 선택하세요";
+"language_selection_subtitle" = "원하는 언어를 선택하세요";
+"language_english" = "English";
+"language_russian" = "Русский";
+"language_continue" = "계속";
+
+// MARK: - Onboarding
+"onboarding_page1_title" = "무슬림 AI 키보드에 오신 것을 환영합니다";
+"onboarding_page1_description" = "이 앱은 무슬림 문구를 빠르고 정확하게 작성하는 데 도움을 줍니다.";
+
+"onboarding_page2_title" = "AI 기반 작성";
+"onboarding_page2_description" = "두아와 이슬람 표현이 포함된 AI 기반 키보드를 사용할 수 있습니다.";
+
+"onboarding_page3_title" = "시작할 준비 완료";
+"onboarding_page3_description" = "설정에서 키보드를 추가하기만 하면 준비 완료입니다!";
+
+// MARK: - Buttons
+"button_add_keyboard" = "키보드 추가";
+"button_get_started" = "시작하기";
+"button_next" = "다음";
+"button_done" = "완료";
+"button_skip" = "건너뛰기";
+"button_continue" = "계속";
+"close" = "닫기";
+
+// MARK: - Tab Bar
+"tab_home" = "홈";
+"tab_phrases" = "문구";
+"tab_stickers" = "스티커";
+"tab_keyboard" = "키보드";
+"tab_settings" = "설정";
+
+// MARK: - Home
+"home_title" = "무슬림 AI 키보드";
+"home_subtitle" = "이슬람 작성을 위한 동반자";
+
+// MARK: - Keyboard Instructions
+"keyboard_title" = "설치 안내";
+"keyboard_subtitle" = "키보드를 추가하려면 다음 단계를 따르세요";
+"keyboard_step1" = "1. '키보드 추가' 버튼을 누르세요";
+"keyboard_step2" = "2. 설정 > 일반 > 키보드로 이동하세요";
+"keyboard_step3" = "3. '키보드'를 누른 다음 '새 키보드 추가'를 누르세요";
+"keyboard_step4" = "4. '무슬림 AI 키보드'를 선택하세요";
+"keyboard_step5" = "5. AI 기능을 위해 '전체 액세스 허용'을 활성화하세요";
+"keyboard_how_to_use" = "사용 방법";
+"keyboard_usage_description" = "설치 후 키보드의 지구본 아이콘을 눌러 어떤 앱에서든 무슬림 AI 키보드로 전환할 수 있습니다.";
+
+// MARK: - Islamic Phrases
+"islamic_phrases_title" = "이슬람 문구";
+"islamic_phrases_subtitle" = "키보드에 표시할 문구를 선택하세요";
+
+// MARK: - Settings
+"settings_title" = "설정";
+"settings_language_title" = "앱 언어";
+"settings_language_subtitle" = "인터페이스 언어 변경";
+"settings_keyboard_languages_title" = "키보드 언어";
+"settings_keyboard_languages_subtitle" = "키보드 언어 관리";
+"settings_keyboard_colors_title" = "키보드 색상";
+"settings_keyboard_colors_subtitle" = "키보드 모양 사용자 정의";
+"settings_support_title" = "지원";
+"settings_support_subtitle" = "도움말 및 피드백 받기";
+"settings_privacy_title" = "개인정보 보호정책";
+"settings_terms_title" = "이용 약관";
+
+// MARK: - Islamic Phrases - Korean
+"phrase_assalamu_alaikum" = "Assalamu Alaikum";
+"phrase_wa_alaikum_assalam" = "Wa Alaikum Assalam";
+"phrase_bismillah" = "Bismillah";
+"phrase_alhamdulillah" = "Alhamdulillah";
+"phrase_subhanallah" = "SubhanAllah";
+"phrase_allahu_akbar" = "Allahu Akbar";
+"phrase_la_ilaha_illallah" = "La ilaha illallah";
+"phrase_astaghfirullah" = "Astaghfirullah";
+"phrase_inshallah" = "InshaAllah";
+"phrase_mashallah" = "MashaAllah";
+"phrase_jazakallahu_khairan" = "JazakAllahu Khairan";
+"phrase_barakallahu_feek" = "BarakAllahu Feek";
+"phrase_ameen" = "Ameen";
+"phrase_la_hawla" = "La hawla wa la quwwata illa billah";
+"phrase_tawakkaltu" = "Tawakkaltu 'ala Allah";
+"phrase_rahimahu_allah" = "Rahimahu Allah";
+"phrase_fi_amanillah" = "Fi Amanillah";
+
+// MARK: - Phrase Meanings - Korean
+"meaning_assalamu_alaikum" = "당신에게 평화가 있기를";
+"meaning_wa_alaikum_assalam" = "당신에게도 평화가 있기를";
+"meaning_bismillah" = "알라의 이름으로";
+"meaning_alhamdulillah" = "알라께 찬양을";
+"meaning_subhanallah" = "알라께 영광을";
+"meaning_allahu_akbar" = "알라는 가장 위대하시다";
+"meaning_la_ilaha_illallah" = "알라 외에는 신이 없다";
+"meaning_astaghfirullah" = "알라께 용서를 구합니다";
+"meaning_inshallah" = "알라께서 원하신다면";
+"meaning_mashallah" = "알라께서 원하신 것";
+"meaning_jazakallahu_khairan" = "알라께서 당신에게 선으로 보상하시기를";
+"meaning_barakallahu_feek" = "알라께서 당신을 축복하시기를";
+"meaning_ameen" = "아멘";
+"meaning_la_hawla" = "알라 외에는 힘과 능력이 없다";
+"meaning_tawakkaltu" = "알라를 신뢰합니다";
+"meaning_rahimahu_allah" = "알라께서 그에게 자비를 베푸시기를";
+"meaning_fi_amanillah" = "알라의 보호 아래";
+
+// MARK: - When to Use - Korean
+"when_assalamu_alaikum" = "표준 이슬람 인사";
+"when_wa_alaikum_assalam" = "Assalamu Alaikum에 대한 응답";
+"when_bismillah" = "어떤 행동을 시작하기 전에";
+"when_alhamdulillah" = "감사를 표현할 때";
+"when_subhanallah" = "경이로움을 표현할 때";
+"when_allahu_akbar" = "알라의 위대함을 표현할 때";
+"when_la_ilaha_illallah" = "신앙 선언";
+"when_astaghfirullah" = "용서를 구할 때";
+"when_inshallah" = "미래 계획에 대해 말할 때";
+"when_mashallah" = "무언가를 칭찬할 때";
+"when_jazakallahu_khairan" = "누군가에게 감사할 때";
+"when_barakallahu_feek" = "누군가를 축복할 때";
+"when_ameen" = "기도나 두아 후에";
+"when_la_hawla" = "어려운 시기에";
+"when_tawakkaltu" = "일을 알라께 맡길 때";
+"when_rahimahu_allah" = "고인을 언급할 때";
+"when_fi_amanillah" = "작별 인사할 때";
+
+// MARK: - Keyboard Settings
+"keyboard_settings" = "키보드 설정";
+"keyboard_languages_title" = "키보드 언어";
+"keyboard_languages_subtitle" = "키보드에 표시할 언어 선택";
+"keyboard_arabic_text_title" = "아랍어 텍스트 언어";
+"keyboard_arabic_text_subtitle" = "아랍어 텍스트를 입력할 언어 선택";
+"keyboard_arabic_dua_text_title" = "아랍어 두아 언어";
+"keyboard_arabic_dua_text_subtitle" = "아랍어 두아를 입력할 언어 선택 (아랍어 텍스트만)";
+"save_selection" = "선택 저장";
+
+// MARK: - Keyboard Colors
+"keyboard_colors_title" = "키보드 색상";
+"keyboard_colors_subtitle" = "키보드 색상 선택";
+
+// MARK: - Arabic Language Selection
+"arabic_language_selection_title" = "아랍어 텍스트 설정";
+"arabic_language_selection_subtitle" = "음역 대신 아랍어 텍스트를 입력할 언어 선택";
+"arabic_disabled" = "비활성화";
+"arabic_disabled_description" = "모든 언어가 음역을 입력합니다";
+"arabic_english_description" = "영어가 아랍어 텍스트를 입력합니다";
+"arabic_russian_description" = "러시아어가 아랍어 텍스트를 입력합니다";
+"arabic_kazakh_description" = "카자흐어가 아랍어 텍스트를 입력합니다";
+"arabic_arabic_description" = "아랍어가 아랍어 텍스트를 입력합니다";
+
+// MARK: - Arabic Dua Language Selection
+"arabic_dua_language_selection_title" = "아랍어 두아 설정";
+"arabic_dua_language_selection_description" = "아랍어 두아를 입력할 언어 선택 (아랍어 텍스트만)";
+"arabic_dua_disabled_description" = "모든 언어가 번역만 입력합니다";
+"arabic_dua_english_description" = "영어가 아랍어 두아를 입력합니다 (아랍어 텍스트만)";
+"arabic_dua_russian_description" = "러시아어가 아랍어 두아를 입력합니다 (아랍어 텍스트만)";
+"arabic_dua_kazakh_description" = "카자흐어가 아랍어 두아를 입력합니다 (아랍어 텍스트만)";
+"arabic_dua_arabic_description" = "아랍어가 아랍어 두아를 입력합니다 (아랍어 텍스트만)";
+
+// MARK: - Arabic Display Mode
+"arabic_display_arabic" = "아랍어 텍스트";
+"arabic_display_english" = "영어 번역";
+"arabic_display_mode_title" = "아랍어 표시 모드";
+"arabic_display_mode_subtitle" = "아랍어 콘텐츠 표시 방법 선택";
+"arabic_display_arabic_description" = "아랍어 텍스트와 음역 표시";
+"arabic_display_english_description" = "아랍어 대신 영어 번역 표시";
+
+// MARK: - Phrase Details
+"transliteration" = "음역";
+"meaning" = "의미";
+"when_to_use" = "사용 시기";
+
+// MARK: - Keyboard Preview
+"keyboard_preview_title" = "키보드 미리보기";
+"keyboard_preview_description" = "무슬림 AI 키보드가 실제 대화에서 어떻게 작동하는지 확인하세요. 이슬람 문구를 눌러 메시지에 삽입하세요.";
+
+// MARK: - Short Duas
+"short_duas_title" = "짧은 두아";
+"short_duas_subtitle" = "키보드에 표시할 두아 선택";
+
+// MARK: - Dua Names - Korean
+"dua_before_meal" = "식사 전";
+"dua_after_meal" = "식사 후";
+"dua_before_sleep" = "잠자기 전";
+"dua_waking_up" = "일어날 때";
+"dua_entering_home" = "집에 들어갈 때";
+"dua_leaving_home" = "집을 나갈 때";
+"dua_before_travel" = "여행 전";
+"dua_entering_mosque" = "모스크에 들어갈 때";
+"dua_leaving_mosque" = "모스크를 나갈 때";
+"dua_seeking_knowledge" = "지식을 구할 때";
+
+// MARK: - Dua Descriptions - Korean
+"dua_before_meal_desc" = "식사 전에 낭송";
+"dua_after_meal_desc" = "식사 후에 낭송";
+"dua_before_sleep_desc" = "잠자기 전에 낭송";
+"dua_waking_up_desc" = "일어날 때 낭송";
+"dua_entering_home_desc" = "집에 들어갈 때 낭송";
+"dua_leaving_home_desc" = "집을 나갈 때 낭송";
+"dua_before_travel_desc" = "여행 전에 낭송";
+"dua_entering_mosque_desc" = "모스크에 들어갈 때 낭송";
+"dua_leaving_mosque_desc" = "모스크를 나갈 때 낭송";
+"dua_seeking_knowledge_desc" = "지식을 구할 때 낭송";
+
+// MARK: - Support
+"support_title" = "지원";
+"support_contact_title" = "문의하기";
+"support_contact_subtitle" = "도움말 받기 또는 피드백 보내기";
+"support_instagram_title" = "Instagram에서 팔로우";
+"support_instagram_subtitle" = "저희와 연결 유지";
+"support_rate_title" = "앱 평가";
+"support_rate_subtitle" = "개선에 도움 주기";
+
+// MARK: - Stickers Settings
+"stickers_show_button_title" = "키보드에 스티커 표시";
+"stickers_show_button_subtitle" = "키보드에서 스티커 버튼 활성화";
+
+// MARK: - New Sticker Generator
+"sticker_generator" = "스티커 생성기";
+"sticker_read_instructions" = "사용 전 안내 읽기";
+"enter_sticker_text" = "스티커 텍스트 입력...";
+"create_sticker" = "스티커 생성";
+"generating" = "생성 중...";
+"sticker_library" = "스티커 라이브러리";
+"select_all" = "모두 선택";
+"sticker_timeout_error" = "이 기능은 아직 완전히 준비되지 않았으며, 작업이 진행 중입니다. 양해해 주셔서 감사합니다!";
+"sticker_network_error" = "연결 문제. 나중에 다시 시도해 주세요.";
+"sticker_general_error" = "이 기능은 아직 완전히 준비되지 않았으며, 작업이 진행 중입니다. 양해해 주셔서 감사합니다!";
+"saved" = "저장됨!";
+"save_selection" = "선택 저장";
+"cancel" = "취소";
+"sticker_miracle_happening" = "기적이 일어날 것입니다... ✨";
+"sticker_elapsed_time" = "경과 시간";
+"sticker_seconds_short" = "초";
+"sticker_progress_starting" = "시작 중...";
+"sticker_progress_inshallah" = "인샤알라, 스티커 생성 중...";
+"sticker_progress_complete" = "완료!";
+"sticker_success_message" = "알함두릴라, 스티커가 준비되었습니다! 🎉";
