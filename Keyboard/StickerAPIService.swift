@@ -396,20 +396,8 @@ final class StickerAPIService: ObservableObject {
 
     /// Запускает генерацию стикера и возвращает task_id
     func startStickerGeneration(phrase: String, username: String) async throws -> StickerTaskResponse {
-        print("🚀 Starting sticker generation request...")
-        print("📝 Phrase: '\(phrase)'")
-        print("👤 Username: '\(username)'")
-        print("🔗 Endpoint: \(baseURL)/generate-sticker")
-
         let request = StickerGenerationRequest(phrase: phrase, username: username)
-
         let response: StickerTaskResponse = try await performPostRequest(endpoint: "/generate-sticker", body: request)
-
-        print("✅ Generation request successful!")
-        print("📋 Task ID: \(response.taskId)")
-        print("📊 Success: \(response.success)")
-        print("📄 Message: \(response.message)")
-
         return response
     }
 
@@ -481,15 +469,14 @@ final class StickerAPIService: ObservableObject {
 
     /// Отслеживает задачу до завершения с периодическими обновлениями прогресса
     private func pollTaskUntilComplete(taskId: String, progressCallback: @escaping (TaskStatusResponse) -> Void) async throws -> (imageData: Data, analysis: StickerAnalysis) {
-        let maxAttempts = 90 // 1.5 минуты при проверке каждую секунду
+        let maxAttempts = 180 // 3 минуты при проверке каждую секунду (увеличено с 90)
         var attempts = 0
         var consecutiveErrors = 0
-        let maxConsecutiveErrors = 5
+        let maxConsecutiveErrors = 8 // Увеличено с 5 до 8
         var lastProgress = 0
         var stuckProgressCount = 0
 
-        print("🔄 Starting task polling for ID: \(taskId)")
-        print("⏱️ Max attempts: \(maxAttempts) (1.5 minutes)")
+        print("🔄 Polling task: \(taskId)")
 
         while attempts < maxAttempts {
             do {
@@ -499,14 +486,15 @@ final class StickerAPIService: ObservableObject {
                 // Проверяем, не застрял ли прогресс
                 if status.progress == lastProgress {
                     stuckProgressCount += 1
-                    if stuckProgressCount > 30 && status.progress >= 90 { // 30 секунд без изменений при 90%+
-                        print("⚠️ Progress stuck at \(status.progress)% for 30+ seconds, trying to get result...")
+                    if stuckProgressCount > 45 && status.progress >= 90 { // 45 секунд без изменений при 90%+ (увеличено с 30)
+                        print("⚠️ Progress stuck at \(status.progress)% for 45+ seconds, trying to get result...")
                         do {
                             let result = try await getTaskResult(taskId: taskId)
                             print("✅ Got result despite stuck progress!")
                             return try await processCompletedTask(result: result)
                         } catch {
                             print("❌ Failed to get result from stuck task: \(error)")
+                            print("🔍 Will continue polling for a bit more...")
                         }
                     }
                 } else {
@@ -517,20 +505,12 @@ final class StickerAPIService: ObservableObject {
                 // Вызываем callback для обновления UI
                 progressCallback(status)
 
-                print("📊 Task status check (attempt \(attempts + 1)/\(maxAttempts)):")
-                print("   - taskId: \(taskId)")
-                print("   - status: \(status.status.rawValue)")
-                print("   - progress: \(status.progress)%")
-                print("   - currentStep: \(status.currentStep)")
-                print("   - errorMessage: \(status.errorMessage ?? "nil")")
-                print("   - stuckCount: \(stuckProgressCount)")
+                print("📊 \(status.status.rawValue) - \(status.progress)%")
 
                 switch status.status {
                 case .completed:
-                    print("✅ Task completed! Getting final result...")
-                    // Получаем результат
+                    print("✅ Task completed!")
                     let result = try await getTaskResult(taskId: taskId)
-                    print("📦 Final result obtained, processing...")
                     return try await processCompletedTask(result: result)
 
                 case .failed:
@@ -570,14 +550,18 @@ final class StickerAPIService: ObservableObject {
             } catch {
                 consecutiveErrors += 1
                 APIConfig.log("⚠️ Error polling task status (attempt \(consecutiveErrors)/\(maxConsecutiveErrors)): \(error)", level: .warning)
+                print("🔍 Error details: \(error)")
+                print("🔍 Error type: \(type(of: error))")
 
                 if consecutiveErrors >= maxConsecutiveErrors {
                     APIConfig.log("❌ Too many consecutive errors, giving up", level: .error)
+                    print("❌ Final error after \(maxConsecutiveErrors) consecutive failures: \(error)")
                     throw APIError.networkError(error)
                 }
 
                 // Увеличиваем задержку при ошибках
-                let backoffDelay = min(consecutiveErrors * 2, 10) // Максимум 10 секунд
+                let backoffDelay = min(consecutiveErrors * 2, 15) // Максимум 15 секунд (увеличено с 10)
+                print("⏳ Backing off for \(backoffDelay) seconds due to error...")
                 try await Task.sleep(nanoseconds: UInt64(backoffDelay * 1_000_000_000))
                 attempts += 1
             }
@@ -585,6 +569,25 @@ final class StickerAPIService: ObservableObject {
 
         print("❌ POLLING TIMEOUT after \(attempts) attempts (\(attempts) seconds)")
         print("❌ Task \(taskId) did not complete within \(maxAttempts) seconds")
+        print("🔍 Last known progress: \(lastProgress)%")
+        print("🔍 Consecutive errors: \(consecutiveErrors)")
+        print("🔍 Stuck progress count: \(stuckProgressCount)")
+
+        // Попытаемся получить финальный статус перед выбросом ошибки
+        do {
+            print("🔄 Making final attempt to get task status...")
+            let finalStatus = try await getTaskStatus(taskId: taskId)
+            print("📊 Final status: \(finalStatus.status.rawValue) - Progress: \(finalStatus.progress)%")
+
+            if finalStatus.status == .completed {
+                print("✅ Task actually completed! Getting result...")
+                let result = try await getTaskResult(taskId: taskId)
+                return try await processCompletedTask(result: result)
+            }
+        } catch {
+            print("❌ Final status check failed: \(error)")
+        }
+
         throw APIError.timeout
     }
 

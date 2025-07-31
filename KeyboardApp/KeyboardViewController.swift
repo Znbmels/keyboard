@@ -280,6 +280,8 @@ class KeyboardViewController: UIInputViewController {
     private var currentLanguage: KeyboardLanguage = .english
     private var isShiftPressed = false
     private var isCapsLockOn = false
+    private var lastKeyPressTime: TimeInterval = 0
+    private let keyPressDebounceInterval: TimeInterval = 0.05 // 50ms минимальный интервал между нажатиями
     
     private let languageManager = KeyboardLanguageManager.shared
     private let phrasesManager = KeyboardPhrasesManager.shared
@@ -951,19 +953,6 @@ class KeyboardViewController: UIInputViewController {
         // Сохраняем тип кнопки как строку в accessibilityIdentifier
         button.accessibilityIdentifier = keyTypeToString(keyType)
 
-        // Дополнительная отладка для кнопки стикеров
-        if case .stickers = keyType {
-            print("🎨 Stickers button created with identifier: \(keyTypeToString(keyType))")
-            print("🎨 Button target added: keyButtonTapped")
-            print("🎨 Button isUserInteractionEnabled: \(button.isUserInteractionEnabled)")
-        }
-
-        // Дополнительная отладка для кнопки ABC
-        if case .letter("ABC") = keyType {
-            print("🔧 Created ABC button with identifier: \(keyTypeToString(keyType))")
-            print("🔧 ABC button target: \(button.allTargets)")
-        }
-
         return button
     }
 
@@ -1259,60 +1248,46 @@ class KeyboardViewController: UIInputViewController {
 
     // MARK: - Actions
     @objc private func keyButtonTapped(_ sender: UIButton) {
+        // Debouncing для предотвращения слишком быстрых нажатий
+        let currentTime = CACurrentMediaTime()
+        if currentTime - lastKeyPressTime < keyPressDebounceInterval {
+            return
+        }
+        lastKeyPressTime = currentTime
+
         guard let identifier = sender.accessibilityIdentifier else {
-            print("❌ Button tapped but no identifier found")
             return
         }
         let keyType = stringToKeyType(identifier)
-        print("🎯 Key button tapped: \(keyType) (identifier: \(identifier))")
-        print("🔘 Button tapped: \(identifier)")
 
         switch keyType {
         case .letter("ABC"):
             // Переключаемся на следующую клавиатуру iOS (системную)
-            print("🔄 ABC button tapped - switching to next iOS keyboard")
-            print("🔧 Available input modes: \(textDocumentProxy.documentInputMode?.primaryLanguage ?? "unknown")")
-            print("🔧 needsInputModeSwitchKey: \(needsInputModeSwitchKey)")
-
-            // Проверяем, есть ли другие клавиатуры в системе
             if hasMultipleKeyboards() {
-                // Есть другие клавиатуры - используем стандартный метод
-                print("🔧 Multiple keyboards available - using advanceToNextInputMode")
                 advanceToNextInputMode()
             } else {
-                // Наша клавиатура единственная - переключаемся на буквенный режим
-                print("🔧 Only our keyboard available - switching to letters mode")
+                // Наша клавиатура единственная - переключаемся между режимами
                 if currentMode == .islamic {
-                    // Если мы в исламском режиме, переключаемся на обычные буквы
                     currentMode = .letters
                     updateKeyboard()
-
-                    // Показываем тактильную обратную связь для подтверждения переключения
-                    let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
-                    impactFeedback.impactOccurred()
                 } else {
-                    // Если уже в буквенном режиме, переключаемся в исламский режим
-                    print("🔧 In letters mode - switching to Islamic mode")
                     currentMode = .islamic
                     updateKeyboard()
-
-                    // Показываем тактильную обратную связь
-                    let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
-                    impactFeedback.impactOccurred()
                 }
             }
-
-            print("✅ ABC button action completed")
+            let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
+            impactFeedback.impactOccurred()
 
         case .letter(let char):
             let displayChar = (isShiftPressed || isCapsLockOn) ? char.uppercased() : char.lowercased()
             textDocumentProxy.insertText(displayChar)
-            lastInsertedText = nil // Сбрасываем при вводе обычных символов
+            lastInsertedText = nil
 
             // Сбрасываем Shift после ввода буквы (если не CapsLock)
             if isShiftPressed && !isCapsLockOn {
                 isShiftPressed = false
-                updateKeyboard()
+                // Обновляем только внешний вид кнопок, не пересоздаем клавиатуру
+                updateShiftButtonAppearance()
             }
 
         case .number(let num):
@@ -1364,16 +1339,20 @@ class KeyboardViewController: UIInputViewController {
             toggleIslamicContent()
 
         case .stickers:
-            print("🎨 Stickers button tapped!")
             showStickerLibrary()
 
         case .stickerBack:
             returnToIslamicKeyboard()
         }
 
-        // Тактильная обратная связь
-        let impactFeedback = UIImpactFeedbackGenerator(style: .light)
-        impactFeedback.impactOccurred()
+        // Тактильная обратная связь только для специальных кнопок
+        switch keyType {
+        case .delete, .shift, .returnKey, .numbers, .symbols, .globe, .moon, .islamicToggle, .stickers, .stickerBack:
+            let impactFeedback = UIImpactFeedbackGenerator(style: .light)
+            impactFeedback.impactOccurred()
+        default:
+            break // Не добавляем тактильную обратную связь для обычных букв/цифр
+        }
     }
 
     private func toggleIslamicContent() {
@@ -1507,21 +1486,45 @@ class KeyboardViewController: UIInputViewController {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(contentView)
 
-        // Создаем кнопки стикеров - увеличенный размер для лучшей видимости
-        let stickersPerRow = 8
-        let stickerSize: CGFloat = 40
-        let spacing: CGFloat = 4
+        // Создаем кнопки стикеров - адаптивный размер под экран
+        let screenWidth = view.bounds.width
         let margin: CGFloat = 8
+        let spacing: CGFloat = 4
+
+        // Рассчитываем оптимальные параметры под ширину экрана
+        let availableWidth = screenWidth - (margin * 2)
+        let maxStickersPerRow = 8
+        let minStickerSize: CGFloat = 32
+        let maxStickerSize: CGFloat = 45
+
+        // Находим оптимальное количество стикеров в ряду
+        var stickersPerRow = maxStickersPerRow
+        var stickerSize: CGFloat = maxStickerSize
+
+        for testPerRow in (5...maxStickersPerRow).reversed() {
+            let testSize = (availableWidth - CGFloat(testPerRow - 1) * spacing) / CGFloat(testPerRow)
+            if testSize >= minStickerSize && testSize <= maxStickerSize {
+                stickersPerRow = testPerRow
+                stickerSize = testSize
+                break
+            }
+        }
+
+        // Если все еще не помещается, используем минимальные значения
+        if stickerSize < minStickerSize {
+            stickerSize = minStickerSize
+            stickersPerRow = Int(availableWidth / (stickerSize + spacing))
+        }
 
         var stickerButtons: [UIButton] = []
 
-        // Рассчитываем общую ширину для 8 стикеров
+        // Рассчитываем фактическую ширину
         let totalWidth = CGFloat(stickersPerRow) * stickerSize + CGFloat(stickersPerRow - 1) * spacing + margin * 2
-        let screenWidth = view.bounds.width
 
         print("🎨 Creating \(stickers.count) sticker buttons...")
+        print("🎨 Screen width: \(screenWidth), Available width: \(availableWidth)")
         print("🎨 Layout: \(stickersPerRow) per row, size: \(stickerSize), spacing: \(spacing), margin: \(margin)")
-        print("🎨 Total width needed: \(totalWidth), screen width: \(screenWidth)")
+        print("🎨 Total width needed: \(totalWidth), fits: \(totalWidth <= screenWidth)")
 
         for (index, sticker) in stickers.reversed().enumerated() {
             print("🎨 Creating button \(index) for sticker: '\(sticker.prompt)'")
@@ -1620,21 +1623,77 @@ class KeyboardViewController: UIInputViewController {
 
         contentView.heightAnchor.constraint(equalToConstant: minContentHeight).isActive = true
 
+        // Создаем ряды для стикеров
+        var currentRowView: UIView?
+        var currentRowButtons: [UIButton] = []
+        var rowViews: [UIView] = []
+
         for (index, button) in stickerButtons.enumerated() {
             let row = index / stickersPerRow
             let col = index % stickersPerRow
 
-            let x = margin + CGFloat(col) * (stickerSize + spacing)
-            let y = margin + CGFloat(row) * (stickerSize + spacing)
+            // Создаем новый ряд если нужно
+            if col == 0 {
+                let rowView = UIView()
+                rowView.translatesAutoresizingMaskIntoConstraints = false
+                contentView.addSubview(rowView)
+                rowViews.append(rowView)
+                currentRowView = rowView
+                currentRowButtons = []
 
-            print("🎨 Button \(index): row=\(row), col=\(col), x=\(x), y=\(y)")
+                print("🎨 Created new row \(row) for button \(index)")
+            }
 
+            guard let rowView = currentRowView else { continue }
+
+            rowView.addSubview(button)
+            currentRowButtons.append(button)
+
+            print("🎨 Button \(index): row=\(row), col=\(col)")
+
+            // Настраиваем ограничения для кнопки
             NSLayoutConstraint.activate([
-                button.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: x),
-                button.topAnchor.constraint(equalTo: contentView.topAnchor, constant: y),
                 button.widthAnchor.constraint(equalToConstant: stickerSize),
-                button.heightAnchor.constraint(equalToConstant: stickerSize)
+                button.heightAnchor.constraint(equalToConstant: stickerSize),
+                button.topAnchor.constraint(equalTo: rowView.topAnchor),
+                button.bottomAnchor.constraint(equalTo: rowView.bottomAnchor)
             ])
+
+            // Горизонтальное размещение
+            if col == 0 {
+                // Первая кнопка в ряду
+                button.leadingAnchor.constraint(equalTo: rowView.leadingAnchor, constant: margin).isActive = true
+            } else {
+                // Остальные кнопки
+                let previousButton = currentRowButtons[col - 1]
+                button.leadingAnchor.constraint(equalTo: previousButton.trailingAnchor, constant: spacing).isActive = true
+            }
+
+            // Если это последняя кнопка в ряду или последняя кнопка вообще
+            if col == stickersPerRow - 1 || index == stickerButtons.count - 1 {
+                button.trailingAnchor.constraint(lessThanOrEqualTo: rowView.trailingAnchor, constant: -margin).isActive = true
+            }
+        }
+
+        // Настраиваем вертикальное размещение рядов
+        for (rowIndex, rowView) in rowViews.enumerated() {
+            NSLayoutConstraint.activate([
+                rowView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+                rowView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+                rowView.heightAnchor.constraint(equalToConstant: stickerSize)
+            ])
+
+            if rowIndex == 0 {
+                rowView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: margin).isActive = true
+            } else {
+                let previousRow = rowViews[rowIndex - 1]
+                rowView.topAnchor.constraint(equalTo: previousRow.bottomAnchor, constant: spacing).isActive = true
+            }
+
+            // Последний ряд
+            if rowIndex == rowViews.count - 1 {
+                rowView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -margin).isActive = true
+            }
         }
     }
 
@@ -1902,7 +1961,32 @@ class KeyboardViewController: UIInputViewController {
             // Одинарное нажатие - включаем Shift
             isShiftPressed = true
         }
-        updateKeyboard()
+        // Быстрое обновление только внешнего вида кнопок
+        updateShiftButtonAppearance()
+    }
+
+    /// Быстрое обновление внешнего вида кнопки Shift без пересоздания клавиатуры
+    private func updateShiftButtonAppearance() {
+        // Находим все кнопки Shift в текущей клавиатуре
+        for subview in keyboardView.subviews {
+            if let rowView = subview as? UIView {
+                for button in rowView.subviews {
+                    if let button = button as? UIButton,
+                       let identifier = button.accessibilityIdentifier,
+                       identifier.contains("shift") {
+
+                        // Обновляем цвет кнопки в зависимости от состояния
+                        if isCapsLockOn {
+                            button.backgroundColor = .systemBlue // CapsLock активен
+                        } else if isShiftPressed {
+                            button.backgroundColor = .systemGray2 // Shift активен
+                        } else {
+                            button.backgroundColor = .white // Обычное состояние
+                        }
+                    }
+                }
+            }
+        }
     }
     //06. 06. 2025 Update keyboard 
 
@@ -1954,6 +2038,9 @@ class KeyboardViewController: UIInputViewController {
             let textToInsert = phrase.insertText(for: languageManager.currentLanguage, useArabic: useArabic)
             textDocumentProxy.insertText(textToInsert)
             lastInsertedText = textToInsert
+
+            // Отмечаем использование фразы для системы рейтинга
+            markPhraseUsage()
         }
     }
 
@@ -1965,6 +2052,9 @@ class KeyboardViewController: UIInputViewController {
             let textToInsert = dua.insertText(for: languageManager.currentLanguage, useArabicForDua: useArabicForDua)
             textDocumentProxy.insertText(textToInsert)
             lastInsertedText = textToInsert
+
+            // Отмечаем использование дуа для системы рейтинга
+            markPhraseUsage()
         }
     }
 
@@ -1974,6 +2064,19 @@ class KeyboardViewController: UIInputViewController {
         } else {
             createKeyRows()
         }
+    }
+
+    // MARK: - Rating System Integration
+
+    private func markPhraseUsage() {
+        // Отправляем уведомление в основное приложение о использовании фразы
+        // Используем UserDefaults для синхронизации между приложением и клавиатурой
+        let userDefaults = UserDefaults(suiteName: "group.school.nfactorial.muslim.keyboard") ?? UserDefaults.standard
+        let currentCount = userDefaults.integer(forKey: "phrase_usage_count")
+        userDefaults.set(currentCount + 1, forKey: "phrase_usage_count")
+        userDefaults.synchronize()
+
+        print("📝 Phrase usage marked: \(currentCount + 1)")
     }
 
     // MARK: - Refresh and Update Methods

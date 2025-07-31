@@ -64,6 +64,8 @@ struct OnboardingView: View {
                                 currentPage += 1
                             }
                         } else {
+                            // Отмечаем завершение онбординга для системы рейтинга
+                            AppRatingManager.shared.markOnboardingCompleted()
                             onComplete()
                         }
                     }) {

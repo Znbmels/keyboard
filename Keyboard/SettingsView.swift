@@ -9,12 +9,14 @@ import SwiftUI
 
 struct SettingsView: View {
     @StateObject private var languageManager = LanguageManager.shared
+    @StateObject private var versionManager = AppVersionManager.shared
     @State private var showLanguageSelection = false
     @State private var showKeyboardLanguageSelection = false
     @State private var showSupport = false
     @State private var showPrivacyPolicy = false
     @State private var showTermsConditions = false
     @State private var showStickersInKeyboard = true
+    @State private var showRatingDebug = false
     
     var body: some View {
         NavigationView {
@@ -137,7 +139,7 @@ struct SettingsView: View {
                             SettingsRow(
                                 icon: "info.square.fill",
                                 title: "settings_version",
-                                subtitle: "1.0.0"
+                                subtitle: "1.0.4"
                             )
 
                             SettingsDivider()
@@ -147,6 +149,30 @@ struct SettingsView: View {
                                 title: "settings_support",
                                 action: {
                                     showSupport = true
+                                }
+                            )
+
+                            SettingsDivider()
+
+                            SettingsRow(
+                                icon: "arrow.up.circle.fill",
+                                title: "settings_check_updates",
+                                action: {
+                                    Task {
+                                        await versionManager.checkForUpdates()
+                                    }
+                                }
+                            )
+
+                            SettingsDivider()
+
+                            SettingsRow(
+                                icon: "star.fill",
+                                title: "settings_rate_app",
+                                action: {
+                                    Task {
+                                        await AppRatingManager.shared.requestRatingManually()
+                                    }
                                 }
                             )
 
@@ -169,6 +195,8 @@ struct SettingsView: View {
                                     showTermsConditions = true
                                 }
                             )
+
+
                         }
                     }
                     .padding(.horizontal, 24)
@@ -207,6 +235,11 @@ struct SettingsView: View {
         .sheet(isPresented: $showTermsConditions) {
             TermsConditionsView()
         }
+        #if DEBUG
+        .sheet(isPresented: $showRatingDebug) {
+            RatingDebugView()
+        }
+        #endif
         .onAppear {
             loadStickersSetting()
         }

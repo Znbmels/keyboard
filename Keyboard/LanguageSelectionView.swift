@@ -141,3 +141,5 @@ struct LanguageOptionView: View {
         print("Language selected")
     }
 }
+
+//default lang == 

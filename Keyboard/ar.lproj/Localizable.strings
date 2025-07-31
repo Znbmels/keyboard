@@ -66,6 +66,9 @@
 "settings_about" = "حول التطبيق";
 "settings_version" = "الإصدار";
 "settings_support" = "الدعم";
+"settings_check_updates" = "التحقق من التحديثات";
+"settings_rate_app" = "تقييم التطبيق";
+"settings_rate_app_subtitle" = "شاركنا رأيك في App Store";
 "settings_privacy" = "سياسة الخصوصية";
 "settings_terms" = "شروط الاستخدام";
 "appearance_settings" = "المظهر";
@@ -224,7 +227,7 @@
 "sticker_input_limit" = "الحد الأقصى 200 حرف";
 "sticker_generate_button" = "🎨 إنشاء ملصق";
 "sticker_generating_button" = "جاري الإنشاء...";
-"sticker_generating_status" = "الذكاء الاصطناعي يحلل عبارتك وينشئ ملصقاً فريداً...";
+"sticker_generating_status" = "الذكاء الاصطناعي يحلل عبارتك وينشئ ملصق فريداً...";
 "sticker_share_button" = "مشاركة";
 "sticker_generation_success" = "تم إنشاء الملصق بنجاح!";
 "sticker_generation_time" = "وقت التوليد:";
@@ -240,18 +243,13 @@
 "sticker_offline_mode" = "(وضع عدم الاتصال)";
 
 // Progress messages
-"sticker_progress_connecting" = "الاتصال بالخادم...";
-"sticker_progress_sending" = "إرسال طلب الإنشاء...";
-"sticker_progress_analyzing" = "تحليل النص...";
-"sticker_progress_creating" = "إنشاء الصورة...";
-"sticker_progress_processing" = "معالجة النتيجة...";
-"sticker_progress_saving" = "حفظ الملصق...";
-"sticker_progress_complete" = "مكتمل!";
-"sticker_progress_long_wait" = "قد يستغرق الإنشاء حتى 10 دقائق...";
-"sticker_progress_unique_design" = "إنشاء تصميم فريد...";
-"sticker_server_overloaded" = "عذراً، خوادمنا محملة بشكل زائد حالياً، يرجى المحاولة مرة أخرى خلال 5 دقائق. نحن نعمل على حل هذه المشكلة.";
+"sticker_progress_starting" = "بدء...";
+"sticker_progress_inshallah" = "إن شاء الله ستكون ملصقتك جاهزة قريباً";
+"sticker_progress_complete" = "تم!";
+"sticker_success_message" = "الحمد لله، ملصقك جاهز! 🎉";
+"sticker_server_overloaded" = "عذراً، خوادمنا محملة بشكل زائد حال، يرجى المحاولة مرة أخرى خلال 5 دقائق. نحن نعمل على حل هذه المشكلة.";
 "sticker_server_wait_time" = "⏱️ وقت الانتظار الموصى به: 5 دقائق";
-"sticker_server_try_later" = "🔄 حاول مرة أخرى لاحقاً";
+"sticker_server_try_later" = "🔄 حاول مرة أخرى لاحق";
 "sticker_retry_countdown" = "⏱️ إعادة المحاولة خلال: %@";
 
 // New sticker generator strings
@@ -329,13 +327,22 @@
 "sticker_library" = "مكتبة الملصقات";
 "select_all" = "تحديد الكل";
 "sticker_timeout_error" = "هذه الميزة لا تزال قيد التطوير. شكراً لتفهمكم!";
-"sticker_network_error" = "مشاكل في الاتصال. يرجى المحاولة لاحقاً.";
+"sticker_network_error" = "مشاكل في الاتصال. يرجى المحاولة لاحق.";
 "sticker_general_error" = "هذه الميزة لا تزال قيد التطوير. شكراً لتفهمكم!";
 "saved" = "تم الحفظ!";
+"save_selection" = "حفظ الاختيار";
+"cancel" = "إلغاء";
+"sticker_miracle_happening" = "الآن ستحدث معجزة... ✨";
+"sticker_elapsed_time" = "الوقت المنقضي";
+"sticker_seconds_short" = "ث";
+"sticker_progress_starting" = "نبدأ...";
+"sticker_progress_inshallah" = "إن شاء الله، ننشئ الملصق...";
+"sticker_progress_complete" = "تم!";
+"sticker_success_message" = "الحمد لله، ملصقك جاهز! 🎉";
 
 // تعليمات الملصقات
 "sticker_read_instructions" = "اقرأ التعليمات قبل الاستخدام";
-"sticker_instructions_title" = "بِسْمِ اللَّهِ - دليل مولد الملصقات";
+"sticker_instructions_title" = "سْ اللَّ - دليل مولد الملصقات";
 "sticker_instructions_nav_title" = "التعليمات";
 "sticker_what_can_generate" = "ما يمكنك إنشاؤه:";
 "sticker_can_islamic_phrases" = "العبارات الإسلامية (الحمد لله، سبحان الله، إلخ)";
@@ -368,11 +375,11 @@
 
 "sticker_important_notes" = "ملاحظات مهمة:";
 "sticker_note_beta_feature" = "هذه الميزة قيد التطوير - توقع مشاكل عرضية";
-"sticker_note_generation_time" = "الإنشاء يستغرق وقتاً - كن صبوراً";
+"sticker_note_generation_time" = "الإنشاء يستغرق وقت - كن صبور";
 "sticker_note_contact_support" = "تواصل مع المطور إذا واجهت مشاكل";
 "sticker_note_disable_feature" = "يمكنك تعطيل الملصقات في الإعدادات إذا لزم الأمر";
 
-"sticker_thanks_understanding" = "جَزَاكَ اللَّهُ خَيْرًا لتفهمك";
+"sticker_thanks_understanding" = "زَا اللَّ خَيْرًا لتفهمك";
 
 // MARK: - New Sticker Generator
 "sticker_generator" = "مولد الملصقات";
@@ -382,5 +389,28 @@
 "sticker_library" = "مكتبة الملصقات";
 "select_all" = "تحديد الكل";
 "sticker_timeout_error" = "هذه الميزة لا تزال قيد التطوير. شكراً لتفهمكم!";
-"sticker_network_error" = "مشاكل في الاتصال. يرجى المحاولة لاحقاً.";
+"sticker_network_error" = "مشاكل في الاتصال. يرجى المحاولة لاحق.";
 "sticker_general_error" = "هذه الميزة لا تزال قيد التطوير. شكراً لتفهمكم!";
+
+
+
+// MARK: - Sticker Errors (Short)
+"sticker_error_network" = "لا إنترنت";
+"sticker_error_timeout" = "حاول لاحقاً";
+"sticker_error_server" = "الخادم مشغول";
+"sticker_error_general" = "حاول مرة أخرى";
+
+// MARK: - App Rating
+"rating_popup_title" = "قيّم تطبيقنا";
+"rating_popup_message" = "إذا كان تطبيقنا مفيداً لك، يرجى دعمنا بترك تقييم 🌟\n\nجزاك الله خيراً على وقتك ودعائك!";
+"rating_popup_rate_button" = "قيّم في App Store";
+"rating_popup_not_now_button" = "ليس الآن";
+"rating_popup_never_button" = "لا تسأل مرة أخرى";
+
+// MARK: - App Update Notifications
+"update_available_title" = "الحمد لله! تحديث جديد متاح 🙌";
+"update_available_message" = "تم إضافة ميزات وتحسينات جديدة. يرجى تحديث التطبيق لمواصلة استخدامه.\n\nجزاك الله خيراً!";
+"update_version_info" = "الإصدار الجديد: %@";
+"update_now_button" = "تحديث الآن";
+"update_later_button" = "لاحقاً";
+"update_skip_version_button" = "تخطي هذا الإصدار";

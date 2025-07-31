@@ -71,6 +71,9 @@
 "settings_about" = "About";
 "settings_version" = "Version";
 "settings_support" = "Support";
+"settings_check_updates" = "Check for Updates";
+"settings_rate_app" = "Rate App";
+"settings_rate_app_subtitle" = "Share your feedback on the App Store";
 "settings_privacy" = "Privacy Policy";
 "settings_terms" = "Terms of Service";
 "appearance_settings" = "Appearance";
@@ -245,15 +248,10 @@
 "sticker_offline_mode" = "(Offline mode)";
 
 // Progress messages
-"sticker_progress_connecting" = "Connecting to server...";
-"sticker_progress_sending" = "Sending generation request...";
-"sticker_progress_analyzing" = "Analyzing text...";
-"sticker_progress_creating" = "Creating image...";
-"sticker_progress_processing" = "Processing result...";
-"sticker_progress_saving" = "Saving sticker...";
-"sticker_progress_complete" = "Complete!";
-"sticker_progress_long_wait" = "Generation may take up to 10 minutes...";
-"sticker_progress_unique_design" = "Creating unique design...";
+"sticker_progress_starting" = "Starting...";
+"sticker_progress_inshallah" = "InshAllah your sticker will be ready soon";
+"sticker_progress_complete" = "Done!";
+"sticker_success_message" = "Alhamdulillah, your sticker is ready! 🎉";
 "sticker_server_overloaded" = "Sorry, our servers are currently overloaded, please try again in 5 minutes. We are already working on this.";
 "sticker_server_wait_time" = "⏱️ Recommended wait time: 5 minutes";
 "sticker_server_try_later" = "🔄 Try again later";
@@ -339,6 +337,15 @@
 "sticker_network_error" = "Connection issues. Please try again later.";
 "sticker_general_error" = "This feature is still being developed. Thank you for your understanding!";
 "saved" = "Saved!";
+"save_selection" = "Save Selection";
+"cancel" = "Cancel";
+"sticker_miracle_happening" = "A miracle is about to happen... ✨";
+"sticker_elapsed_time" = "Elapsed time";
+"sticker_seconds_short" = "s";
+"sticker_progress_starting" = "Starting...";
+"sticker_progress_inshallah" = "InshaAllah, creating sticker...";
+"sticker_progress_complete" = "Complete!";
+"sticker_success_message" = "Alhamdulillah, your sticker is ready! 🎉";
 
 // Sticker Instructions
 "sticker_read_instructions" = "Read Instructions Before Using";
@@ -380,3 +387,31 @@
 "sticker_note_disable_feature" = "You can disable stickers in Settings if needed";
 
 "sticker_thanks_understanding" = "Jazakallahu Khairan for your understanding";
+
+// MARK: - Sticker Generation Progress
+"sticker_progress_inshallah" = "InshAllah your sticker will be ready soon";
+"sticker_progress_creating" = "Creating sticker...";
+"sticker_progress_processing" = "Processing...";
+"sticker_progress_finalizing" = "Finalizing...";
+"sticker_progress_complete" = "Done!";
+
+// MARK: - Sticker Errors (Short)
+"sticker_error_network" = "No internet";
+"sticker_error_timeout" = "Try later";
+"sticker_error_server" = "Server busy";
+"sticker_error_general" = "Try again";
+
+// MARK: - App Rating
+"rating_popup_title" = "Rate Our App";
+"rating_popup_message" = "If our app has been helpful to you, please support us by leaving a review 🌟\n\nJazakAllahu khayran for your time and duas!";
+"rating_popup_rate_button" = "Rate in App Store";
+"rating_popup_not_now_button" = "Not Now";
+"rating_popup_never_button" = "Don't Ask Again";
+
+// MARK: - App Update Notifications
+"update_available_title" = "Alhamdulillah! New Update Available 🙌";
+"update_available_message" = "Added new features and improvements. Please update the app to continue using it.\n\nMay Allah reward you!";
+"update_version_info" = "New version: %@";
+"update_now_button" = "Update Now";
+"update_later_button" = "Later";
+"update_skip_version_button" = "Skip This Version";

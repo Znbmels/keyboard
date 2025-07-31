@@ -9,6 +9,7 @@ import SwiftUI
 
 struct StickerGeneratorView: View {
     @ObservedObject private var stickerManager = StickerManager.shared
+    @ObservedObject private var languageManager = LanguageManager.shared
     @State private var inputText = ""
     @State private var isGenerating = false
     @State private var errorMessage: String?
@@ -38,6 +39,14 @@ struct StickerGeneratorView: View {
         stickerManager.savedStickers.allSatisfy { selectedStickersForKeyboard.contains($0.id) }
     }
 
+    // Helper function for localization
+    private func localizedString(_ key: String) -> String {
+        let bundle = Bundle.main
+        let path = bundle.path(forResource: languageManager.currentLanguage.rawValue, ofType: "lproj")
+        let localizedBundle = path != nil ? Bundle(path: path!) : bundle
+        return NSLocalizedString(key, bundle: localizedBundle ?? bundle, comment: "")
+    }
+
     var body: some View {
         NavigationView {
             ZStack {
@@ -46,7 +55,7 @@ struct StickerGeneratorView: View {
                 VStack(spacing: 40) {
                     // Clean Header with Instructions Button
                     VStack(spacing: 12) {
-                        Text(NSLocalizedString("sticker_generator", comment: "Sticker Generator"))
+                        Text(localizedString("sticker_generator"))
                             .font(.title)
                             .fontWeight(.bold)
                             .foregroundColor(.white)
@@ -58,7 +67,7 @@ struct StickerGeneratorView: View {
                             HStack(spacing: 8) {
                                 Image(systemName: "info.circle")
                                     .font(.system(size: 16))
-                                Text("sticker_read_instructions")
+                                Text(localizedString("sticker_read_instructions"))
                                     .font(.system(size: 14, weight: .medium))
                             }
                             .foregroundColor(.islamicGreen)
@@ -74,7 +83,7 @@ struct StickerGeneratorView: View {
 
                     // Input Section
                     VStack(spacing: 20) {
-                        TextField(NSLocalizedString("enter_sticker_text", comment: "Enter sticker text"), text: $inputText)
+                        TextField(localizedString("enter_sticker_text"), text: $inputText)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .font(.system(size: 16))
                             .padding(.horizontal, 20)
@@ -92,7 +101,7 @@ struct StickerGeneratorView: View {
                                         .progressViewStyle(CircularProgressViewStyle(tint: .white))
                                         .scaleEffect(0.8)
                                 }
-                                Text(isGenerating ? NSLocalizedString("generating", comment: "Generating...") : NSLocalizedString("create_sticker", comment: "Create Sticker"))
+                                Text(isGenerating ? localizedString("generating") : localizedString("create_sticker"))
                                     .font(.system(size: 16, weight: .semibold))
                                     .foregroundColor(.white)
                             }
@@ -113,15 +122,27 @@ struct StickerGeneratorView: View {
                                     .progressViewStyle(LinearProgressViewStyle(tint: .green))
                                     .padding(.horizontal, 20)
 
-                                Text(currentStep.isEmpty ? "Сейчас произойдет чудо... ✨" : currentStep)
+                                Text(currentStep.isEmpty ? localizedString("sticker_miracle_happening") : currentStep)
                                     .font(.system(size: 14))
                                     .foregroundColor(.white.opacity(0.8))
 
                                 if elapsedTime > 0 {
-                                    Text("Прошло времени: \(elapsedTime)с")
+                                    Text(localizedString("sticker_elapsed_time") + ": \(elapsedTime)" + localizedString("sticker_seconds_short"))
                                         .font(.system(size: 12))
                                         .foregroundColor(.white.opacity(0.6))
                                 }
+
+                                // Cancel button
+                                Button(localizedString("cancel")) {
+                                    generationTask?.cancel()
+                                    isGenerating = false
+                                    generationProgress = 0
+                                    currentStep = ""
+                                    errorMessage = nil
+                                }
+                                .font(.system(size: 14))
+                                .foregroundColor(.red)
+                                .padding(.top, 8)
                             }
                         }
 
@@ -145,7 +166,7 @@ struct StickerGeneratorView: View {
                     if !stickerManager.savedStickers.isEmpty {
                         VStack(alignment: .leading, spacing: 16) {
                             HStack {
-                                Text(NSLocalizedString("sticker_library", comment: "Sticker Library"))
+                                Text(localizedString("sticker_library"))
                                     .font(.headline)
                                     .foregroundColor(.white)
 
@@ -157,7 +178,7 @@ struct StickerGeneratorView: View {
                                         Image(systemName: allStickersSelected ? "checkmark.square.fill" : "square")
                                             .foregroundColor(allStickersSelected ? .green : .white)
                                             .font(.system(size: 14))
-                                        Text(NSLocalizedString("select_all", comment: "Select All"))
+                                        Text(localizedString("select_all"))
                                             .font(.caption)
                                             .foregroundColor(.white)
                                     }
@@ -215,7 +236,7 @@ struct StickerGeneratorView: View {
                                                 .foregroundColor(.white)
                                                 .font(.system(size: 16))
                                         }
-                                        Text(showSaveSuccess ? NSLocalizedString("saved", comment: "Saved") : NSLocalizedString("save_selection", comment: "Save Selection"))
+                                        Text(showSaveSuccess ? localizedString("saved") : localizedString("save_selection"))
                                             .font(.system(size: 16, weight: .semibold))
                                             .foregroundColor(.white)
                                     }
@@ -251,6 +272,7 @@ struct StickerGeneratorView: View {
         .sheet(isPresented: $showingInstructions) {
             StickerInstructionsView()
         }
+        .environmentLanguage(languageManager.currentLanguage)
         .onAppear {
             loadSelectedStickers()
 
@@ -298,48 +320,45 @@ struct StickerGeneratorView: View {
                 errorMessage = nil
                 successMessage = nil
                 generationProgress = 0
-                currentStep = "Инициализация..."
+                currentStep = localizedString("sticker_progress_starting")
                 generationStartTime = Date()
                 elapsedTime = 0
 
                 // Start elapsed time tracking
                 startElapsedTimeTracking()
 
-                print("🚀 Starting sticker generation...")
-                currentStep = "Создание задачи генерации..."
+                print("🚀 Starting sticker generation for: '\(promptText)'")
                 generationProgress = 10
 
                 // Step 1: Start generation and get task ID
                 let taskResponse = try await apiService.startStickerGeneration(phrase: promptText, username: "ios_user")
                 taskId = taskResponse.taskId
-                print("✅ Task created with ID: \(taskResponse.taskId)")
+                print("✅ Task created: \(taskResponse.taskId)")
 
-                currentStep = "Обработка запроса..."
+                currentStep = localizedString("sticker_progress_inshallah")
                 generationProgress = 30
 
-                // Step 2: Poll for completion with shorter intervals
+                // Step 2: Poll for completion with optimized intervals
                 var attempts = 0
-                let maxAttempts = 120 // 2 minutes max (checking every 1 second)
+                let maxAttempts = 60 // 2 minutes max (checking every 2 seconds)
+                let pollInterval: UInt64 = 2_000_000_000 // 2 seconds
 
                 while attempts < maxAttempts {
-                    try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
+                    // Проверяем, не была ли задача отменена
+                    try Task.checkCancellation()
+
+                    try await Task.sleep(nanoseconds: pollInterval)
                     attempts += 1
 
-                    currentStep = "Генерация стикера... (\(attempts)с)"
-                    generationProgress = min(30 + (attempts * 60 / maxAttempts), 90)
-
                     let statusResponse = try await apiService.getTaskStatus(taskId: taskResponse.taskId)
-                    print("📊 Task status: \(statusResponse.status) - Progress: \(statusResponse.progress)%")
 
-                    // Update progress from server
-                    generationProgress = max(generationProgress, statusResponse.progress)
-                    if !statusResponse.currentStep.isEmpty {
-                        currentStep = statusResponse.currentStep
-                    }
+                    // Обновляем прогресс на основе серверного ответа
+                    let serverProgress = statusResponse.progress
+                    let calculatedProgress = min(30 + (attempts * 60 / maxAttempts), 90)
+                    generationProgress = max(calculatedProgress, serverProgress)
 
                     if statusResponse.status == .completed {
                         print("🎉 Generation completed!")
-                        currentStep = "Получение результата..."
                         generationProgress = 95
 
                         // Get the final result
@@ -352,8 +371,6 @@ struct StickerGeneratorView: View {
                         // Download image
                         let imageData = try await apiService.downloadImage(from: imageUrl)
 
-                        currentStep = "Сохранение стикера..."
-
                         // Save the sticker
                         stickerManager.saveSticker(
                             prompt: promptText,
@@ -362,12 +379,13 @@ struct StickerGeneratorView: View {
                             analysis: nil
                         )
 
-                        generationProgress = 100
-                        currentStep = "Готово!"
-                        successMessage = "Альхамдуллилях, ваш стикер готов! 🎉"
-                        inputText = ""
+                        // Mark successful sticker generation for rating system
+                        AppRatingManager.shared.markSuccessfulStickerGeneration()
 
-                        print("✅ Sticker saved successfully")
+                        generationProgress = 100
+                        currentStep = localizedString("sticker_progress_complete")
+                        successMessage = localizedString("sticker_success_message")
+                        inputText = ""
                         break
 
                     } else if statusResponse.status == .failed {
@@ -377,14 +395,19 @@ struct StickerGeneratorView: View {
                 }
 
                 if attempts >= maxAttempts {
-                    throw NSError(domain: "StickerGeneration", code: -2, userInfo: [NSLocalizedDescriptionKey: "Generation timed out after \(maxAttempts) seconds"])
+                    throw NSError(domain: "StickerGeneration", code: -2, userInfo: [NSLocalizedDescriptionKey: "Generation timed out after \(maxAttempts * 2) seconds"])
                 }
 
             } catch {
-                print("❌ Generation failed: \(error.localizedDescription)")
-                errorMessage = error.localizedDescription
+                let friendlyError = getUserFriendlyErrorMessage(error.localizedDescription)
+                errorMessage = friendlyError
                 currentStep = ""
                 generationProgress = 0
+
+                // Если это таймаут, предлагаем попробовать снова
+                if error.localizedDescription.contains("timed out") {
+                    errorMessage = "Генерация заняла слишком много времени. Попробуйте снова с более простым запросом."
+                }
             }
 
             isGenerating = false
@@ -433,7 +456,19 @@ struct StickerGeneratorView: View {
     }
 
     private func getUserFriendlyErrorMessage(_ error: String) -> String {
-        return "Извините, сейчас эта страница только проходит тестирование... Попробуйте снова и обратитесь к поддержке 🛠️"
+        let errorLower = error.lowercased()
+
+        if errorLower.contains("network") || errorLower.contains("connection") || errorLower.contains("сети") {
+            return "sticker_error_network".localized
+        } else if errorLower.contains("timeout") || errorLower.contains("time") || errorLower.contains("время") || errorLower.contains("ожидания") {
+            return "sticker_error_timeout".localized
+        } else if errorLower.contains("server") || errorLower.contains("busy") || errorLower.contains("сервер") || errorLower.contains("перегружен") {
+            return "sticker_error_server".localized
+        } else if errorLower.contains("generation timed out") || errorLower.contains("did not complete") {
+            return "sticker_error_timeout".localized
+        } else {
+            return "sticker_error_general".localized
+        }
     }
 
     private func startElapsedTimeTracking() {
